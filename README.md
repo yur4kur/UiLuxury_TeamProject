@@ -1,4 +1,5 @@
-![Схема проекта](https://github.com/yur4kur/UiLuxury_TeamProject/assets/105720427/801b8c67-4f61-4797-a8a6-3d0b23e22ce4)
+![ReadMe](https://github.com/yur4kur/UiLuxury_TeamProject/assets/105720427/4b86440f-050d-46a8-8496-1f3a77b0232d)
+
 # UiLuxury_TeamProject
 Разрабатываем игру типа "Кликер"
 ## Предварительный стек:
