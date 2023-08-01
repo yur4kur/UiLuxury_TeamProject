@@ -9,6 +9,7 @@ import UIKit
 
 class ClickViewController: UIViewController {
 
+    // MARK: - Override methods
     override func viewDidLoad() {
         super.viewDidLoad()
 
