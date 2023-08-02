@@ -9,13 +9,11 @@ import UIKit
 
 class ClickViewController: UIViewController {
 
-    // MARK: - Override methods
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
+    let items: [Item] = DataSource.shared.gameItems
     
-
+    var score = 0
+   
+    
     
     // MARK: - Navigation
 
@@ -25,5 +23,19 @@ class ClickViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     
-
+    @IBAction func clickerTapped() {
+        score += 1
+        items.forEach { item in
+            switch item.itemOperator {
+            case .add:
+                score += item.itemModifier
+            case .multiply:
+                score *= item.itemModifier
+            case .assets:
+                return
+            }
+        }
+        print(score)
+    }
+    
 }
