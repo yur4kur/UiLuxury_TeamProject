@@ -1,13 +1,13 @@
 //
-//  SecondDeveloperViewController.swift
+//  DevelopersInfoViewController.swift
 //  UiLuxury_TeamProject
 //
-//  Created by Бийбол Зулпукаров on 29/7/23.
+//  Created by Бийбол Зулпукаров on 4/8/23.
 //
 
 import UIKit
 
-class SecondDeveloperViewController: UIViewController {
+class DevelopersInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
