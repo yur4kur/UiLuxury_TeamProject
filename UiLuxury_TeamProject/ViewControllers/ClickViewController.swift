@@ -9,6 +9,13 @@ import UIKit
 
 class ClickViewController: UIViewController {
 
+    // MARK: - Override methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+    }
+    
+
     let items: [Item] = DataSource.shared.gameItems
     
     var score = 0
