@@ -33,11 +33,11 @@ class ClickViewController: UIViewController {
     @IBAction func clickerTapped() {
         score += 1
         items.forEach { item in
-            switch item.itemOperator {
+            switch item.actionOperator{
             case .add:
-                score += item.itemModifier
+                score += item.modifier
             case .multiply:
-                score *= item.itemModifier
+                score *= item.modifier
             case .assets:
                 return
             }
