@@ -11,8 +11,6 @@ class DevelopersInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
     }
     
 
