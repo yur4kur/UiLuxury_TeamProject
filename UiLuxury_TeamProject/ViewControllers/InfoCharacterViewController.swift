@@ -8,22 +8,36 @@
 import UIKit
 
 class InfoCharacterViewController: UIViewController {
-
+    
+    @IBOutlet var userImageView: UIImageView!
+    @IBOutlet var userNameLabel: UILabel!
+    @IBOutlet var boughtItemsTableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        boughtItemsTableView.dataSource = self
+        boughtItemsTableView.delegate = self
+        userImageView.image = UIImage.init(systemName: "swift")
+        userNameLabel.text = "User"
     }
     
+    
+    
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+extension InfoCharacterViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        3
     }
-    */
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = boughtItemsTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let content = cell.defaultContentConfiguration()
+        cell.contentConfiguration = content
+        return cell
+    }
+}
 
+extension InfoCharacterViewController: UITableViewDelegate {
+    
 }

@@ -16,6 +16,11 @@ class ClickViewController: UIViewController {
     }
     
 
+    let items: [Item] = DataSource.shared.gameItems
+    
+    var score = 0
+   
+    
     
     // MARK: - Navigation
 
@@ -25,5 +30,19 @@ class ClickViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     
-
+    @IBAction func clickerTapped() {
+        score += 1
+        items.forEach { item in
+            switch item.actionOperator{
+            case .add:
+                score += item.modifier
+            case .multiply:
+                score *= item.modifier
+            case .assets:
+                return
+            }
+        }
+        print(score)
+    }
+    
 }

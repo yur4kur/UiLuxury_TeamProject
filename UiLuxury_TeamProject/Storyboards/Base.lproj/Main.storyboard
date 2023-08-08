@@ -30,6 +30,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="clickerTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="jsa-Bk-1Qk"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -110,11 +113,21 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="vf8-i5-DbQ">
                                 <rect key="frame" x="16" y="330.5" width="343" height="287.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" id="RQ0-b4-fvO">
+                                        <rect key="frame" x="0.0" y="50" width="343" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RQ0-b4-fvO" id="gxx-WW-8KF">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="62" translatesAutoresizingMaskIntoConstraints="NO" id="Z2x-Qm-yOL">
                                 <rect key="frame" x="16" y="80" width="343" height="210.5"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9H3-nV-4Nt">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sw" translatesAutoresizingMaskIntoConstraints="NO" id="9H3-nV-4Nt">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="128"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z6O-uE-Rld">
@@ -145,6 +158,11 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="boughtItemsTableView" destination="vf8-i5-DbQ" id="4hT-pz-hTm"/>
+                        <outlet property="userImageView" destination="9H3-nV-4Nt" id="brw-Uu-CEF"/>
+                        <outlet property="userNameLabel" destination="z6O-uE-Rld" id="tgw-CI-v6c"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MPt-Ua-ViX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -316,6 +334,7 @@
         <image name="cursorarrow.click.2" catalog="system" width="128" height="125"/>
         <image name="info.bubble.fill" catalog="system" width="128" height="110"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="sw" width="128" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
