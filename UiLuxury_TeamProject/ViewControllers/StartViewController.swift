@@ -1,13 +1,13 @@
 //
-//  FirstDeveloperViewController.swift
+//  StartViewController.swift
 //  UiLuxury_TeamProject
 //
-//  Created by Бийбол Зулпукаров on 29/7/23.
+//  Created by Бийбол Зулпукаров on 2/8/23.
 //
 
 import UIKit
 
-class FirstDeveloperViewController: UIViewController {
+class StartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

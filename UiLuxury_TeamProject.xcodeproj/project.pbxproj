@@ -11,10 +11,8 @@
 		46227DE62A73B1D600C042F4 /* ShopListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227DE52A73B1D600C042F4 /* ShopListViewController.swift */; };
 		46227DE82A73B25C00C042F4 /* InfoCharacterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227DE72A73B25C00C042F4 /* InfoCharacterViewController.swift */; };
 		46227DEB2A73B2CE00C042F4 /* BasketListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227DEA2A73B2CE00C042F4 /* BasketListViewController.swift */; };
-		46227DF22A743DC600C042F4 /* FirstDeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227DF12A743DC600C042F4 /* FirstDeveloperViewController.swift */; };
-		46227DF42A743DD700C042F4 /* SecondDeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227DF32A743DD700C042F4 /* SecondDeveloperViewController.swift */; };
-		46227DF62A743DE600C042F4 /* ThirdDeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227DF52A743DE600C042F4 /* ThirdDeveloperViewController.swift */; };
-		46227DF82A743DF500C042F4 /* FourthDeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46227DF72A743DF500C042F4 /* FourthDeveloperViewController.swift */; };
+		462738762A7A4AF2006138E8 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462738752A7A4AF2006138E8 /* StartViewController.swift */; };
+		46C7C9DA2A7C2CC500FE5922 /* DevelopersInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C7C9D92A7C2CC500FE5922 /* DevelopersInfoViewController.swift */; };
 		6AB7F8712A7302330026E5DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB7F8702A7302330026E5DC /* AppDelegate.swift */; };
 		6AB7F8732A7302330026E5DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB7F8722A7302330026E5DC /* SceneDelegate.swift */; };
 		6AB7F8782A7302330026E5DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AB7F8762A7302330026E5DC /* Main.storyboard */; };
@@ -30,10 +28,8 @@
 		46227DE52A73B1D600C042F4 /* ShopListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListViewController.swift; sourceTree = "<group>"; };
 		46227DE72A73B25C00C042F4 /* InfoCharacterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCharacterViewController.swift; sourceTree = "<group>"; };
 		46227DEA2A73B2CE00C042F4 /* BasketListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketListViewController.swift; sourceTree = "<group>"; };
-		46227DF12A743DC600C042F4 /* FirstDeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstDeveloperViewController.swift; sourceTree = "<group>"; };
-		46227DF32A743DD700C042F4 /* SecondDeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondDeveloperViewController.swift; sourceTree = "<group>"; };
-		46227DF52A743DE600C042F4 /* ThirdDeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdDeveloperViewController.swift; sourceTree = "<group>"; };
-		46227DF72A743DF500C042F4 /* FourthDeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourthDeveloperViewController.swift; sourceTree = "<group>"; };
+		462738752A7A4AF2006138E8 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		46C7C9D92A7C2CC500FE5922 /* DevelopersInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopersInfoViewController.swift; sourceTree = "<group>"; };
 		6AB7F86D2A7302330026E5DC /* UiLuxury_TeamProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UiLuxury_TeamProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AB7F8702A7302330026E5DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6AB7F8722A7302330026E5DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -57,17 +53,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		46227DF02A743D4300C042F4 /* DeveloperViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				46227DF12A743DC600C042F4 /* FirstDeveloperViewController.swift */,
-				46227DF32A743DD700C042F4 /* SecondDeveloperViewController.swift */,
-				46227DF52A743DE600C042F4 /* ThirdDeveloperViewController.swift */,
-				46227DF72A743DF500C042F4 /* FourthDeveloperViewController.swift */,
-			);
-			path = DeveloperViewControllers;
-			sourceTree = "<group>";
-		};
 		6AB7F8642A7302330026E5DC = {
 			isa = PBXGroup;
 			children = (
@@ -123,7 +108,8 @@
 				46227DE52A73B1D600C042F4 /* ShopListViewController.swift */,
 				46227DE72A73B25C00C042F4 /* InfoCharacterViewController.swift */,
 				46227DEA2A73B2CE00C042F4 /* BasketListViewController.swift */,
-				46227DF02A743D4300C042F4 /* DeveloperViewControllers */,
+				462738752A7A4AF2006138E8 /* StartViewController.swift */,
+				46C7C9D92A7C2CC500FE5922 /* DevelopersInfoViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -225,16 +211,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6AB7F88D2A7303B00026E5DC /* Developers.swift in Sources */,
-				46227DF62A743DE600C042F4 /* ThirdDeveloperViewController.swift in Sources */,
-				46227DF42A743DD700C042F4 /* SecondDeveloperViewController.swift in Sources */,
 				6AB7F8712A7302330026E5DC /* AppDelegate.swift in Sources */,
 				6AB7F8A72A7AA97D0026E5DC /* Item.swift in Sources */,
 				46227DEB2A73B2CE00C042F4 /* BasketListViewController.swift in Sources */,
 				6AB7F88B2A7303740026E5DC /* DataSource.swift in Sources */,
-				46227DF82A743DF500C042F4 /* FourthDeveloperViewController.swift in Sources */,
 				46227DE42A73AF4300C042F4 /* ClickViewController.swift in Sources */,
+				46C7C9DA2A7C2CC500FE5922 /* DevelopersInfoViewController.swift in Sources */,
+				462738762A7A4AF2006138E8 /* StartViewController.swift in Sources */,
 				46227DE82A73B25C00C042F4 /* InfoCharacterViewController.swift in Sources */,
-				46227DF22A743DC600C042F4 /* FirstDeveloperViewController.swift in Sources */,
 				46227DE62A73B1D600C042F4 /* ShopListViewController.swift in Sources */,
 				6AB7F8732A7302330026E5DC /* SceneDelegate.swift in Sources */,
 			);
