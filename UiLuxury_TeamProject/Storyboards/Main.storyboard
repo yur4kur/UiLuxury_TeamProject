@@ -152,11 +152,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="BSg-Tn-fg7">
-                        <barButtonItem key="rightBarButtonItem" title="Credits" id="dWA-bl-ME9">
-                            <connections>
-                                <segue destination="ilj-2s-IZ6" kind="show" id="EN3-RS-sQf"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Credits" id="dWA-bl-ME9"/>
                     </navigationItem>
                     <connections>
                         <outlet property="boughtItemsTableView" destination="Ui0-ue-ON1" id="Tn9-lm-RhG"/>
@@ -200,71 +196,6 @@
             </objects>
             <point key="canvasLocation" x="-532" y="1585"/>
         </scene>
-        <!--Mikhail-->
-        <scene sceneID="UN8-7y-OA7">
-            <objects>
-                <viewController id="LWE-3d-KSg" customClass="FirstDeveloperViewController" customModule="UiLuxury_TeamProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="FMm-sm-ihB">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="gm5-zD-bov"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Mikhail" image="person.fill" catalog="system" id="G5a-nL-Em4"/>
-                    <navigationItem key="navigationItem" id="Q3H-FH-vCO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="C1c-jK-gFf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1504.8" y="1639.4302848575715"/>
-        </scene>
-        <!--Yuriy-->
-        <scene sceneID="GZQ-HD-U3K">
-            <objects>
-                <viewController id="1Rg-89-aXu" customClass="SecondDeveloperViewController" customModule="UiLuxury_TeamProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="842-kf-rbi">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="yXH-ok-GY7"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Yuriy" image="person.fill" catalog="system" id="4c8-Xd-cOs"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ens-yD-nEV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2312.8000000000002" y="1638.5307346326838"/>
-        </scene>
-        <!--Biibol-->
-        <scene sceneID="QIH-vJ-Pen">
-            <objects>
-                <viewController id="hhG-Yh-9lm" customClass="FourthDeveloperViewController" customModule="UiLuxury_TeamProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="emq-jf-dQz">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="GGk-Ul-1au"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Biibol" image="person.fill" catalog="system" id="VIp-Wb-iHT"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2Ty-QA-XoL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4000.8000000000002" y="1648.4257871064469"/>
-        </scene>
-        <!--Kirill-->
-        <scene sceneID="Szt-DO-Y7s">
-            <objects>
-                <viewController id="xcX-CR-pNm" customClass="ThirdDeveloperViewController" customModule="UiLuxury_TeamProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="7Mr-s1-tQK">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="qfD-bP-WLP"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Kirill" image="person.fill" catalog="system" id="oiR-kw-Hqo"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ggJ-Gn-UrT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3119.1999999999998" y="1649.3253373313344"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="nQt-r2-cdq">
             <objects>
@@ -285,28 +216,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HRa-d2-Fvl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1450" y="81"/>
-        </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="O5W-KI-eZq">
-            <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="ilj-2s-IZ6" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="ILw-MG-cca"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="He6-WL-ubO">
-                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="LWE-3d-KSg" kind="relationship" relationship="viewControllers" id="Gvh-lJ-LvC"/>
-                        <segue destination="1Rg-89-aXu" kind="relationship" relationship="viewControllers" id="VQg-H3-T6h"/>
-                        <segue destination="xcX-CR-pNm" kind="relationship" relationship="viewControllers" id="Dgc-GJ-aR1"/>
-                        <segue destination="hhG-Yh-9lm" kind="relationship" relationship="viewControllers" id="FU6-8s-KrS"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="KHW-r9-OpS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1260" y="858"/>
         </scene>
         <!--info-->
         <scene sceneID="fSa-0e-zYx">
@@ -333,7 +242,6 @@
         <image name="clipboard.fill" catalog="system" width="103" height="128"/>
         <image name="cursorarrow.click.2" catalog="system" width="128" height="125"/>
         <image name="info.bubble.fill" catalog="system" width="128" height="110"/>
-        <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="sw" width="128" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
