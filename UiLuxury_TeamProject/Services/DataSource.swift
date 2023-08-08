@@ -97,4 +97,6 @@ class DataSource {
              modifier: 1,
              actionOperator: .assets)
     ]
+    
+    private init () {}
 }
