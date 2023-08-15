@@ -12,7 +12,8 @@ final class ShopListViewController: UITableViewController {
     //MARK: - Private propertys
     
     private let shoppings = Item.getItem()
-    private var selectedCells: [Item] = []
+    private var selectCells: [Item] = []
+    private var selectIndexCells: [IndexPath] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,12 +29,12 @@ final class ShopListViewController: UITableViewController {
         1
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellMarket", for: indexPath)
         let content = shoppings[indexPath.section]
         cell.textLabel?.text = content.description
         cell.detailTextLabel?.text = "$\(content.price.formatted())"
+        
         return cell
     }
     
@@ -47,35 +48,54 @@ final class ShopListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let selectedCell = shoppings[indexPath.section]
+        let selectIndexCell = tableView.cellForRow(at: indexPath)
+        let selectCell = shoppings[indexPath.section]
         
-        if selectedCells.count < 3 {
-            selectedCells.append(selectedCell)
+        if selectIndexCells.contains(indexPath) {
+            selectIndexCell?.backgroundColor = .clear
+            if let index = selectIndexCells.firstIndex(of: indexPath) {
+                selectIndexCells.remove(at: index)
+                selectCells.remove(at: index)
+            }
         } else {
-            let alert = UIAlertController(
-                title: "Упс",
-                message: "В корзину можно добавить только ТРИ апгрейда",
-                preferredStyle: .alert)
-            let okAktion = UIAlertAction(title: "Ок", style: .default)
-            alert.addAction(okAktion)
-            present(alert, animated: true)
+            if selectCells.count < 3 {
+                selectIndexCell?.backgroundColor = .purple
+                selectIndexCells.append(indexPath)
+                selectCells.append(selectCell)
+            } else {
+                showAlerAction()
+            }
         }
-        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let basketListVS = segue.destination as? BasketListViewController else { return }
-        basketListVS.selectedCells = selectedCells
+        basketListVS.selectCells = selectCells
         basketListVS.delegate = self
+        
     }
 }
 
 //MARK: - Update Data Delegate
 
 extension ShopListViewController: IUpdateDataDelegate {
-    func updateData(updatedArray: [Item]) {
-        self.selectedCells = updatedArray
+    func updateData(updateSelectCells: [Item]) {
+        self.selectCells = updateSelectCells
+    }
+}
+
+private extension ShopListViewController {
+    func showAlerAction() {
+        let alert = UIAlertController(
+            title: "Упс",
+            message: "В корзину можно добавить только ТРИ апгрейда",
+            preferredStyle: .alert)
+        let okAktion = UIAlertAction(title: "Ок", style: .default)
+        alert.addAction(okAktion)
+        present(alert, animated: true)
+        
     }
 }
