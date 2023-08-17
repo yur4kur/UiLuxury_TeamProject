@@ -8,41 +8,57 @@
 import UIKit
 
 class ClickViewController: UIViewController {
-
+    
+    @IBOutlet var walletLabel: UILabel!
+    
     // MARK: - Override methods
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//        modifySetup()
     }
     
-
-    let items: [Item] = DataSource.shared.gameItems
     
-    var score = 0
-   
+    let items: [Item] = DataSource.shared.gameItems
+    let itemsSegueTest: [Item] = []
+    
+    var userWallet = 0
+    private var clickModify = 1
+    var delegate: ISendInfoAboutCharacterDelegate?
     
     
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
     
-    @IBAction func clickerTapped() {
-        score += 1
+    func modifySetup() {
         items.forEach { item in
             switch item.actionOperator{
             case .add:
-                score += item.modifier
+                clickModify += item.modifier
             case .multiply:
-                score *= item.modifier
+                clickModify *= item.modifier
             case .assets:
                 return
             }
         }
-        print(score)
+        print(userWallet)
     }
     
+    @IBAction func tapOnFarmButton() {
+        userWallet += clickModify
+        updateCharacterWallet(with: userWallet)
+        delegate?.updateCharacterWallet(with: userWallet)
+    }
+ 
+    
 }
+
+extension ClickViewController: ISendInfoAboutCharacterDelegate {
+    
+    func updateCharacterWallet(with newValue: Int) {
+        userWallet = newValue
+        walletLabel.text = userWallet.description
+    }
+    
+    
+    
+}
+
