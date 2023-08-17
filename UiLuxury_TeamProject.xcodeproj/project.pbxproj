@@ -21,6 +21,8 @@
 		6AB7F88B2A7303740026E5DC /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB7F88A2A7303740026E5DC /* DataSource.swift */; };
 		6AB7F88D2A7303B00026E5DC /* Developers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB7F88C2A7303B00026E5DC /* Developers.swift */; };
 		6AB7F8A72A7AA97D0026E5DC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB7F8A62A7AA97D0026E5DC /* Item.swift */; };
+		E99F36322A8EAE0300C96277 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99F36312A8EAE0300C96277 /* Protocol.swift */; };
+		E99F36342A8EAE2100C96277 /* DataAboutCharacter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99F36332A8EAE2100C96277 /* DataAboutCharacter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		6AB7F88A2A7303740026E5DC /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		6AB7F88C2A7303B00026E5DC /* Developers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Developers.swift; sourceTree = "<group>"; };
 		6AB7F8A62A7AA97D0026E5DC /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		E99F36312A8EAE0300C96277 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
+		E99F36332A8EAE2100C96277 /* DataAboutCharacter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataAboutCharacter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +139,8 @@
 			isa = PBXGroup;
 			children = (
 				6AB7F88A2A7303740026E5DC /* DataSource.swift */,
+				E99F36332A8EAE2100C96277 /* DataAboutCharacter.swift */,
+				E99F36312A8EAE0300C96277 /* Protocol.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -214,6 +220,7 @@
 				6AB7F8712A7302330026E5DC /* AppDelegate.swift in Sources */,
 				6AB7F8A72A7AA97D0026E5DC /* Item.swift in Sources */,
 				46227DEB2A73B2CE00C042F4 /* BasketListViewController.swift in Sources */,
+				E99F36342A8EAE2100C96277 /* DataAboutCharacter.swift in Sources */,
 				6AB7F88B2A7303740026E5DC /* DataSource.swift in Sources */,
 				46227DE42A73AF4300C042F4 /* ClickViewController.swift in Sources */,
 				46C7C9DA2A7C2CC500FE5922 /* DevelopersInfoViewController.swift in Sources */,
@@ -221,6 +228,7 @@
 				46227DE82A73B25C00C042F4 /* InfoCharacterViewController.swift in Sources */,
 				46227DE62A73B1D600C042F4 /* ShopListViewController.swift in Sources */,
 				6AB7F8732A7302330026E5DC /* SceneDelegate.swift in Sources */,
+				E99F36322A8EAE0300C96277 /* Protocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
