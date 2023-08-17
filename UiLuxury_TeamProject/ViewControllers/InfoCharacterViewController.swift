@@ -16,7 +16,7 @@ final class InfoCharacterViewController: UIViewController {
     
     // MARK: - Bought items property
     let items: [Item] = DataSource.shared.gameItems
-    var delegate = ""
+    //var delegate = ""
     
     // MARK: - Override methods
     override func viewDidLoad() {
