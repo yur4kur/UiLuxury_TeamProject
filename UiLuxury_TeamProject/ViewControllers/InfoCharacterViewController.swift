@@ -9,8 +9,6 @@ import UIKit
 
 final class InfoCharacterViewController: UIViewController {
     
-    
-    
     // MARK: - IBOutlets
     @IBOutlet var userImageView: UIImageView!
     @IBOutlet var userNameLabel: UILabel!
@@ -18,6 +16,8 @@ final class InfoCharacterViewController: UIViewController {
     
     // MARK: - Bought items property
     let items: [Item] = DataSource.shared.gameItems
+    //var delegate = ""
+
     
     // MARK: - Override methods
     override func viewDidLoad() {
@@ -27,10 +27,10 @@ final class InfoCharacterViewController: UIViewController {
         userImageView.image = UIImage.init(systemName: "swift")
         
     }
-    
     var userWallet: Int!
     var delegate: ISendInfoAboutCharacterDelegate!
     
+
 }
 
 // MARK: - TableView Extensions
@@ -78,7 +78,7 @@ extension InfoCharacterViewController: UITableViewDelegate {
         
         return contentView
     }
-    
+
     func tableView(_ tableView: UITableView,
                             willDisplayHeaderView view: UIView,
                             forSection section: Int) {
@@ -93,4 +93,9 @@ extension InfoCharacterViewController: ISendInfoAboutCharacterDelegate {
         userNameLabel.text = newValue.description
     }
     
+    func tableView(_ tableView: UITableView,
+                            willDisplayHeaderView view: UIView,
+                            forSection section: Int) {
+        view.backgroundColor = .gray
+    }
 }
