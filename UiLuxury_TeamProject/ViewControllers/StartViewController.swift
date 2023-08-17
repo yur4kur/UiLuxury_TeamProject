@@ -7,23 +7,47 @@
 
 import UIKit
 
-class StartViewController: UIViewController {
+class StartViewController: UIViewController{
+    
+    @IBOutlet var greetingsLabel: UILabel!
+    @IBOutlet var nameTextField: UITextField!
+    
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let tabBarVC = segue.destination as? UITabBarController else {return}
+        guard let viewControllers = tabBarVC.viewControllers else { return }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        viewControllers.forEach { ViewController in
+            if let clickerVC = ViewController as? ClickViewController {
+                clickerVC.delegate = self
+            } else if let navigationVC = ViewController as? UINavigationController {
+                let navigationViewControllers = navigationVC.viewControllers
+                navigationViewControllers.forEach { NavigationController in
+                    if let infoVC = NavigationController as? InfoCharacterViewController {
+                        infoVC.delegate = self
+                        print(viewControllers)
+                    } else if let shopListVC = NavigationController as? ShopListViewController {
+                        shopListVC.delegate = self
+                    }
+                }
+            }
+        }
+
+
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func startButton() {
+        
     }
-    */
+    
+}
 
+extension StartViewController: ISendInfoAboutCharacterDelegate {
+   
+    func updateCharacterWallet(with newValue: Int) {
+        
+    }
 }

@@ -19,6 +19,8 @@ final class ShopListViewController: UITableViewController {
         super.viewDidLoad()
     }
     
+    var delegate: ISendInfoAboutCharacterDelegate!
+    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -28,6 +30,7 @@ final class ShopListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellMarket", for: indexPath)

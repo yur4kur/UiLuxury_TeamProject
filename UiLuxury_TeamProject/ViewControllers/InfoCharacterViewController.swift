@@ -17,6 +17,7 @@ final class InfoCharacterViewController: UIViewController {
     // MARK: - Bought items property
     let items: [Item] = DataSource.shared.gameItems
     //var delegate = ""
+
     
     // MARK: - Override methods
     override func viewDidLoad() {
@@ -24,8 +25,12 @@ final class InfoCharacterViewController: UIViewController {
         boughtItemsTableView.dataSource = self
         boughtItemsTableView.delegate = self
         userImageView.image = UIImage.init(systemName: "swift")
-        userNameLabel.text = "User"
+        
     }
+    var userWallet: Int!
+    var delegate: ISendInfoAboutCharacterDelegate!
+    
+
 }
 
 // MARK: - TableView Extensions
@@ -72,6 +77,20 @@ extension InfoCharacterViewController: UITableViewDelegate {
         contentView.addSubview(itemNameLabel)
         
         return contentView
+    }
+
+    func tableView(_ tableView: UITableView,
+                            willDisplayHeaderView view: UIView,
+                            forSection section: Int) {
+        view.backgroundColor = .gray
+    }
+    
+}
+    
+extension InfoCharacterViewController: ISendInfoAboutCharacterDelegate {
+    
+    func updateCharacterWallet(with newValue: Int) {
+        userNameLabel.text = newValue.description
     }
     
     func tableView(_ tableView: UITableView,
