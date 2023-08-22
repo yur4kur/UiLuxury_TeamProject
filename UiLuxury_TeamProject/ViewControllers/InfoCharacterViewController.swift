@@ -16,6 +16,7 @@ final class InfoCharacterViewController: UIViewController {
     
     // MARK: - Bought items property
     let items: [Item] = DataSource.shared.gameItems
+    var user = User.shared
     //var delegate = ""
 
     
@@ -25,7 +26,7 @@ final class InfoCharacterViewController: UIViewController {
         boughtItemsTableView.dataSource = self
         boughtItemsTableView.delegate = self
         userImageView.image = UIImage.init(systemName: "swift")
-        
+        userNameLabel.text = user.name
     }
     var userWallet: Int!
     var delegate: ISendInfoAboutCharacterDelegate!
@@ -90,12 +91,6 @@ extension InfoCharacterViewController: UITableViewDelegate {
 extension InfoCharacterViewController: ISendInfoAboutCharacterDelegate {
     
     func updateCharacterWallet(with newValue: Int) {
-        userNameLabel.text = newValue.description
-    }
-    
-    func tableView(_ tableView: UITableView,
-                            willDisplayHeaderView view: UIView,
-                            forSection section: Int) {
-        view.backgroundColor = .gray
+        //userNameLabel.text = newValue.description
     }
 }
