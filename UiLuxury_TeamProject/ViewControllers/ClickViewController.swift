@@ -21,7 +21,13 @@ class ClickViewController: UIViewController {
     let items: [Item] = DataSource.shared.gameItems
     let itemsSegueTest: [Item] = []
     
-    var userWallet = 0
+//    var userWallet = 0
+    private var user = User.shared
+    private var score = 0 {
+        didSet {
+            user.wallet += score
+        }
+    }
     private var clickModify = 1
     var delegate: ISendInfoAboutCharacterDelegate?
     
@@ -39,13 +45,13 @@ class ClickViewController: UIViewController {
                 return
             }
         }
-        print(userWallet)
+        //print(userWallet)
     }
     
     @IBAction func tapOnFarmButton() {
-        userWallet += clickModify
-        updateCharacterWallet(with: userWallet)
-        delegate?.updateCharacterWallet(with: userWallet)
+        score += clickModify
+        updateCharacterWallet(with: score)
+//        delegate?.updateCharacterWallet(with: userWallet)
     }
  
     
@@ -54,8 +60,8 @@ class ClickViewController: UIViewController {
 extension ClickViewController: ISendInfoAboutCharacterDelegate {
     
     func updateCharacterWallet(with newValue: Int) {
-        userWallet = newValue
-        walletLabel.text = userWallet.description
+        user.wallet += newValue
+        walletLabel.text = score.description
     }
     
     

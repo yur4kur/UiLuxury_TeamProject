@@ -30,6 +30,9 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="Button"/>
+                                        <connections>
+                                            <action selector="tapOnFarmButton" destination="9yJ-Nj-HI8" eventType="touchUpInside" id="JVd-1v-zY9"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -42,6 +45,9 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Click Button" image="cursorarrow.click.2" catalog="system" id="XPD-Ya-wAM"/>
+                    <connections>
+                        <outlet property="walletLabel" destination="HIg-NE-1eI" id="gQd-cm-yzp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G62-wN-QYW" sceneMemberID="firstResponder"/>
             </objects>
@@ -127,7 +133,7 @@
                                 <rect key="frame" x="16" y="310.5" width="343" height="307.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="NWD-Hj-qGP" detailTextLabel="H1A-vx-gSw" style="IBUITableViewCellStyleSubtitle" id="u5q-oG-atc">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="NWD-Hj-qGP" detailTextLabel="H1A-vx-gSw" style="IBUITableViewCellStyleSubtitle" id="u5q-oG-atc">
                                         <rect key="frame" x="0.0" y="50" width="343" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="u5q-oG-atc" id="Zbc-VK-i9J">
@@ -187,6 +193,11 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="boughtItemsTableView" destination="0Dd-wb-X6k" id="gMP-fb-IzG"/>
+                        <outlet property="userImageView" destination="Tf6-Uo-zSu" id="EwK-PU-454"/>
+                        <outlet property="userNameLabel" destination="LTO-Qf-3Wf" id="2ZX-49-1vs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rvi-8L-nce" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -455,6 +466,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Start"/>
                                         <connections>
+                                            <action selector="startButton" destination="POR-UJ-85G" eventType="touchUpInside" id="zAy-Ua-9G7"/>
                                             <segue destination="7rB-ai-QFg" kind="presentation" modalPresentationStyle="fullScreen" id="vYV-wH-Djg"/>
                                         </connections>
                                     </button>
@@ -475,6 +487,10 @@
                             <constraint firstItem="QxY-s4-RdQ" firstAttribute="centerX" secondItem="gYd-DB-W9E" secondAttribute="centerX" id="fbG-J1-V53"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="greetingsLabel" destination="Jzk-3i-7Bg" id="Hvi-Dp-uVE"/>
+                        <outlet property="nameTextField" destination="VCy-fi-CGV" id="SDn-2K-SmL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gUF-Cs-N3O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

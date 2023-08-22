@@ -34,7 +34,8 @@ final class InfoCharacterViewController: UIViewController {
 
 }
 
-// MARK: - TableView Extensions
+// MARK: - Extensions
+// MARK: TableViewDataSource
 extension InfoCharacterViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         items.count
@@ -53,7 +54,7 @@ extension InfoCharacterViewController: UITableViewDataSource {
         
         var content = cell.defaultContentConfiguration()
         content.text = items[indexPath.section].description
-        content.secondaryText = "Price: \(items[indexPath.row].price)"
+        content.secondaryText = "Sell: \(items[indexPath.row].price)"
         
         cell.contentConfiguration = content
         
@@ -61,6 +62,7 @@ extension InfoCharacterViewController: UITableViewDataSource {
     }
 }
 
+// MARK: TableViewDelegate
 extension InfoCharacterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                             viewForHeaderInSection section: Int) -> UIView? {
@@ -86,8 +88,12 @@ extension InfoCharacterViewController: UITableViewDelegate {
         view.backgroundColor = .gray
     }
     
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: false)
+//    }
 }
     
+// MARK: - Protocol
 extension InfoCharacterViewController: ISendInfoAboutCharacterDelegate {
     
     func updateCharacterWallet(with newValue: Int) {
