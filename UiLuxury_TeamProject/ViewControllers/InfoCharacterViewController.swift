@@ -35,8 +35,6 @@ final class InfoCharacterViewController: UIViewController {
         super.viewWillAppear(animated)
         walletLabel.text = "Credits: \(user.wallet)"
     }
-    
-
 }
 
 
@@ -46,16 +44,20 @@ extension InfoCharacterViewController: UITableViewDataSource {
         user.items.count
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView,
+                   titleForHeaderInSection section: Int) -> String? {
         user.items[section].title
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView,
+                   numberOfRowsInSection section: Int) -> Int {
         1
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = boughtItemsTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = boughtItemsTableView.dequeueReusableCell(
+            withIdentifier: "cell", for: indexPath)
         
         var content = cell.defaultContentConfiguration()
         content.text = user.items[indexPath.section].description
@@ -70,7 +72,7 @@ extension InfoCharacterViewController: UITableViewDataSource {
 // MARK: TableViewDelegate
 extension InfoCharacterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
-                            viewForHeaderInSection section: Int) -> UIView? {
+                   viewForHeaderInSection section: Int) -> UIView? {
         let itemNameLabel = UILabel(
         frame: CGRect(
             x: 16,
@@ -95,10 +97,46 @@ extension InfoCharacterViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
+        showAlert(withTitle: "Sell this item",
+                  andMessage: "Do you really want to sell it?") { [weak self] action in
+            switch action {
+            case .confirm:
+                self?.user.items.remove(at: indexPath.section)
+                DispatchQueue.main.async {
+                    self?.boughtItemsTableView.reloadData()
+                }
+            case .refuse:
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
+        }
     }
 }
+   
+// MARK: - Alert
+extension InfoCharacterViewController {
+    enum AlertAction {
+        case confirm
+        case refuse
+    }
     
+    func showAlert(withTitle title: String,
+                   andMessage message: String,
+                   _ handler: @escaping (AlertAction) -> Void) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { _ in
+            handler(.confirm)
+        }
+        
+        let refuseAction = UIAlertAction(title: "Refuse", style: .destructive) { _ in
+            handler(.refuse)
+        }
+        alert.addAction(confirmAction)
+        alert.addAction(refuseAction)
+        present(alert, animated: true)
+    }
+}
 // MARK: - Protocol
 extension InfoCharacterViewController: ISendInfoAboutCharacterDelegate {
     
