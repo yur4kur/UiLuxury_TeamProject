@@ -33,7 +33,15 @@ final class InfoCharacterViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        walletLabel.text = "Credits: \(user.wallet)"
+        updateInfoChararcter()
+    }
+    
+    // MARK: - Private properties
+    private func updateInfoChararcter() {
+        DispatchQueue.main.async {
+            self.boughtItemsTableView.reloadData()
+            self.walletLabel.text = "Credits: \(self.user.wallet)"
+        }
     }
 }
 
@@ -101,10 +109,10 @@ extension InfoCharacterViewController: UITableViewDelegate {
                   andMessage: "Do you really want to sell it?") { [weak self] action in
             switch action {
             case .confirm:
+                guard let itemPrice = self?.user.items[indexPath.section].price else { return }
+                self?.user.wallet += itemPrice
                 self?.user.items.remove(at: indexPath.section)
-                DispatchQueue.main.async {
-                    self?.boughtItemsTableView.reloadData()
-                }
+                self?.updateInfoChararcter()
             case .refuse:
                 tableView.deselectRow(at: indexPath, animated: true)
             }
@@ -112,7 +120,7 @@ extension InfoCharacterViewController: UITableViewDelegate {
     }
 }
    
-// MARK: - Alert
+// MARK: - Alert extension
 extension InfoCharacterViewController {
     enum AlertAction {
         case confirm
@@ -128,7 +136,6 @@ extension InfoCharacterViewController {
         let confirmAction = UIAlertAction(title: "Confirm", style: .default) { _ in
             handler(.confirm)
         }
-        
         let refuseAction = UIAlertAction(title: "Refuse", style: .destructive) { _ in
             handler(.refuse)
         }

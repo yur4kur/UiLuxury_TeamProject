@@ -351,20 +351,8 @@
                         <viewLayoutGuide key="safeArea" id="okN-re-cFG"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="ixd-9B-Jga" secondAttribute="bottom" constant="30" id="3d5-Yy-P2E"/>
-                            <constraint firstItem="ixd-9B-Jga" firstAttribute="height" secondItem="VPM-VM-08m" secondAttribute="height" multiplier="0.694903" id="6cu-IB-hFY"/>
-                            <constraint firstItem="CUq-E5-71r" firstAttribute="height" secondItem="VPM-VM-08m" secondAttribute="height" multiplier="0.694903" id="EJK-cZ-c7p"/>
-                            <constraint firstAttribute="bottom" secondItem="2iN-pt-R1m" secondAttribute="bottom" constant="30" id="Mdg-pT-0ga"/>
-                            <constraint firstItem="Dl8-qE-BgX" firstAttribute="centerX" secondItem="VPM-VM-08m" secondAttribute="centerX" id="S3j-LX-TGQ"/>
-                            <constraint firstItem="2iN-pt-R1m" firstAttribute="centerX" secondItem="VPM-VM-08m" secondAttribute="centerX" id="cRP-Eh-Ym2"/>
                             <constraint firstItem="pkQ-iv-w0U" firstAttribute="top" secondItem="okN-re-cFG" secondAttribute="top" constant="12" id="gTv-Kc-Pz9"/>
                             <constraint firstItem="pkQ-iv-w0U" firstAttribute="centerX" secondItem="VPM-VM-08m" secondAttribute="centerX" id="jIG-Dz-zag"/>
-                            <constraint firstItem="Dl8-qE-BgX" firstAttribute="height" secondItem="VPM-VM-08m" secondAttribute="height" multiplier="0.694903" id="mMR-lF-QbF"/>
-                            <constraint firstItem="2iN-pt-R1m" firstAttribute="height" secondItem="VPM-VM-08m" secondAttribute="height" multiplier="0.694903" id="mfK-8O-RK0"/>
-                            <constraint firstAttribute="bottom" secondItem="Dl8-qE-BgX" secondAttribute="bottom" constant="30" id="o1a-Zj-lhK"/>
-                            <constraint firstItem="CUq-E5-71r" firstAttribute="centerX" secondItem="VPM-VM-08m" secondAttribute="centerX" id="qGm-bq-ZKf"/>
-                            <constraint firstAttribute="bottom" secondItem="CUq-E5-71r" secondAttribute="bottom" constant="30" id="qhB-NU-x2t"/>
-                            <constraint firstItem="ixd-9B-Jga" firstAttribute="centerX" secondItem="VPM-VM-08m" secondAttribute="centerX" id="z0h-pp-OLz"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
