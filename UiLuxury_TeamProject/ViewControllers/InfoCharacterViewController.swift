@@ -11,38 +11,43 @@ final class InfoCharacterViewController: UIViewController {
     
     // MARK: - IBOutlets
     @IBOutlet var userImageView: UIImageView!
-    @IBOutlet var userNameLabel: UILabel!
+    @IBOutlet var walletLabel: UILabel!
     @IBOutlet var boughtItemsTableView: UITableView!
     
-    // MARK: - Bought items property
-    let items: [Item] = DataSource.shared.gameItems
-    var user = User.shared
-    //var delegate = ""
-
+    // MARK: - Public properties
+    //var items: [Item] = DataSource.shared.gameItems
+    var userWallet: Int!
+    var delegate: ISendInfoAboutCharacterDelegate!
     
+    // MARK: - Private properties
+    private var user = User.shared
+
     // MARK: - Override methods
     override func viewDidLoad() {
         super.viewDidLoad()
         boughtItemsTableView.dataSource = self
         boughtItemsTableView.delegate = self
         userImageView.image = UIImage.init(systemName: "swift")
-        userNameLabel.text = user.name
+        navigationItem.title = user.name
     }
-    var userWallet: Int!
-    var delegate: ISendInfoAboutCharacterDelegate!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        walletLabel.text = "Credits: \(user.wallet)"
+    }
     
 
 }
 
-// MARK: - Extensions
+
 // MARK: TableViewDataSource
 extension InfoCharacterViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        items.count
+        user.items.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        items[section].title
+        user.items[section].title
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,8 +58,8 @@ extension InfoCharacterViewController: UITableViewDataSource {
         let cell = boughtItemsTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         var content = cell.defaultContentConfiguration()
-        content.text = items[indexPath.section].description
-        content.secondaryText = "Sell: \(items[indexPath.row].price)"
+        content.text = user.items[indexPath.section].description
+        content.secondaryText = "Sell: \(user.items[indexPath.row].price)"
         
         cell.contentConfiguration = content
         
@@ -72,7 +77,7 @@ extension InfoCharacterViewController: UITableViewDelegate {
             y: 3,
             width: tableView.frame.width,
             height: 20))
-        itemNameLabel.text = "\(items[section].title)"
+        itemNameLabel.text = "\(user.items[section].title)"
         itemNameLabel.font = UIFont.boldSystemFont(ofSize: 16)
         itemNameLabel.textColor = .white
         
@@ -88,9 +93,10 @@ extension InfoCharacterViewController: UITableViewDelegate {
         view.backgroundColor = .gray
     }
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: false)
-//    }
+    func tableView(_ tableView: UITableView,
+                   didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+    }
 }
     
 // MARK: - Protocol

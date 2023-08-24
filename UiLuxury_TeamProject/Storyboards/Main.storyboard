@@ -196,7 +196,7 @@
                     <connections>
                         <outlet property="boughtItemsTableView" destination="0Dd-wb-X6k" id="gMP-fb-IzG"/>
                         <outlet property="userImageView" destination="Tf6-Uo-zSu" id="EwK-PU-454"/>
-                        <outlet property="userNameLabel" destination="LTO-Qf-3Wf" id="2ZX-49-1vs"/>
+                        <outlet property="walletLabel" destination="LTO-Qf-3Wf" id="2ZX-49-1vs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rvi-8L-nce" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

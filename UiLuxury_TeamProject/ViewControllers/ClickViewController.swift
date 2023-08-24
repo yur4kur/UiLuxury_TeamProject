@@ -9,6 +9,7 @@ import UIKit
 
 class ClickViewController: UIViewController {
     
+    // MARK: - IBOutlets
     @IBOutlet var walletLabel: UILabel!
     
     // MARK: - Override methods
@@ -17,11 +18,13 @@ class ClickViewController: UIViewController {
 //        modifySetup()
     }
     
-    
+    // MARK: - Public properties
     let items: [Item] = DataSource.shared.gameItems
     let itemsSegueTest: [Item] = []
-    
 //    var userWallet = 0
+    var delegate: ISendInfoAboutCharacterDelegate?
+    
+    // MARK: - Private properties
     private var user = User.shared
     private var score = 0 {
         didSet {
@@ -29,7 +32,7 @@ class ClickViewController: UIViewController {
         }
     }
     private var clickModify = 1
-    var delegate: ISendInfoAboutCharacterDelegate?
+    
     
     
     // MARK: - Navigation
@@ -61,7 +64,7 @@ extension ClickViewController: ISendInfoAboutCharacterDelegate {
     
     func updateCharacterWallet(with newValue: Int) {
         user.wallet += newValue
-        walletLabel.text = score.description
+        walletLabel.text = user.wallet.description
     }
     
     
