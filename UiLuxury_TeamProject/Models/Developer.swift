@@ -5,7 +5,7 @@
 //  Created by Юрий Куринной on 27.07.2023.
 //
 
-struct Developers {
+struct Developer {
     
     let name: String
     let clan: String

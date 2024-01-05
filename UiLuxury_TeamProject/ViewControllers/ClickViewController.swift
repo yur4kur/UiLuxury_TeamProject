@@ -9,27 +9,39 @@ import UIKit
 
 class ClickViewController: UIViewController {
     
+    // MARK: - IBOutlets
     @IBOutlet var walletLabel: UILabel!
+    
+    // MARK: - Public properties
+    //let items: [Item] = DataSource.shared.gameItems
+    let itemsSegueTest: [Item] = []
+//    var userWallet = 0
+    var delegate: ISendInfoAboutCharacterDelegate?
+    
+    // MARK: - Private properties
+    private var user = User.shared
+    private var score = 0
+    private var clickModify = 1
     
     // MARK: - Override methods
     override func viewDidLoad() {
         super.viewDidLoad()
-//        modifySetup()
+        walletLabel.text = String(user.wallet)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        modifySetup()
+    }
     
-    let items: [Item] = DataSource.shared.gameItems
-    let itemsSegueTest: [Item] = []
+    @IBAction func tapOnFarmButton() {
+        score += clickModify
+        updateCharacterWallet(with: score)
+    }
     
-    var userWallet = 0
-    private var clickModify = 1
-    var delegate: ISendInfoAboutCharacterDelegate?
-    
-    
-    // MARK: - Navigation
-    
-    func modifySetup() {
-        items.forEach { item in
+    // MARK: - Private methods
+    private func modifySetup() {
+        user.items.forEach { item in
             switch item.actionOperator{
             case .add:
                 clickModify += item.modifier
@@ -39,26 +51,18 @@ class ClickViewController: UIViewController {
                 return
             }
         }
-        print(userWallet)
     }
     
-    @IBAction func tapOnFarmButton() {
-        userWallet += clickModify
-        updateCharacterWallet(with: userWallet)
-        delegate?.updateCharacterWallet(with: userWallet)
+    private func updateCharacterWallet(with newValue: Int) {
+        user.wallet += newValue
+        walletLabel.text = user.wallet.description
     }
- 
-    
 }
 
-extension ClickViewController: ISendInfoAboutCharacterDelegate {
-    
-    func updateCharacterWallet(with newValue: Int) {
-        userWallet = newValue
-        walletLabel.text = userWallet.description
-    }
-    
-    
-    
-}
+//extension ClickViewController: ISendInfoAboutCharacterDelegate {
+//    func updateCharacterWallet(with newValue: Int) {
+//        user.wallet += newValue
+//        walletLabel.text = user.wallet.description
+//    }
+//}
 

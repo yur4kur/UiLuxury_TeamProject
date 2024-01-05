@@ -12,6 +12,8 @@ class StartViewController: UIViewController{
     @IBOutlet var greetingsLabel: UILabel!
     @IBOutlet var nameTextField: UITextField!
     
+    var user = User.shared
+    
     
     // MARK: - Navigation
     
@@ -28,7 +30,6 @@ class StartViewController: UIViewController{
                 navigationViewControllers.forEach { NavigationController in
                     if let infoVC = NavigationController as? InfoCharacterViewController {
                         infoVC.delegate = self
-                        print(viewControllers)
                     } else if let shopListVC = NavigationController as? ShopListViewController {
                         shopListVC.delegate = self
                     }
@@ -40,7 +41,7 @@ class StartViewController: UIViewController{
     }
     
     @IBAction func startButton() {
-        
+        user.name = nameTextField.text ?? "NewUser"
     }
     
 }
