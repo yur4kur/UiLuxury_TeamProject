@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="POR-UJ-85G">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="POR-UJ-85G">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,39 +16,10 @@
                     <view key="view" contentMode="scaleToFill" id="lda-jo-0F8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="224" translatesAutoresizingMaskIntoConstraints="NO" id="RZs-C9-wsb">
-                                <rect key="frame" x="137.5" y="179.5" width="100" height="308"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HIg-NE-1eI">
-                                        <rect key="frame" x="20.5" y="0.0" width="59" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nMJ-lB-IJM">
-                                        <rect key="frame" x="0.0" y="254" width="100" height="54"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="tapOnFarmButton" destination="9yJ-Nj-HI8" eventType="touchUpInside" id="JVd-1v-zY9"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="Nj0-kc-RgR"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="RZs-C9-wsb" firstAttribute="centerY" secondItem="lda-jo-0F8" secondAttribute="centerY" id="3Cf-IK-I3e"/>
-                            <constraint firstItem="RZs-C9-wsb" firstAttribute="centerX" secondItem="lda-jo-0F8" secondAttribute="centerX" id="ulp-rl-4uB"/>
-                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Click Button" image="cursorarrow.click.2" catalog="system" id="XPD-Ya-wAM"/>
-                    <connections>
-                        <outlet property="walletLabel" destination="HIg-NE-1eI" id="gQd-cm-yzp"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G62-wN-QYW" sceneMemberID="firstResponder"/>
             </objects>
@@ -130,7 +102,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0Dd-wb-X6k">
-                                <rect key="frame" x="16" y="310.5" width="343" height="307.5"/>
+                                <rect key="frame" x="16" y="340" width="343" height="278"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="NWD-Hj-qGP" detailTextLabel="H1A-vx-gSw" style="IBUITableViewCellStyleSubtitle" id="u5q-oG-atc">
@@ -159,29 +131,12 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="62" translatesAutoresizingMaskIntoConstraints="NO" id="zzB-xY-HqL">
-                                <rect key="frame" x="16" y="60" width="343" height="210.5"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Tf6-Uo-zSu">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="128"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LTO-Qf-3Wf">
-                                        <rect key="frame" x="0.0" y="190" width="343" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="5Xi-23-Oay"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="zzB-xY-HqL" firstAttribute="top" secondItem="5Xi-23-Oay" secondAttribute="top" constant="16" id="2bL-F4-R00"/>
                             <constraint firstItem="5Xi-23-Oay" firstAttribute="trailing" secondItem="0Dd-wb-X6k" secondAttribute="trailing" constant="16" id="APq-KL-uzF"/>
-                            <constraint firstItem="5Xi-23-Oay" firstAttribute="trailing" secondItem="zzB-xY-HqL" secondAttribute="trailing" constant="16" id="M8a-zn-WUO"/>
-                            <constraint firstItem="zzB-xY-HqL" firstAttribute="leading" secondItem="5Xi-23-Oay" secondAttribute="leading" constant="16" id="QGG-ce-6Nd"/>
-                            <constraint firstItem="0Dd-wb-X6k" firstAttribute="top" secondItem="zzB-xY-HqL" secondAttribute="bottom" constant="40" id="alW-eG-lsA"/>
+                            <constraint firstItem="0Dd-wb-X6k" firstAttribute="top" secondItem="5Xi-23-Oay" secondAttribute="top" constant="296" id="Bgo-BF-zOn"/>
                             <constraint firstItem="0Dd-wb-X6k" firstAttribute="bottom" secondItem="5Xi-23-Oay" secondAttribute="bottom" id="nsK-tF-ifj"/>
                             <constraint firstItem="0Dd-wb-X6k" firstAttribute="leading" secondItem="5Xi-23-Oay" secondAttribute="leading" constant="16" id="xPQ-Bv-vdt"/>
                         </constraints>
@@ -195,8 +150,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="boughtItemsTableView" destination="0Dd-wb-X6k" id="gMP-fb-IzG"/>
-                        <outlet property="userImageView" destination="Tf6-Uo-zSu" id="EwK-PU-454"/>
-                        <outlet property="walletLabel" destination="LTO-Qf-3Wf" id="2ZX-49-1vs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rvi-8L-nce" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -527,11 +480,11 @@
     </scenes>
     <resources>
         <image name="basket.fill" catalog="system" width="128" height="108"/>
-        <image name="clipboard.fill" catalog="system" width="103" height="128"/>
+        <image name="clipboard.fill" catalog="system" width="98" height="128"/>
         <image name="cursorarrow.click.2" catalog="system" width="128" height="125"/>
         <image name="info.bubble.fill" catalog="system" width="128" height="110"/>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

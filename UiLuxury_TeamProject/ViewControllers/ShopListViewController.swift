@@ -7,49 +7,83 @@
 
 import UIKit
 
+// MARK: - ShopListViewController
+
 final class ShopListViewController: UITableViewController {
     
-    //MARK: - Private propertys
+    //MARK: - Private properties
     
     private let shoppings = Item.getItem()
     private var selectCells: [Item] = []
     private var selectIndexCells: [IndexPath] = []
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+    // MARK: - Public properties
     
     var delegate: ISendInfoAboutCharacterDelegate!
     
-    // MARK: - Table view data source
+    // MARK: - Override methods
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let basketListVS = segue.destination as? BasketListViewController else { return }
+        basketListVS.selectCells = selectCells
+        basketListVS.delegate = self
+        
+    }
+}
+
+// MARK: - TableView DataSource
+
+extension ShopListViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         shoppings.count
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, 
+                            numberOfRowsInSection section: Int) -> Int {
         1
     }
     
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellMarket", for: indexPath)
+    override func tableView(_ tableView: UITableView, 
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: Constants.cellID,
+            for: indexPath
+        )
         let content = shoppings[indexPath.section]
         cell.textLabel?.text = content.description
         cell.detailTextLabel?.text = "$\(content.price.formatted())"
         
         return cell
     }
+}
+
+// MARK: - TableView Delegate
+
+extension ShopListViewController {
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, 
+                            titleForHeaderInSection section: Int) -> String? {
         shoppings[section].title
     }
     
-    override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    override func tableView(_ tableView: UITableView, 
+                            willDisplayHeaderView view: UIView,
+                            forSection section: Int) {
         view.tintColor = .systemGray6
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, 
+                            didSelectRowAt indexPath: IndexPath) {
         
         let selectIndexCell = tableView.cellForRow(at: indexPath)
         let selectCell = shoppings[indexPath.section]
@@ -71,14 +105,27 @@ final class ShopListViewController: UITableViewController {
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
+}
+
+// MARK: - Setting View
+
+private extension ShopListViewController {
     
-    // MARK: - Navigation
+    func setupUI() {
+        setupTableView()
+    }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let basketListVS = segue.destination as? BasketListViewController else { return }
-        basketListVS.selectCells = selectCells
-        basketListVS.delegate = self
-        
+}
+
+// MARK: - Setting Elements
+
+private extension ShopListViewController {
+    
+    // MARK: Configure TableView
+    
+    func setupTableView() {
+        tableView.register(UITableViewCell.self,
+                           forCellReuseIdentifier: Constants.cellID)
     }
 }
 
@@ -90,6 +137,8 @@ extension ShopListViewController: IUpdateDataDelegate {
     }
 }
 
+// MARK: - Alert
+
 private extension ShopListViewController {
     func showAlerAction() {
         let alert = UIAlertController(
@@ -99,5 +148,13 @@ private extension ShopListViewController {
         let okAktion = UIAlertAction(title: "Ок", style: .default)
         alert.addAction(okAktion)
         present(alert, animated: true)
+    }
+}
+
+// MARK: - Constants
+
+private extension ShopListViewController {
+    enum Constants {
+        static let cellID = "cellMarket"
     }
 }

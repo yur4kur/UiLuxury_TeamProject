@@ -11,8 +11,9 @@ final class InfoCharacterViewController: UIViewController {
     
     // MARK: - IBOutlets
     
-    @IBOutlet var userImageView: UIImageView!
-    @IBOutlet var walletLabel: UILabel!
+    private var userInfoStackView = UIStackView()
+    private var userImageView = UIImageView()
+    private var walletLabel = UILabel()
     @IBOutlet var boughtItemsTableView: UITableView!
     
     // MARK: - Public properties
@@ -29,10 +30,10 @@ final class InfoCharacterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = user.name
+        setupUI()
         boughtItemsTableView.dataSource = self
         boughtItemsTableView.delegate = self
-        userImageView.image = UIImage.init(systemName: "swift")
-        navigationItem.title = user.name
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -127,7 +128,86 @@ extension InfoCharacterViewController: UITableViewDelegate {
     }
 }
    
+// MARK: - Setting View
+
+private extension InfoCharacterViewController {
+    func setupUI() {
+        
+        addSuviews()
+        
+        setupViews()
+        
+        setConstraints()
+        
+    }
+}
+
+// MARK: - Setting elements
+
+private extension InfoCharacterViewController {
+    
+    func addSuviews() {
+        view.addSubview(userInfoStackView)
+        view.addSubview(userImageView)
+        
+        userInfoStackView.addArrangedSubview(userImageView)
+        userInfoStackView.addArrangedSubview(walletLabel)
+    }
+    
+    func setupViews() {
+        
+        // MARK: UserInfoStackView
+        userInfoStackView.contentMode = .scaleToFill
+        userInfoStackView.axis = .vertical
+        userInfoStackView.distribution = .equalSpacing
+        userInfoStackView.spacing = 62
+        userInfoStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // MARK: UserImageView
+        userImageView.contentMode = .scaleAspectFit
+        userImageView.translatesAutoresizingMaskIntoConstraints = false
+        userImageView.image = UIImage.init(systemName: "swift")
+        
+        // MARK: WalletLabel
+        walletLabel.contentMode = .left
+        //walletLabel.text = "Label"
+        walletLabel.textAlignment = .center
+        walletLabel.lineBreakMode = .byTruncatingTail
+        walletLabel.baselineAdjustment = .alignBaselines
+        walletLabel.adjustsFontSizeToFitWidth = false
+        walletLabel.translatesAutoresizingMaskIntoConstraints = false
+        walletLabel.font = .systemFont(ofSize: 17)
+    }
+    
+}
+
+// MARK: - Set Constraints
+
+private extension InfoCharacterViewController {
+    
+    func setConstraints() {
+        
+        NSLayoutConstraint.activate([
+           
+        userInfoStackView.topAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.topAnchor,
+            constant: 16
+        ),
+        userInfoStackView.leadingAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+            constant: 16
+        ),
+        userInfoStackView.trailingAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+            constant: -16
+        ),
+        
+        ])
+    }
+}
+
 // MARK: - Alert extension
+
 extension InfoCharacterViewController {
     enum AlertAction {
         case confirm

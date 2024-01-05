@@ -10,7 +10,9 @@ import UIKit
 class ClickViewController: UIViewController {
     
     // MARK: - IBOutlets
-    @IBOutlet var walletLabel: UILabel!
+    private let walletLabel = UILabel()
+    private let clickStackView = UIStackView()
+    private let clickButton = UIButton()
     
     // MARK: - Public properties
     //let items: [Item] = DataSource.shared.gameItems
@@ -24,22 +26,30 @@ class ClickViewController: UIViewController {
     private var clickModify = 1
     
     // MARK: - Override methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        walletLabel.text = String(user.wallet)
+        
+        setupUI()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         modifySetup()
+        
     }
     
-    @IBAction func tapOnFarmButton() {
+    
+    
+    // MARK: - Private methods
+    
+    @objc private func tapOnFarmButton() {
         score += clickModify
         updateCharacterWallet(with: score)
     }
     
-    // MARK: - Private methods
     private func modifySetup() {
         user.items.forEach { item in
             switch item.actionOperator{
@@ -59,6 +69,83 @@ class ClickViewController: UIViewController {
     }
 }
 
+// MARK: - Setting UI
+
+private extension ClickViewController {
+    
+    func setupUI() {
+        
+        addSubviews()
+        
+        setupViews()
+        
+        setConstraints()
+    }
+}
+
+// MARK: - Setting Elements
+
+private extension ClickViewController {
+    
+    func addSubviews() {
+        
+        view.addSubview(clickStackView)
+        
+        clickStackView.addArrangedSubview(walletLabel)
+        clickStackView.addArrangedSubview(clickButton)
+    }
+    
+    func setupViews() {
+        
+        view.backgroundColor = .cyan
+        
+        // MARK: ClickStackView
+        clickStackView.contentMode = .scaleToFill
+        clickStackView.axis = .vertical
+        clickStackView.alignment = .center
+        clickStackView.spacing = 224
+        clickStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        // MARK: WalletLabel
+        walletLabel.contentMode = .left
+        walletLabel.text = String(user.wallet)
+        walletLabel.textAlignment = .natural
+        walletLabel.lineBreakMode = .byTruncatingTail
+        walletLabel.baselineAdjustment = .alignBaselines
+        walletLabel.adjustsFontSizeToFitWidth = false
+        walletLabel.translatesAutoresizingMaskIntoConstraints = false
+        walletLabel.font = .systemFont(ofSize: 25)
+        
+        // MARK: ClickButton
+        clickButton.contentMode = .scaleToFill
+        clickButton.contentHorizontalAlignment = .center
+        clickButton.contentVerticalAlignment = .center
+        clickButton.translatesAutoresizingMaskIntoConstraints = false
+        clickButton.titleLabel?.font = .systemFont(ofSize: 35)
+        clickButton.setTitle("ClickButton", for: .normal)
+        clickButton.addTarget(
+            self,
+            action: #selector(tapOnFarmButton),
+            for: .touchUpInside
+        )
+    }
+}
+
+// MARK: - Constraints
+
+private extension ClickViewController {
+    
+    func setConstraints() {
+        NSLayoutConstraint.activate([
+            clickStackView.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor
+            ),
+            clickStackView.centerYAnchor.constraint(
+                equalTo: view.centerYAnchor
+            )
+        ])
+    }
+}
 //extension ClickViewController: ISendInfoAboutCharacterDelegate {
 //    func updateCharacterWallet(with newValue: Int) {
 //        user.wallet += newValue
