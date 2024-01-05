@@ -79,11 +79,11 @@
 			isa = PBXGroup;
 			children = (
 				6AB7F8842A7302A20026E5DC /* Config */,
-				6AB7F8882A73031E0026E5DC /* Resources */,
 				6AB7F8872A7303020026E5DC /* Storyboards */,
 				6AB7F8892A7303310026E5DC /* Services */,
 				6AB7F8852A7302E00026E5DC /* Models */,
 				6AB7F8862A7302F10026E5DC /* ViewControllers */,
+				6AB7F8882A73031E0026E5DC /* Resources */,
 			);
 			path = UiLuxury_TeamProject;
 			sourceTree = "<group>";

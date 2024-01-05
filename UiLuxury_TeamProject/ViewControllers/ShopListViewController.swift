@@ -99,6 +99,5 @@ private extension ShopListViewController {
         let okAktion = UIAlertAction(title: "Ок", style: .default)
         alert.addAction(okAktion)
         present(alert, animated: true)
-        
     }
 }

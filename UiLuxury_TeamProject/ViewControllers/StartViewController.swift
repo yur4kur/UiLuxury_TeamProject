@@ -30,7 +30,6 @@ class StartViewController: UIViewController{
                 navigationViewControllers.forEach { NavigationController in
                     if let infoVC = NavigationController as? InfoCharacterViewController {
                         infoVC.delegate = self
-                        print(viewControllers)
                     } else if let shopListVC = NavigationController as? ShopListViewController {
                         shopListVC.delegate = self
                     }

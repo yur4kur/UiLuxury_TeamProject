@@ -10,19 +10,23 @@ import UIKit
 final class InfoCharacterViewController: UIViewController {
     
     // MARK: - IBOutlets
+    
     @IBOutlet var userImageView: UIImageView!
     @IBOutlet var walletLabel: UILabel!
     @IBOutlet var boughtItemsTableView: UITableView!
     
     // MARK: - Public properties
+    
     //var items: [Item] = DataSource.shared.gameItems
     var userWallet: Int!
     var delegate: ISendInfoAboutCharacterDelegate!
     
     // MARK: - Private properties
+    
     private var user = User.shared
 
     // MARK: - Override methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         boughtItemsTableView.dataSource = self
@@ -37,6 +41,7 @@ final class InfoCharacterViewController: UIViewController {
     }
     
     // MARK: - Private properties
+    
     private func updateInfoChararcter() {
         DispatchQueue.main.async {
             self.boughtItemsTableView.reloadData()
@@ -46,7 +51,8 @@ final class InfoCharacterViewController: UIViewController {
 }
 
 
-// MARK: TableViewDataSource
+// MARK: - TableViewDataSource
+
 extension InfoCharacterViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         user.items.count
@@ -77,7 +83,8 @@ extension InfoCharacterViewController: UITableViewDataSource {
     }
 }
 
-// MARK: TableViewDelegate
+// MARK: - TableViewDelegate
+
 extension InfoCharacterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView,
                    viewForHeaderInSection section: Int) -> UIView? {
