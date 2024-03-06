@@ -128,7 +128,7 @@ extension InfoCharacterViewController: UITableViewDelegate {
     }
 }
    
-// MARK: - Configure UI
+// MARK: - Configure UI elements
 
 private extension InfoCharacterViewController {
     func setupUI() {
@@ -140,6 +140,8 @@ private extension InfoCharacterViewController {
         setConstraints()
         
     }
+
+    func test() {}
 }
 
 // MARK: - Setup UI
