@@ -25,7 +25,7 @@ class ClickViewController: UIViewController {
     private var score = 0
     private var clickModify = 1
     
-    // MARK: - Override methods
+    // MARK: - Public methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +69,7 @@ class ClickViewController: UIViewController {
     }
 }
 
-// MARK: - Setting UI
+// MARK: - Configure UI
 
 private extension ClickViewController {
     
@@ -83,7 +83,7 @@ private extension ClickViewController {
     }
 }
 
-// MARK: - Setting Elements
+// MARK: - Setup UI
 
 private extension ClickViewController {
     

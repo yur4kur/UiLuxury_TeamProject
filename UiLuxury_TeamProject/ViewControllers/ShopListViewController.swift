@@ -23,7 +23,7 @@ final class ShopListViewController: UITableViewController {
     
     var delegate: ISendInfoAboutCharacterDelegate!
     
-    // MARK: - Override methods
+    // MARK: - Public methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,7 +119,7 @@ extension ShopListViewController {
     }
 }
 
-// MARK: - Setting View
+// MARK: - Configure UI
 
 private extension ShopListViewController {
     
@@ -130,7 +130,7 @@ private extension ShopListViewController {
     
 }
 
-// MARK: - Setting Elements
+// MARK: - Setup UI
 
 private extension ShopListViewController {
     
@@ -138,7 +138,7 @@ private extension ShopListViewController {
         
     }
     
-    // MARK: Configure cell labels
+    // MARK: Setup cell labels
     func setupCellLabels() {
         
         // MARK: Description Label
@@ -165,7 +165,7 @@ private extension ShopListViewController {
         priceLabel.font = .systemFont(ofSize: 20)
     }
     
-    // MARK: Configure TableView
+    // MARK: Setup TableView
     func setupTableView() {
 //        tableView.register(UITableViewCell.self,
 //                           forCellReuseIdentifier: Constants.cellID)

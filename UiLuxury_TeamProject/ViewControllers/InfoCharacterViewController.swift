@@ -26,7 +26,7 @@ final class InfoCharacterViewController: UIViewController {
     
     private var user = User.shared
 
-    // MARK: - Override methods
+    // MARK: - Public methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,7 +128,7 @@ extension InfoCharacterViewController: UITableViewDelegate {
     }
 }
    
-// MARK: - Setting View
+// MARK: - Configure UI
 
 private extension InfoCharacterViewController {
     func setupUI() {
@@ -142,7 +142,7 @@ private extension InfoCharacterViewController {
     }
 }
 
-// MARK: - Setting elements
+// MARK: - Setup UI
 
 private extension InfoCharacterViewController {
     
@@ -181,7 +181,7 @@ private extension InfoCharacterViewController {
     
 }
 
-// MARK: - Set Constraints
+// MARK: - Constraints
 
 private extension InfoCharacterViewController {
     
@@ -206,7 +206,7 @@ private extension InfoCharacterViewController {
     }
 }
 
-// MARK: - Alert extension
+// MARK: - Alert Controller
 
 extension InfoCharacterViewController {
     enum AlertAction {
