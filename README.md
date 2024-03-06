@@ -36,14 +36,17 @@
   func setupUI{} - контейнер, который вызываем во viewDidLoad
   
 // MARK: - Setup UI
+  
   func addSubviews{} - контейнер
   func setupViews{} - настройка вида контроллера
   func setup/название элемента/
   
 // MARK: - Constraints
+  
   func setupConstraints{}
 
 // MARK: - Constants
+  
   enum Constants {
     static let... 
     }
