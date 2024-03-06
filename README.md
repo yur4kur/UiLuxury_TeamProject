@@ -5,7 +5,9 @@
 ## Предварительный стек:
 Верстка: кодом
 
-Контроллеры: TabBarController, ViewController, NavigationController + TableViewController
+Навигация: NavigationController, TabBarController 
+
+Представления: ViewController, TableViewController
 
 Передача данных: (Delegate??)
 
@@ -26,6 +28,8 @@
 
 // MARK: - Initializers
 
+// MARK: - Lifecycle methods
+
 // MARK: - Public methods
 
 // MARK: - Private Methods
@@ -33,17 +37,23 @@
 Далее private extensions:
 
 // MARK: - Configure UI
+  
   func setupUI{} - контейнер, который вызываем во viewDidLoad
+
   
 // MARK: - Setup UI
   
-  func addSubviews{} - контейнер
+  func addSubviews{} - контейнер views контроллера
+  
   func setupViews{} - настройка вида контроллера
+  
   func setup/название элемента/
+
   
 // MARK: - Constraints
   
   func setupConstraints{}
+
 
 // MARK: - Constants
   
