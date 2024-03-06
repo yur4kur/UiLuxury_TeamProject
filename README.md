@@ -3,21 +3,22 @@
 # UiLuxury_TeamProject
 Разрабатываем игру типа "Кликер"
 ## Предварительный стек:
-Верстка: Storyboard
+Верстка: кодом
 
-Вьюхи: TabBarController, ViewController, NavigationController + TableViewController
+Контроллеры: TabBarController, ViewController, NavigationController + TableViewController
 
-Передача данных: Delegate
+Передача данных: (Delegate??)
 
 ### Организация кода
 
-Используйте extensions для организации кода в логические блоки функциональности. Каждый extension следует помечать // MARK: - для придания большей читаемости кода.
+Используйте марки для организации кода в логические блоки функциональности. Каждую марку следует помечать "// MARK: -", 
+а дополнительные внутри большого блока "// MARK:" для придания большей читаемости кода.
 
-Следующая последовательность является рекомендацией для следования:
+Следующая последовательность является обязательной для следования:
 
 // MARK: - Types
 
-// MARK: - IBOutlet
+// MARK: - "Имя класса"
 
 // MARK: - Public Properties
 
@@ -27,6 +28,23 @@
 
 // MARK: - Public methods
 
-// MARK: - IBAction
-
 // MARK: - Private Methods
+
+Далее private extensions:
+
+// MARK: - Configure UI
+  func setupUI{} - контейнер, который вызываем во viewDidLoad
+  
+// MARK: - Setup UI
+  func addSubviews{} - контейнер
+  func setupViews{} - настройка вида контроллера
+  func setup/название элемента/
+  
+// MARK: - Constraints
+  func setupConstraints{}
+
+// MARK: - Constants
+  enum Constants {
+    static let... 
+    }
+  
