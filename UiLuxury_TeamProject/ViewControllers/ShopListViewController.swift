@@ -16,6 +16,8 @@ final class ShopListViewController: UITableViewController {
     private let shoppings = Item.getItem()
     private var selectCells: [Item] = []
     private var selectIndexCells: [IndexPath] = []
+    private let descriptionLabel = UILabel()
+    private let priceLabel = UILabel()
     
     // MARK: - Public properties
     
@@ -42,26 +44,36 @@ final class ShopListViewController: UITableViewController {
 
 extension ShopListViewController {
     
+    // MARK: Section
     override func numberOfSections(in tableView: UITableView) -> Int {
         shoppings.count
     }
     
-    override func tableView(_ tableView: UITableView, 
+    // MARK: Row
+    override func tableView(_ tableView: UITableView,
                             numberOfRowsInSection section: Int) -> Int {
         1
     }
     
-    
-    override func tableView(_ tableView: UITableView, 
+    // MARK: Cell
+    override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
         let cell = tableView.dequeueReusableCell(
             withIdentifier: Constants.cellID,
             for: indexPath
         )
-        let content = shoppings[indexPath.section]
-        cell.textLabel?.text = content.description
-        cell.detailTextLabel?.text = "$\(content.price.formatted())"
+        
+//        let content = cell.contentConfiguration?.makeContentView()
+       
+//        cell.contentView.addSubview(descriptionLabel)
+//        cell.contentView.addSubview(priceLabel)
+        let textContent = shoppings[indexPath.section]
+        cell.textLabel?.text = textContent.description
+        cell.detailTextLabel?.text = "$\(textContent.price.formatted())"
+//        descriptionLabel.text = textContent.description
+//        priceLabel.text = "$\(textContent.price.formatted())"
+//        cell.contentConfiguration = content as! any UIContentConfiguration
         
         return cell
     }
@@ -113,6 +125,7 @@ private extension ShopListViewController {
     
     func setupUI() {
         setupTableView()
+        
     }
     
 }
@@ -121,11 +134,41 @@ private extension ShopListViewController {
 
 private extension ShopListViewController {
     
-    // MARK: Configure TableView
+    func addCellSubviews() {
+        
+    }
     
+    // MARK: Configure cell labels
+    func setupCellLabels() {
+        
+        // MARK: Description Label
+        descriptionLabel.isMultipleTouchEnabled = true
+        descriptionLabel.contentMode = .left
+        descriptionLabel.insetsLayoutMarginsFromSafeArea = false
+//        descriptionLabel.text
+        descriptionLabel.textAlignment = .natural
+        descriptionLabel.lineBreakMode = .byTruncatingTail
+        descriptionLabel.numberOfLines = 3
+        descriptionLabel.baselineAdjustment = .alignBaselines
+        descriptionLabel.adjustsFontSizeToFitWidth = false
+        descriptionLabel.font = .systemFont(ofSize: 13)
+        
+        // MARK: Price label
+        priceLabel.isMultipleTouchEnabled = true
+        priceLabel.contentMode = .left
+        priceLabel.insetsLayoutMarginsFromSafeArea = false
+        //priceLabel.text = "Detail"
+        priceLabel.textAlignment = .right
+        priceLabel.lineBreakMode = .byTruncatingTail
+        priceLabel.baselineAdjustment = .alignBaselines
+        priceLabel.adjustsFontSizeToFitWidth = false
+        priceLabel.font = .systemFont(ofSize: 20)
+    }
+    
+    // MARK: Configure TableView
     func setupTableView() {
-        tableView.register(UITableViewCell.self,
-                           forCellReuseIdentifier: Constants.cellID)
+//        tableView.register(UITableViewCell.self,
+//                           forCellReuseIdentifier: Constants.cellID)
     }
 }
 

@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct DataAboutCharacter {
+struct Character {
     
-    static var shared = DataAboutCharacter()
+    static var shared = Character()
     
     private init() {}
     
