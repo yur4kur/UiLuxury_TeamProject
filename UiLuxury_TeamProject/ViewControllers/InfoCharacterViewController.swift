@@ -138,7 +138,10 @@ private extension InfoCharacterViewController {
         setupViews()
         
         setConstraints()
-        
+
+        print("test")
+
+
     }
 
     func test() {}
