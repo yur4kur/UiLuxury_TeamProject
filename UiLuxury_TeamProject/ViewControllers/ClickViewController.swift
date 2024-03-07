@@ -129,7 +129,6 @@ private extension ClickViewController {
     
     // MARK: ClickButton
     func setupClickButton() {
-        clickButton.contentMode = .center
         clickButton.setTitle(Constants.clickButtonTitle, for: .normal)
         clickButton.setTitleColor(.black, for: .normal)
         clickButton.backgroundColor = .systemYellow
@@ -139,8 +138,8 @@ private extension ClickViewController {
     }
     
     func roundClickButton() {
-        clickButton.layer.frame.size.width = 200
-        clickButton.layer.cornerRadius = clickButton.frame.width / 2
+        clickButton.layer.bounds.size.width = 200
+        clickButton.layer.cornerRadius = clickButton.bounds.size.width / 2
     }
     
     // MARK: Actions
