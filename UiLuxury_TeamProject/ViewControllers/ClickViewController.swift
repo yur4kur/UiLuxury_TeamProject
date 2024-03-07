@@ -1,8 +1,8 @@
 //
-//  ClickViewController.swift
+//  User.swift
 //  UiLuxury_TeamProject
 //
-//  Created by Бийбол Зулпукаров on 28/7/23.
+//  Created by Юрий Куринной on 19.08.2023.
 //
 
 import UIKit
@@ -17,18 +17,15 @@ class ClickViewController: UIViewController {
     private let clickStackView = UIStackView()
     private let clickButton = UIButton()
     
-    // MARK: - Public properties
-    
-    //let items: [Item] = DataSource.shared.gameItems
-    let itemsSegueTest: [Item] = []
-//    var userWallet = 0
-    var delegate: ISendInfoAboutCharacterDelegate?
-    
-    // MARK: - Private properties
-    
+    // TODO: вынести во вьюмодель
     private var user = User.shared
     private var score = 0
     private var clickModify = 1
+    
+    // MARK: - Public properties
+    
+    let itemsSegueTest: [Item] = []
+    var delegate: ISendInfoAboutCharacterDelegate?
     
     // MARK: - Lifecycle methods
     
@@ -38,6 +35,11 @@ class ClickViewController: UIViewController {
         setupUI()
     }
     
+    override func viewWillLayoutSubviews() {
+        roundClickButton()
+    }
+    
+    // TODO: Проверить необходимость в методе после создания вьюмодели
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -46,6 +48,7 @@ class ClickViewController: UIViewController {
     
     // MARK: - Private methods
     
+    // TODO: весь блок по возможности перенести во вьюмодель
     @objc private func buttonDidTap() {
         score += clickModify
         updateCharacterWallet(with: score)
@@ -90,12 +93,10 @@ private extension ClickViewController {
     func addSubviews() {
         view.addSubview(clickStackView)
         
-        clickStackView.addArrangedSubview(walletLabel)
-        clickStackView.addArrangedSubview(clickButton)
     }
     
     func setupViews() {
-        view.backgroundColor = .cyan
+        view.backgroundColor = .purple
         view.disableAutoresizingMask(
             clickStackView,
             walletLabel,
@@ -104,34 +105,42 @@ private extension ClickViewController {
         
         setupStackView()
         setupWalletLabel()
+        setupClickButton()
     }
     
     // MARK: ClickStackView
     func setupStackView() {
-        clickStackView.contentMode = .scaleToFill
         clickStackView.axis = .vertical
         clickStackView.alignment = .center
-        clickStackView.spacing = 224
+        clickStackView.distribution = .fill
+        clickStackView.spacing = 250
+        
+        clickStackView.addArrangedSubview(walletLabel)
+        clickStackView.addArrangedSubview(clickButton)
     }
     
     // MARK: WalletLabel
     func setupWalletLabel() {
-        walletLabel.contentMode = .left
         walletLabel.text = String(user.wallet)
+        walletLabel.textColor = .systemYellow
+        walletLabel.font = .preferredFont(forTextStyle: .largeTitle)
         walletLabel.textAlignment = .natural
-        walletLabel.lineBreakMode = .byTruncatingTail
-        walletLabel.baselineAdjustment = .alignBaselines
-        walletLabel.adjustsFontSizeToFitWidth = false
-        walletLabel.font = .systemFont(ofSize: 25)
     }
     
     // MARK: ClickButton
     func setupClickButton() {
-        clickButton.contentMode = .scaleToFill
-        clickButton.contentHorizontalAlignment = .center
-        clickButton.contentVerticalAlignment = .center
-        clickButton.titleLabel?.font = .systemFont(ofSize: 35)
+        clickButton.contentMode = .center
         clickButton.setTitle(Constants.clickButtonTitle, for: .normal)
+        clickButton.setTitleColor(.black, for: .normal)
+        clickButton.backgroundColor = .systemYellow
+        clickButton.layer.borderColor = UIColor.black.cgColor
+        clickButton.layer.borderWidth = 2
+        
+    }
+    
+    func roundClickButton() {
+        clickButton.layer.frame.size.width = 200
+        clickButton.layer.cornerRadius = clickButton.frame.width / 2
     }
     
     // MARK: Actions
@@ -150,12 +159,8 @@ private extension ClickViewController {
     
     func setConstraints() {
         NSLayoutConstraint.activate([
-            clickStackView.centerXAnchor.constraint(
-                equalTo: view.centerXAnchor
-            ),
-            clickStackView.centerYAnchor.constraint(
-                equalTo: view.centerYAnchor
-            )
+            clickStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            clickStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
 }
@@ -165,14 +170,8 @@ private extension ClickViewController {
 private extension ClickViewController {
     
     enum Constants {
-        static let clickButtonTitle = "ClickButton"
+        static let clickButtonTitle = " X 1 "
     }
-    
 }
-//extension ClickViewController: ISendInfoAboutCharacterDelegate {
-//    func updateCharacterWallet(with newValue: Int) {
-//        user.wallet += newValue
-//        walletLabel.text = user.wallet.description
-//    }
-//}
+
 
