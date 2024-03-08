@@ -1,8 +1,8 @@
 //
-//  UIView+.swift
-//  UIKitProgramming
+//  ClickViewController.swift
+//  UiLuxury_TeamProject
 //
-//  Created by Евгений Сычёв on 21.06.2023.
+//  Created by Юрий Куринной on 06.03.2024.
 //
 
 import UIKit
@@ -18,7 +18,7 @@ extension UIView {
         views.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
     }
-    
+
     /// Метод добавляет вертикальный градиент с неизменяемыми цветами
     func addQuadroGradientLayer() {
         let gradient = CAGradientLayer()
@@ -34,5 +34,6 @@ extension UIView {
         gradient.endPoint = CGPoint(x: 0, y: 1)
         layer.insertSublayer(gradient, at: 0)
     }
+
 }
 
