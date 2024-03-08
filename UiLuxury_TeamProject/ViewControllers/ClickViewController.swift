@@ -1,51 +1,52 @@
 //
-//  ClickViewController.swift
+//  User.swift
 //  UiLuxury_TeamProject
 //
-//  Created by Бийбол Зулпукаров on 28/7/23.
+//  Created by Юрий Куринной on 19.08.2023.
 //
 
 import UIKit
 
+// MARK: - ClickViewController
+
 class ClickViewController: UIViewController {
     
-    // MARK: - IBOutlets
+    // MARK: - Private properties
+    
     private let walletLabel = UILabel()
     private let clickStackView = UIStackView()
     private let clickButton = UIButton()
+    private let coinImage = UIImage(named: Constants.coinImage)
     
-    // MARK: - Public properties
-    //let items: [Item] = DataSource.shared.gameItems
-    let itemsSegueTest: [Item] = []
-//    var userWallet = 0
-    var delegate: ISendInfoAboutCharacterDelegate?
-    
-    // MARK: - Private properties
+    // TODO: вынести во вьюмодель
     private var user = User.shared
     private var score = 0
     private var clickModify = 1
     
-    // MARK: - Public methods
+    // MARK: - Public properties
+    
+    let itemsSegueTest: [Item] = []
+    var delegate: ISendInfoAboutCharacterDelegate?
+    
+    // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupUI()
-        
     }
     
+    // TODO: Проверить необходимость в методе после создания вьюмодели
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         modifySetup()
-        
     }
-    
-    
     
     // MARK: - Private methods
     
-    @objc private func tapOnFarmButton() {
+    // TODO: весь блок по возможности перенести во вьюмодель
+    @objc private func buttonDidTap() {
         score += clickModify
         updateCharacterWallet(with: score)
     }
@@ -74,11 +75,9 @@ class ClickViewController: UIViewController {
 private extension ClickViewController {
     
     func setupUI() {
-        
         addSubviews()
-        
         setupViews()
-        
+        addActions()
         setConstraints()
     }
 }
@@ -87,45 +86,46 @@ private extension ClickViewController {
 
 private extension ClickViewController {
     
+    // MARK: Add & setup views
     func addSubviews() {
+        view.addSubviews(
+            walletLabel,
+            clickButton
+        )
         
-        view.addSubview(clickStackView)
-        
-        clickStackView.addArrangedSubview(walletLabel)
-        clickStackView.addArrangedSubview(clickButton)
     }
     
     func setupViews() {
+        view.addQuadroGradientLayer()
+        view.disableAutoresizingMask(
+            walletLabel,
+            clickButton
+        )
         
-        view.backgroundColor = .cyan
-        
-        // MARK: ClickStackView
-        clickStackView.contentMode = .scaleToFill
-        clickStackView.axis = .vertical
-        clickStackView.alignment = .center
-        clickStackView.spacing = 224
-        clickStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        // MARK: WalletLabel
-        walletLabel.contentMode = .left
+        setupWalletLabel()
+        setupClickButton()
+    }
+    
+    // MARK: WalletLabel
+    func setupWalletLabel() {
         walletLabel.text = String(user.wallet)
+        walletLabel.textColor = .black
+        walletLabel.font = .preferredFont(forTextStyle: .largeTitle)
         walletLabel.textAlignment = .natural
-        walletLabel.lineBreakMode = .byTruncatingTail
-        walletLabel.baselineAdjustment = .alignBaselines
-        walletLabel.adjustsFontSizeToFitWidth = false
-        walletLabel.translatesAutoresizingMaskIntoConstraints = false
-        walletLabel.font = .systemFont(ofSize: 25)
-        
-        // MARK: ClickButton
-        clickButton.contentMode = .scaleToFill
-        clickButton.contentHorizontalAlignment = .center
-        clickButton.contentVerticalAlignment = .center
-        clickButton.translatesAutoresizingMaskIntoConstraints = false
-        clickButton.titleLabel?.font = .systemFont(ofSize: 35)
-        clickButton.setTitle("ClickButton", for: .normal)
+    }
+    
+    // MARK: ClickButton
+    func setupClickButton() {
+        clickButton.setImage(coinImage, for: .normal)
+        clickButton.imageView?.contentMode = .scaleAspectFit
+    }
+
+    
+    // MARK: Actions
+    func addActions() {
         clickButton.addTarget(
             self,
-            action: #selector(tapOnFarmButton),
+            action: #selector(buttonDidTap),
             for: .touchUpInside
         )
     }
@@ -137,19 +137,23 @@ private extension ClickViewController {
     
     func setConstraints() {
         NSLayoutConstraint.activate([
-            clickStackView.centerXAnchor.constraint(
-                equalTo: view.centerXAnchor
-            ),
-            clickStackView.centerYAnchor.constraint(
-                equalTo: view.centerYAnchor
-            )
+            walletLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            walletLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            
+            clickButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            clickButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -200)
         ])
     }
 }
-//extension ClickViewController: ISendInfoAboutCharacterDelegate {
-//    func updateCharacterWallet(with newValue: Int) {
-//        user.wallet += newValue
-//        walletLabel.text = user.wallet.description
-//    }
-//}
+
+// MARK: - Constants
+
+private extension ClickViewController {
+    
+    enum Constants {
+        static let coinImage = "plainCoin"
+//        static let clickButtonTitle = "X1"
+    }
+}
+
 

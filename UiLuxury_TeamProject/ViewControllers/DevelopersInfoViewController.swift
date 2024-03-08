@@ -63,6 +63,7 @@ private extension DevelopersInfoViewController {
         view.backgroundColor = .white
     }
 
+
     func setupMainLabel() {
         mainLabel.text = "Developers"
         mainLabel.font = UIFont.boldSystemFont(ofSize: 17)

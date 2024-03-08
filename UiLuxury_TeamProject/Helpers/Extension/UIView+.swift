@@ -18,5 +18,22 @@ extension UIView {
         views.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         
     }
+
+    /// Метод добавляет вертикальный градиент с неизменяемыми цветами
+    func addQuadroGradientLayer() {
+        let gradient = CAGradientLayer()
+        gradient.frame = bounds
+        gradient.colors = [
+            UIColor.systemCyan.cgColor,
+            UIColor.systemMint.cgColor,
+            UIColor.systemBlue.cgColor,
+            UIColor.systemIndigo.cgColor
+        ]
+        gradient.locations = [0.0, 1.0]
+        gradient.startPoint = CGPoint(x: 0, y: 0)
+        gradient.endPoint = CGPoint(x: 0, y: 1)
+        layer.insertSublayer(gradient, at: 0)
+    }
+
 }
 

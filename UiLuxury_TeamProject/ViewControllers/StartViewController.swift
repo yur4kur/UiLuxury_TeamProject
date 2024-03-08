@@ -19,6 +19,11 @@ class StartViewController: UIViewController{
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let tabBarVC = segue.destination as? UITabBarController else {return}
+        
+        // TODO: Вынести настройку таббара в отдельный класс
+        tabBarVC.tabBar.backgroundColor = UIColor.clear
+        tabBarVC.tabBar.tintColor = .yellow
+        tabBarVC.tabBar.unselectedItemTintColor = .white
         guard let viewControllers = tabBarVC.viewControllers else { return }
 
 
