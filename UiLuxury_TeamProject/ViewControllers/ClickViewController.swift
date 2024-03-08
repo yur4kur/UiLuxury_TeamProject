@@ -36,10 +36,6 @@ class ClickViewController: UIViewController {
         setupUI()
     }
     
-//    override func viewWillLayoutSubviews() {
-//        roundClickButton()
-//    }
-    
     // TODO: Проверить необходимость в методе после создания вьюмодели
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -114,12 +110,7 @@ private extension ClickViewController {
     func setupWalletLabel() {
         walletLabel.text = String(user.wallet)
         walletLabel.textColor = .black
-        if #available(iOS 17.0, *) {
-            walletLabel.font = .preferredFont(forTextStyle: .extraLargeTitle)
-            walletLabel.font = .preferredFont(forTextStyle: .largeTitle)
-        } else {
-            // Fallback on earlier versions
-        }
+        walletLabel.font = .preferredFont(forTextStyle: .largeTitle)
         walletLabel.textAlignment = .natural
     }
     
@@ -161,7 +152,7 @@ private extension ClickViewController {
     
     enum Constants {
         static let coinImage = "plainCoin"
-        static let clickButtonTitle = "X1"
+//        static let clickButtonTitle = "X1"
     }
 }
 
