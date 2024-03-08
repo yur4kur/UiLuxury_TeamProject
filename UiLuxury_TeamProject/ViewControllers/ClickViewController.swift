@@ -16,6 +16,7 @@ class ClickViewController: UIViewController {
     private let walletLabel = UILabel()
     private let clickStackView = UIStackView()
     private let clickButton = UIButton()
+    private let coinImage = UIImage(named: Constants.coinImage)
     
     // TODO: вынести во вьюмодель
     private var user = User.shared
@@ -91,66 +92,43 @@ private extension ClickViewController {
     
     // MARK: Add & setup views
     func addSubviews() {
-        view.addSubview(clickStackView)
+        view.addSubviews(
+            walletLabel,
+            clickButton
+        )
         
     }
     
     func setupViews() {
         view.addQuadroGradientLayer()
         view.disableAutoresizingMask(
-            clickStackView,
             walletLabel,
             clickButton
         )
         
-        setupStackView()
         setupWalletLabel()
         setupClickButton()
-    }
-    
-    // MARK: ClickStackView
-    func setupStackView() {
-        clickStackView.axis = .vertical
-        clickStackView.alignment = .center
-        clickStackView.distribution = .fill
-        clickStackView.spacing = 250
-        
-        clickStackView.addArrangedSubview(walletLabel)
-        clickStackView.addArrangedSubview(clickButton)
     }
     
     // MARK: WalletLabel
     func setupWalletLabel() {
         walletLabel.text = String(user.wallet)
-        walletLabel.textColor = .systemYellow
-        walletLabel.font = .preferredFont(forTextStyle: .largeTitle)
+        walletLabel.textColor = .black
+        if #available(iOS 17.0, *) {
+            walletLabel.font = .preferredFont(forTextStyle: .extraLargeTitle)
+            walletLabel.font = .preferredFont(forTextStyle: .largeTitle)
+        } else {
+            // Fallback on earlier versions
+        }
         walletLabel.textAlignment = .natural
     }
     
     // MARK: ClickButton
     func setupClickButton() {
-        clickButton.configuration = setupButtonConfiguration()
-        clickButton.setTitle(Constants.clickButtonTitle, for: .normal)
-        clickButton.setTitleColor(.black, for: .normal)
-        clickButton.layer.cornerRadius = 25
-        clickButton.layer.borderColor = UIColor.black.cgColor
-        clickButton.layer.borderWidth = 2
-        
+        clickButton.setImage(coinImage, for: .normal)
+        clickButton.imageView?.contentMode = .scaleAspectFit
     }
-    
-    func setupButtonConfiguration() -> UIButton.Configuration {
-        var configuration = UIButton.Configuration.borderedTinted()
-        configuration.baseForegroundColor = .yellow
-        configuration.cornerStyle = .capsule
-        configuration.buttonSize = .large
-        
-        return configuration
-    }
-    
-    func roundClickButton() {
-        clickButton.layer.bounds.size.width = 200
-        clickButton.layer.cornerRadius = clickButton.bounds.size.width / 2
-    }
+
     
     // MARK: Actions
     func addActions() {
@@ -168,8 +146,11 @@ private extension ClickViewController {
     
     func setConstraints() {
         NSLayoutConstraint.activate([
-            clickStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            clickStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            walletLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            walletLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            
+            clickButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            clickButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -200)
         ])
     }
 }
@@ -179,6 +160,7 @@ private extension ClickViewController {
 private extension ClickViewController {
     
     enum Constants {
+        static let coinImage = "plainCoin"
         static let clickButtonTitle = "X1"
     }
 }
