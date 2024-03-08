@@ -35,9 +35,9 @@ class ClickViewController: UIViewController {
         setupUI()
     }
     
-    override func viewWillLayoutSubviews() {
-        roundClickButton()
-    }
+//    override func viewWillLayoutSubviews() {
+//        roundClickButton()
+//    }
     
     // TODO: Проверить необходимость в методе после создания вьюмодели
     override func viewDidAppear(_ animated: Bool) {
@@ -96,7 +96,7 @@ private extension ClickViewController {
     }
     
     func setupViews() {
-        view.backgroundColor = .purple
+        view.addQuadroGradientLayer()
         view.disableAutoresizingMask(
             clickStackView,
             walletLabel,
@@ -129,12 +129,22 @@ private extension ClickViewController {
     
     // MARK: ClickButton
     func setupClickButton() {
+        clickButton.configuration = setupButtonConfiguration()
         clickButton.setTitle(Constants.clickButtonTitle, for: .normal)
         clickButton.setTitleColor(.black, for: .normal)
-        clickButton.backgroundColor = .systemYellow
+        clickButton.layer.cornerRadius = 25
         clickButton.layer.borderColor = UIColor.black.cgColor
         clickButton.layer.borderWidth = 2
         
+    }
+    
+    func setupButtonConfiguration() -> UIButton.Configuration {
+        var configuration = UIButton.Configuration.borderedTinted()
+        configuration.baseForegroundColor = .yellow
+        configuration.cornerStyle = .capsule
+        configuration.buttonSize = .large
+        
+        return configuration
     }
     
     func roundClickButton() {
@@ -169,7 +179,7 @@ private extension ClickViewController {
 private extension ClickViewController {
     
     enum Constants {
-        static let clickButtonTitle = " X 1 "
+        static let clickButtonTitle = "X1"
     }
 }
 

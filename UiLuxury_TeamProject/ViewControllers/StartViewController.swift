@@ -19,6 +19,7 @@ class StartViewController: UIViewController{
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let tabBarVC = segue.destination as? UITabBarController else {return}
+        tabBarVC.tabBar.backgroundColor = UIColor.clear
         guard let viewControllers = tabBarVC.viewControllers else { return }
 
 
