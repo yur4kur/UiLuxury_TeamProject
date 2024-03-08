@@ -119,7 +119,7 @@ private extension InfoCharacterViewController {
             userImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             userImageView.heightAnchor.constraint(equalTo: userImageView.widthAnchor, multiplier: 1, constant: 32),
 
-            walletLabel.topAnchor.constraint(equalTo: userImageView.bottomAnchor, constant: 20),
+            walletLabel.topAnchor.constraint(equalTo: userImageView.bottomAnchor, constant: 32),
             walletLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             walletLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             walletLabel.heightAnchor.constraint(equalToConstant: 22),

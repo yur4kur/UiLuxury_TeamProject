@@ -7,34 +7,57 @@
 
 import UIKit
 
+// MARK: - DevelopersInfo ViewController
 final class DevelopersInfoViewController: UIViewController {
 
+    // MARK: - Private properties
     private let mainLabel = UILabel()
     private var developerSegments = UISegmentedControl()
     private let developerImageView = UIImageView()
     private let developerContactLabel = UILabel()
 
-    private var selectedSegmentIndex = 0
+    private var segmentIndex = 0
 
+    // MARK: - Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupBinding()
+    }
+
+    // MARK: - Private Methods
+    @objc private func showDeveloperInfo() {
+        let selectedSegmentIndex = developerSegments.selectedSegmentIndex
+        guard selectedSegmentIndex < DevelopersInfo.names.count else { return }
+        segmentIndex = selectedSegmentIndex
+
+        guard let developerImage = UIImage(named: String(segmentIndex)) else { return }
+        let developerContact = DevelopersInfo.contacts[segmentIndex]
+
+        developerImageView.image = developerImage
+        developerContactLabel.text = developerContact
     }
 }
 
+// MARK: - Configure UI
 private extension DevelopersInfoViewController {
     func setupUI() {
         setupView()
         setupMainLabel()
-        setupDevelopersSegments()
+        setupDeveloperSegments()
         setupDeveloperImageView()
         setupDeveloperContactLabel()
 
         addSubviews()
         setConstraints()
     }
+
+    func setupBinding() {
+        developerSegments.addTarget(self, action: #selector(showDeveloperInfo), for: .valueChanged)
+    }
 }
 
+// MARK: - Setup UI
 private extension DevelopersInfoViewController {
     func setupView() {
         view.backgroundColor = .white
@@ -42,23 +65,15 @@ private extension DevelopersInfoViewController {
 
     func setupMainLabel() {
         mainLabel.text = "Developers"
-        mainLabel.font = UIFont.systemFont(ofSize: 17)
+        mainLabel.font = UIFont.boldSystemFont(ofSize: 17)
         mainLabel.textColor = .black
         mainLabel.textAlignment = .center
     }
 
-    func setupDevelopersSegments() {
+    func setupDeveloperSegments() {
         developerSegments = UISegmentedControl(items: DevelopersInfo.names)
-        developerSegments.selectedSegmentIndex = selectedSegmentIndex
-//        let selectedSegmentIndex = developerSegments.selectedSegmentIndex
-//        guard selectedSegmentIndex < DevelopersInfo.names.count else { return }
-//        self.selectedSegmentIndex = selectedSegmentIndex
-//
-//        guard let developerImage = UIImage(named: DevelopersInfo.names[selectedSegmentIndex]) else { return }
-//        let developerContact = DevelopersInfo.contacts[selectedSegmentIndex]
-//
-//        developerImageView.image = developerImage
-//        developerContactLabel.text = developerContact
+        developerSegments.selectedSegmentIndex = segmentIndex
+        showDeveloperInfo()
     }
 
     func setupDeveloperImageView() {
@@ -79,6 +94,7 @@ private extension DevelopersInfoViewController {
     }
 }
 
+// MARK: - Constraints
 private extension DevelopersInfoViewController {
     func setConstraints() {
         NSLayoutConstraint.activate([
@@ -90,7 +106,7 @@ private extension DevelopersInfoViewController {
             developerSegments.topAnchor.constraint(equalTo: mainLabel.bottomAnchor, constant: 20),
             developerSegments.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             developerSegments.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            developerSegments.heightAnchor.constraint(equalToConstant: 22),
+            developerSegments.heightAnchor.constraint(equalToConstant: 32),
 
             developerImageView.topAnchor.constraint(equalTo: developerSegments.bottomAnchor, constant: 20),
             developerImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -100,11 +116,12 @@ private extension DevelopersInfoViewController {
             developerContactLabel.topAnchor.constraint(equalTo: developerImageView.bottomAnchor, constant: 20),
             developerContactLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             developerContactLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            developerContactLabel.heightAnchor.constraint(equalToConstant: 22),
+            developerContactLabel.heightAnchor.constraint(equalToConstant: 22)
         ])
     }
 }
 
+// MARK: - Constants
 private extension DevelopersInfoViewController {
     enum DevelopersInfo {
         static let names = [
