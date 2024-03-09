@@ -2,49 +2,33 @@
 //  StartViewController.swift
 //  UiLuxury_TeamProject
 //
-//  Created by Бийбол Зулпукаров on 2/8/23.
+//   Created by Юрий Куринной on 09.03.2024.
 //
 
 import UIKit
 
+// MARK: - StartViewController
+
 class StartViewController: UIViewController{
     
-    @IBOutlet var greetingsLabel: UILabel!
-    @IBOutlet var nameTextField: UITextField!
+    // MARK: - Private properties
     
-    var user = User.shared
+    private let greetingsLabel = UILabel()
+    private let startButton = UIButton()
     
+    // TODO: Удалить, если не потребуются в ВМ
+//    var nameTextField: UITextField!
+//    var user = User.shared
     
-    // MARK: - Navigation
+    // MARK: - Lifecycle methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+    }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        guard let tabBarVC = segue.destination as? UITabBarController else {return}
-//        
-//        // TODO: Вынести настройку таббара в отдельный класс
-//        tabBarVC.tabBar.backgroundColor = UIColor.clear
-//        tabBarVC.tabBar.tintColor = .yellow
-//        tabBarVC.tabBar.unselectedItemTintColor = .white
-//        guard let viewControllers = tabBarVC.viewControllers else { return }
-//
-//
-//        viewControllers.forEach { ViewController in
-//            if let clickerVC = ViewController as? ClickViewController {
-//                clickerVC.delegate = self
-//            } else if let navigationVC = ViewController as? UINavigationController {
-//                let navigationViewControllers = navigationVC.viewControllers
-//                navigationViewControllers.forEach { NavigationController in
-//                    if let infoVC = NavigationController as? InfoCharacterViewController {
-//                        infoVC.delegate = self
-//                    } else if let shopListVC = NavigationController as? ShopListViewController {
-//                        shopListVC.delegate = self
-//                    }
-//                }
-//            }
-//        }
-//    }
+    // MARK: - Private methods
     
-    @IBAction func startButton() {
-//        user.name = nameTextField.text ?? "NewUser"
+    @objc private func startGame() {
         let vc = GameTabBarController()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
@@ -52,9 +36,45 @@ class StartViewController: UIViewController{
     
 }
 
-extension StartViewController: ISendInfoAboutCharacterDelegate {
-   
-    func updateCharacterWallet(with newValue: Int) {
+// MARK: -  Configure UI
+
+private extension StartViewController {
+    func setupUI() {
+        setupViews()
+        addActions()
+        addSubviews()
+        setConstraints()
+    }
+}
+
+// MARK: - Setup UI
+
+private extension StartViewController {
+    
+    func addSubviews() {
+        view.addSubviews(
+        
+        )
+    }
+    
+    func setupViews() {
+        view.addQuadroGradientLayer()
+        
+        view.disableAutoresizingMask(
+        
+        )
+    }
+    
+    func addActions() {
+        
+    }
+}
+
+// MARK: - Constraints
+
+private extension StartViewController {
+    
+    func setConstraints() {
         
     }
 }

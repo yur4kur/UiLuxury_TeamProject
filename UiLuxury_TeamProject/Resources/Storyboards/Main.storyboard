@@ -401,7 +401,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Start"/>
                                         <connections>
-                                            <action selector="startButton" destination="POR-UJ-85G" eventType="touchUpInside" id="zAy-Ua-9G7"/>
+                                            <action selector="startGame" destination="POR-UJ-85G" eventType="touchUpInside" id="zAy-Ua-9G7"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -421,10 +421,6 @@
                             <constraint firstItem="QxY-s4-RdQ" firstAttribute="centerX" secondItem="gYd-DB-W9E" secondAttribute="centerX" id="fbG-J1-V53"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="greetingsLabel" destination="Jzk-3i-7Bg" id="Hvi-Dp-uVE"/>
-                        <outlet property="nameTextField" destination="VCy-fi-CGV" id="SDn-2K-SmL"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gUF-Cs-N3O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
