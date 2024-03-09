@@ -1,5 +1,5 @@
 //
-//  GameTabController.swift
+//  GameTabBarController.swift
 //  UiLuxury_TeamProject
 //
 //  Created by Юрий Куринной on 09.03.2024.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-// MARK: - GameTabViewController
+// MARK: - GameTabBarController
 
 class GameTabBarController: UITabBarController {
 
