@@ -64,9 +64,9 @@ private extension InfoCharacterViewController {
 // MARK: - Setup UI
 private extension InfoCharacterViewController {
     func setupView() {
-        view.backgroundColor = .white
+        view.addQuadroGradientLayer()
 
-        navigationItem.title = user.name
+        //navigationItem.title = user.name
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "gearshape.fill"),
@@ -106,8 +106,18 @@ private extension InfoCharacterViewController {
     }
 
     func addSubviews() {
-        view.addSubviews(userImageView, walletLabel, boughtItemsTableView)
-        view.disableAutoresizingMask(userImageView, walletLabel, boughtItemsTableView)
+        
+        view.addSubviews(
+            userImageView,
+            walletLabel,
+            boughtItemsTableView
+        )
+        
+        view.disableAutoresizingMask(
+            userImageView,
+            walletLabel,
+            boughtItemsTableView
+        )
     }
 }
 

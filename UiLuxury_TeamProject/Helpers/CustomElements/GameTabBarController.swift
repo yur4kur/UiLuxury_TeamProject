@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - GameTabBarController
 
-class GameTabBarController: UITabBarController {
+final class GameTabBarController: UITabBarController {
 
     // MARK: - Lifecycle Methods
     
@@ -17,19 +17,21 @@ class GameTabBarController: UITabBarController {
         super.viewDidLoad()
 
         setUpTabs()
+        setupTabBar()
     }
     
     // MARK: - Private methods
     
     /// Метод создает NavigationController с прозрачной полосой и черными шрифтами
     private func createNavigationController(title: String,
-                                            imageName: String,
+                                            image: UIImage?,
                                             rootViewController: UIViewController) -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: rootViewController)
         navigationController.tabBarItem.title = title
-        navigationController.tabBarItem.image = UIImage(named: imageName)
+        navigationController.tabBarItem.image = image
         
         setupNavigationBar(navigationController)
+        navigationController.viewControllers.first?.navigationItem.title = title
         
         return navigationController
     }
@@ -45,36 +47,51 @@ class GameTabBarController: UITabBarController {
     /// Метода настраивает иконки и названия элементов ТабБара с привязкой к контроллерам
     private func setUpTabs() {
         let clickVC = createNavigationController(
-            title: "Игра",
-            imageName: "cursorarrow.click.2",
+            title: Constants.gameTabName,
+            image: UIImage(systemName: Constants.gameTabIcon),
             rootViewController: ClickViewController()
         )
         
         let shopVC = createNavigationController(
-            title: "Магазин",
-            imageName: "clipboard.fill",
+            title: Constants.shopTabName,
+            image: UIImage(systemName: Constants.shopTabIcon),
             rootViewController: ShopListViewController()
         )
         
         let userVC = createNavigationController(
-            title: "Покупки",
-            imageName: "bag.fill",
+            title: Constants.userTabName,
+            image: UIImage(systemName: Constants.userTabIcon),
             rootViewController: InfoCharacterViewController()
         )
         
-        let devsVC = createNavigationController(
-            title: "Команда",
-            imageName: "person.2.badge.gearshape.fill",
+        let teamVC = createNavigationController(
+            title: Constants.teamTabName,
+            image: UIImage(systemName: Constants.teamTabIcon),
             rootViewController: DevelopersInfoViewController()
         )
         
-        setViewControllers([clickVC, shopVC, userVC, devsVC], animated: true)
+        setViewControllers([clickVC, shopVC, userVC, teamVC], animated: true)
     }
     
+    /// Метод настраивает цвет иконок и делает таббар прозрачным
     private func setupTabBar() {
         tabBar.barTintColor = .clear
         tabBar.tintColor = .white
-        tabBar.unselectedItemTintColor = .black
+        tabBar.unselectedItemTintColor = .darkGray
     }
+}
 
+// MARK: - Constants
+
+private extension GameTabBarController {
+    enum Constants {
+        static let gameTabName = "Игра"
+        static let gameTabIcon = "cursorarrow.click.2"
+        static let shopTabName = "Магазин"
+        static let shopTabIcon = "cart.fill"
+        static let userTabName = "Покупки"
+        static let userTabIcon = "bag.fill"
+        static let teamTabName = "Команда"
+        static let teamTabIcon = "person.2.badge.gearshape.fill"
+    }
 }

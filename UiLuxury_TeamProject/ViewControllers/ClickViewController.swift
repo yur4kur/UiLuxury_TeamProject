@@ -75,9 +75,9 @@ class ClickViewController: UIViewController {
 private extension ClickViewController {
     
     func setupUI() {
-        addSubviews()
         setupViews()
         addActions()
+        addSubviews()
         setConstraints()
     }
 }
@@ -92,11 +92,12 @@ private extension ClickViewController {
             walletLabel,
             clickButton
         )
-        
     }
     
     func setupViews() {
         view.addQuadroGradientLayer()
+        navigationItem.title = Constants.navigationTitle
+        
         view.disableAutoresizingMask(
             walletLabel,
             clickButton
@@ -138,7 +139,7 @@ private extension ClickViewController {
     func setConstraints() {
         NSLayoutConstraint.activate([
             walletLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            walletLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            walletLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
             
             clickButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             clickButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -200)
@@ -152,7 +153,7 @@ private extension ClickViewController {
     
     enum Constants {
         static let coinImage = "plainCoin"
-//        static let clickButtonTitle = "X1"
+        static let navigationTitle = "Счет: "
     }
 }
 
