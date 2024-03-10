@@ -75,7 +75,7 @@ private extension StartViewController {
     // MARK: Greeting label
     func setupGreetingLabel() {
         greetingLabel.text = Constants.greetingText
-        greetingLabel.font = UIFont.systemFont(ofSize: 50)
+        greetingLabel.font = UIFont.systemFont(ofSize: 30)
         greetingLabel.textColor = .white
         greetingLabel.textAlignment = .center
         greetingLabel.numberOfLines = 5
@@ -122,14 +122,14 @@ private extension StartViewController {
                 equalTo: view.centerXAnchor
             ),
             startButton.widthAnchor.constraint(
-                equalToConstant: 80
+                equalToConstant: 120
             ),
             startButton.heightAnchor.constraint(
-                equalToConstant: 80
+                equalToConstant: 40
             ),
             startButton.bottomAnchor.constraint(
                 equalTo: view.bottomAnchor,
-                constant: 80
+                constant: -80
             )
         ])
     }
@@ -140,7 +140,7 @@ private extension StartViewController {
 private extension StartViewController {
     
     enum Constants {
-        static let greetingText = "Дави на кнопку, зарабатывай монеты!"
+        static let greetingText = "Вперед за золотом! Дави на кнопку, зарабатывай монеты!"
         static let startButtonTitle = "Вперед!"
     }
 }
