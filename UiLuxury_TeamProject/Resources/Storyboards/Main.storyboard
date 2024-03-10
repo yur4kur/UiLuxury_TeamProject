@@ -400,9 +400,6 @@
                                         <rect key="frame" x="71.5" y="492" width="61.5" height="35"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Start"/>
-                                        <connections>
-                                            <action selector="startGame" destination="POR-UJ-85G" eventType="touchUpInside" id="zAy-Ua-9G7"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>

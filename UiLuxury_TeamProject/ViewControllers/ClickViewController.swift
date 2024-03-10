@@ -46,7 +46,7 @@ final class ClickViewController: UIViewController {
     // MARK: - Private methods
     
     // TODO: весь блок по возможности перенести во вьюмодель
-    @objc private func buttonTapped() {
+    @objc private func clickButtonTapped() {
         score += clickModify
         updateCharacterWallet(with: score)
     }
@@ -126,7 +126,7 @@ private extension ClickViewController {
     func addActions() {
         clickButton.addTarget(
             self,
-            action: #selector(buttonTapped),
+            action: #selector(clickButtonTapped),
             for: .touchUpInside
         )
     }
