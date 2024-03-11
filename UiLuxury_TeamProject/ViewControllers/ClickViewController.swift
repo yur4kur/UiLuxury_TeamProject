@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - ClickViewController
 
-class ClickViewController: UIViewController {
+final class ClickViewController: UIViewController {
     
     // MARK: - Private properties
     
@@ -24,7 +24,7 @@ class ClickViewController: UIViewController {
     private var clickModify = 1
     
     // MARK: - Public properties
-    
+    // TODO: вынести во вьюмодель или удалить
     let itemsSegueTest: [Item] = []
     var delegate: ISendInfoAboutCharacterDelegate?
     
@@ -46,7 +46,7 @@ class ClickViewController: UIViewController {
     // MARK: - Private methods
     
     // TODO: весь блок по возможности перенести во вьюмодель
-    @objc private func buttonDidTap() {
+    @objc private func clickButtonTapped() {
         score += clickModify
         updateCharacterWallet(with: score)
     }
@@ -73,11 +73,10 @@ class ClickViewController: UIViewController {
 // MARK: - Configure UI
 
 private extension ClickViewController {
-    
     func setupUI() {
-        addSubviews()
         setupViews()
         addActions()
+        addSubviews()
         setConstraints()
     }
 }
@@ -86,17 +85,19 @@ private extension ClickViewController {
 
 private extension ClickViewController {
     
-    // MARK: Add & setup views
+    // MARK: Add subviews
     func addSubviews() {
         view.addSubviews(
             walletLabel,
             clickButton
         )
-        
     }
     
+    // MARK: Setup views
     func setupViews() {
         view.addQuadroGradientLayer()
+        navigationItem.title = Constants.navigationTitle
+        
         view.disableAutoresizingMask(
             walletLabel,
             clickButton
@@ -125,7 +126,7 @@ private extension ClickViewController {
     func addActions() {
         clickButton.addTarget(
             self,
-            action: #selector(buttonDidTap),
+            action: #selector(clickButtonTapped),
             for: .touchUpInside
         )
     }
@@ -134,14 +135,24 @@ private extension ClickViewController {
 // MARK: - Constraints
 
 private extension ClickViewController {
-    
     func setConstraints() {
         NSLayoutConstraint.activate([
-            walletLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            walletLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            walletLabel.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor
+            ),
+            walletLabel.topAnchor.constraint(
+                equalTo: view.topAnchor,
+                constant: 200
+            ),
             
-            clickButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            clickButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -200)
+            // TODO: Удалить, если кастомная кнопка будет заверстана фреймом
+            clickButton.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor
+            ),
+            clickButton.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor,
+                constant: -200
+            )
         ])
     }
 }
@@ -152,7 +163,7 @@ private extension ClickViewController {
     
     enum Constants {
         static let coinImage = "plainCoin"
-//        static let clickButtonTitle = "X1"
+        static let navigationTitle = "Счет: "
     }
 }
 

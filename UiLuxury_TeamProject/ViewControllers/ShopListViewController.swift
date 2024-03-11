@@ -167,8 +167,8 @@ private extension ShopListViewController {
     
     // MARK: Setup TableView
     func setupTableView() {
-//        tableView.register(UITableViewCell.self,
-//                           forCellReuseIdentifier: Constants.cellID)
+        tableView.register(UITableViewCell.self,
+                           forCellReuseIdentifier: Constants.cellID)
     }
 }
 

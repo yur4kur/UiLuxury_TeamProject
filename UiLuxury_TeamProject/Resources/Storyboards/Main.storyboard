@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="POR-UJ-85G">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="POR-UJ-85G">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -82,7 +82,7 @@
                 <navigationController id="Xq5-Yo-NOt" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Shop List" image="clipboard.fill" catalog="system" id="glo-eA-yaB"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="VQm-GS-txT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -102,7 +102,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0Dd-wb-X6k">
-                                <rect key="frame" x="16" y="340" width="343" height="278"/>
+                                <rect key="frame" x="16" y="360" width="343" height="258"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="NWD-Hj-qGP" detailTextLabel="H1A-vx-gSw" style="IBUITableViewCellStyleSubtitle" id="u5q-oG-atc">
@@ -159,7 +159,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="pkQ-iv-w0U">
-                                <rect key="frame" x="62" y="56" width="251" height="79.5"/>
+                                <rect key="frame" x="62" y="76" width="251" height="79.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Developers" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e1e-8x-EAX">
                                         <rect key="frame" x="82.5" y="0.0" width="86" height="20.5"/>
@@ -400,10 +400,6 @@
                                         <rect key="frame" x="71.5" y="492" width="61.5" height="35"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Start"/>
-                                        <connections>
-                                            <action selector="startButton" destination="POR-UJ-85G" eventType="touchUpInside" id="zAy-Ua-9G7"/>
-                                            <segue destination="7rB-ai-QFg" kind="presentation" modalPresentationStyle="fullScreen" id="vYV-wH-Djg"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -422,10 +418,6 @@
                             <constraint firstItem="QxY-s4-RdQ" firstAttribute="centerX" secondItem="gYd-DB-W9E" secondAttribute="centerX" id="fbG-J1-V53"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="greetingsLabel" destination="Jzk-3i-7Bg" id="Hvi-Dp-uVE"/>
-                        <outlet property="nameTextField" destination="VCy-fi-CGV" id="SDn-2K-SmL"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gUF-Cs-N3O" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -459,7 +451,7 @@
                     <tabBarItem key="tabBarItem" title="info" image="info.bubble.fill" catalog="system" id="Jpy-GW-Z0f"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LX9-xI-WBp">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
