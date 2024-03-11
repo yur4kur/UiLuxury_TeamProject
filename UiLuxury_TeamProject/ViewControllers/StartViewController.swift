@@ -75,7 +75,7 @@ private extension StartViewController {
     // MARK: Greeting label
     func setupGreetingLabel() {
         greetingLabel.text = Constants.greetingText
-        greetingLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 30)
+        greetingLabel.font = UIFont(name: Constants.gameFont, size: 30)
         greetingLabel.textColor = .white
         greetingLabel.textAlignment = .center
         greetingLabel.numberOfLines = 5
@@ -87,10 +87,10 @@ private extension StartViewController {
         
         startButton.setTitle(Constants.startButtonTitle, for: .normal)
         startButton.setTitleColor(.white, for: .normal)
-        startButton.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
+        startButton.titleLabel?.font = UIFont(name: Constants.gameFont, size: 25)
         
         startButton.layer.cornerRadius = 10
-        startButton.layer.borderWidth = 3
+        startButton.layer.borderWidth = 1
         startButton.layer.borderColor = UIColor.darkGray.cgColor
     }
     
@@ -137,5 +137,6 @@ private extension StartViewController {
     enum Constants {
         static let greetingText = "Вперед за золотом! Дави на кнопку, зарабатывай монеты!"
         static let startButtonTitle = "Вперед!"
+        static let gameFont = "AvenirNext-DemiBold"
     }
 }
