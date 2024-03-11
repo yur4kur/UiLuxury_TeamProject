@@ -75,7 +75,7 @@ private extension StartViewController {
     // MARK: Greeting label
     func setupGreetingLabel() {
         greetingLabel.text = Constants.greetingText
-        greetingLabel.font = UIFont.systemFont(ofSize: 30)
+        greetingLabel.font = UIFont(name: "AvenirNext-DemiBold", size: 30)
         greetingLabel.textColor = .white
         greetingLabel.textAlignment = .center
         greetingLabel.numberOfLines = 5
@@ -83,10 +83,11 @@ private extension StartViewController {
     
     // MARK: Start button
     func setupStartButton() {
-        startButton.backgroundColor = UIColor(red: 0, green: 0.7, blue: 1, alpha: 1)
+        startButton.backgroundColor = UIColor(red: 0, green: 0.8, blue: 1, alpha: 1)
         
         startButton.setTitle(Constants.startButtonTitle, for: .normal)
         startButton.setTitleColor(.white, for: .normal)
+        startButton.titleLabel?.font = UIFont(name: "AvenirNext-DemiBold", size: 25)
         
         startButton.layer.cornerRadius = 10
         startButton.layer.borderWidth = 3
@@ -119,9 +120,13 @@ private extension StartViewController {
             
             // MARK: Start button
             startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            startButton.widthAnchor.constraint(equalToConstant: 120),
-            startButton.heightAnchor.constraint(equalToConstant: 40),
-            startButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80)
+            startButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            startButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.08),
+            startButton.bottomAnchor.constraint(
+                greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor,
+                constant: -80
+            )
+                
         ])
     }
 }
