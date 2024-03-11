@@ -100,6 +100,7 @@ extension ShopListViewController: UITableViewDelegate {
         view.tintColor = .systemGray6
     }
     
+    // Метод нужно исправить, не отрабатывает
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let selectIndexCell = tableView.cellForRow(at: indexPath)
