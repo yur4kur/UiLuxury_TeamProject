@@ -14,7 +14,7 @@ final class StartViewController: UIViewController {
     // MARK: - Private properties
     
     private let greetingLabel = UILabel()
-    private let startButton = UIButton(configuration: .filled())
+    private let startButton = ShadowedButton()
     
     // TODO: Удалить, если не потребуются в ВМ
 //    var nameTextField: UITextField!
@@ -83,8 +83,15 @@ private extension StartViewController {
     
     // MARK: Start button
     func setupStartButton() {
+        startButton.backgroundColor = UIColor(red: 0, green: 0.7, blue: 1, alpha: 1)
+        
         startButton.setTitle(Constants.startButtonTitle, for: .normal)
-        startButton.configuration?.cornerStyle = .capsule
+        startButton.setTitleColor(.white, for: .normal)
+        
+        startButton.layer.cornerRadius = 10
+        startButton.layer.borderWidth = 3
+        startButton.layer.borderColor = UIColor.darkGray.cgColor
+        //startButton.configuration?.cornerStyle = .capsule
     }
     
     // MARK: Actions
@@ -103,34 +110,18 @@ private extension StartViewController {
     
     func setConstraints() {
         NSLayoutConstraint.activate([
-            greetingLabel.centerXAnchor.constraint(
-                equalTo: view.centerXAnchor
-            ),
-            greetingLabel.centerYAnchor.constraint(
-                equalTo: view.centerYAnchor
-            ),
-            greetingLabel.widthAnchor.constraint(
-                equalTo: view.widthAnchor,
-                multiplier: 0.8
-            ),
-            greetingLabel.heightAnchor.constraint(
-                equalTo: view.heightAnchor,
-                multiplier: 0.5
-            ),
             
-            startButton.centerXAnchor.constraint(
-                equalTo: view.centerXAnchor
-            ),
-            startButton.widthAnchor.constraint(
-                equalToConstant: 120
-            ),
-            startButton.heightAnchor.constraint(
-                equalToConstant: 40
-            ),
-            startButton.bottomAnchor.constraint(
-                equalTo: view.bottomAnchor,
-                constant: -80
-            )
+            // MARK: Greeting label
+            greetingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            greetingLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            greetingLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            greetingLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+            
+            // MARK: Start button
+            startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            startButton.widthAnchor.constraint(equalToConstant: 120),
+            startButton.heightAnchor.constraint(equalToConstant: 40),
+            startButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80)
         ])
     }
 }
