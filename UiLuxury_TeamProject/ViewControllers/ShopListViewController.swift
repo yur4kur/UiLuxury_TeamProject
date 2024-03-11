@@ -28,16 +28,43 @@ final class ShopListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "basket"),
+            style: .plain,
+            target: self,
+            action: #selector(goBasket)
+        )
+        
+        navigationItem.backBarButtonItem = UIBarButtonItem(
+            title: "Back",
+            style: .plain,
+            target: nil,
+            action: nil
+        )
+     }
+    
+    
+    @objc private func goBasket() {
+        let vc = BasketListViewController()
+        vc.selectCells = selectCells
+        vc.delegate = self
+        //vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
+    
+    
+    
+    
     
     // MARK: - Navigation
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let basketListVS = segue.destination as? BasketListViewController else { return }
-        basketListVS.selectCells = selectCells
-        basketListVS.delegate = self
-        
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        guard let basketListVS = segue.destination as? BasketListViewController else { return }
+//        basketListVS.selectCells = selectCells
+//        basketListVS.delegate = self
+//
+//    }
 }
 
 // MARK: - TableView DataSource
@@ -174,7 +201,7 @@ private extension ShopListViewController {
 
 //MARK: - Update Data Delegate
 
-extension ShopListViewController: IUpdateDataDelegate {
+extension ShopListViewController: UpdateDataDelegate {
     func updateData(updateSelectCells: [Item]) {
         self.selectCells = updateSelectCells
     }
