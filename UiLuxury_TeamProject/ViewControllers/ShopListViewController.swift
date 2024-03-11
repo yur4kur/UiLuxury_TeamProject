@@ -2,14 +2,14 @@
 //  ShopListViewController.swift
 //  UiLuxury_TeamProject
 //
-//  Created by Бийбол Зулпукаров on 28/7/23.
+//  Created by Kirill Tokarev on 28/7/23.
 //
 
 import UIKit
 
 // MARK: - ShopListViewController
 
-final class ShopListViewController: UITableViewController {
+final class ShopListViewController: UIViewController {
     
     //MARK: - Private properties
     
@@ -19,6 +19,12 @@ final class ShopListViewController: UITableViewController {
     private let descriptionLabel = UILabel()
     private let priceLabel = UILabel()
     
+    let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
     // MARK: - Public properties
     
     var delegate: ISendInfoAboutCharacterDelegate!
@@ -27,7 +33,10 @@ final class ShopListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setupViews()
+    }
+    ///Настройка View
+    private func setupViews() {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "basket"),
@@ -36,15 +45,11 @@ final class ShopListViewController: UITableViewController {
             action: #selector(goBasket)
         )
         
-        navigationItem.backBarButtonItem = UIBarButtonItem(
-            title: "Back",
-            style: .plain,
-            target: nil,
-            action: nil
-        )
-     }
-    
-    
+        view.backgroundColor = .white
+        view.addSubview(tableView)
+        setupTableView()
+    }
+    ///Метод перехода на экран корзины
     @objc private func goBasket() {
         let vc = BasketListViewController()
         vc.selectCells = selectCells
@@ -52,77 +57,50 @@ final class ShopListViewController: UITableViewController {
         //vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
-    
-    
-    
-    
-    
-    // MARK: - Navigation
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        guard let basketListVS = segue.destination as? BasketListViewController else { return }
-//        basketListVS.selectCells = selectCells
-//        basketListVS.delegate = self
-//
-//    }
 }
 
 // MARK: - TableView DataSource
 
-extension ShopListViewController {
+extension ShopListViewController: UITableViewDataSource {
     
-    // MARK: Section
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         shoppings.count
     }
     
-    // MARK: Row
-    override func tableView(_ tableView: UITableView,
-                            numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView,numberOfRowsInSection section: Int) -> Int {
         1
     }
     
-    // MARK: Cell
-    override func tableView(_ tableView: UITableView,
-                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: Constants.cellID,
-            for: indexPath
-        )
-        
-//        let content = cell.contentConfiguration?.makeContentView()
-       
-//        cell.contentView.addSubview(descriptionLabel)
-//        cell.contentView.addSubview(priceLabel)
-        let textContent = shoppings[indexPath.section]
-        cell.textLabel?.text = textContent.description
-        cell.detailTextLabel?.text = "$\(textContent.price.formatted())"
-//        descriptionLabel.text = textContent.description
-//        priceLabel.text = "$\(textContent.price.formatted())"
-//        cell.contentConfiguration = content as! any UIContentConfiguration
-        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        var content = cell.defaultContentConfiguration()
+        content.text = shoppings[indexPath.section].description
+        cell.contentConfiguration = content
         return cell
     }
 }
 
 // MARK: - TableView Delegate
 
-extension ShopListViewController {
+extension ShopListViewController: UITableViewDelegate {
     
-    override func tableView(_ tableView: UITableView, 
-                            titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         shoppings[section].title
     }
     
-    override func tableView(_ tableView: UITableView, 
-                            willDisplayHeaderView view: UIView,
-                            forSection section: Int) {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = .systemGray5
+    }
+    
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        "$\(shoppings[section].price.formatted())"
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         view.tintColor = .systemGray6
     }
     
-    override func tableView(_ tableView: UITableView, 
-                            didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let selectIndexCell = tableView.cellForRow(at: indexPath)
         let selectCell = shoppings[indexPath.section]
@@ -150,52 +128,28 @@ extension ShopListViewController {
 
 private extension ShopListViewController {
     
-    func setupUI() {
-        setupTableView()
-        
-    }
-    
-}
-
-// MARK: - Setup UI
-
-private extension ShopListViewController {
-    
-    func addCellSubviews() {
-        
-    }
-    
-    // MARK: Setup cell labels
-    func setupCellLabels() {
-        
-        // MARK: Description Label
-        descriptionLabel.isMultipleTouchEnabled = true
-        descriptionLabel.contentMode = .left
-        descriptionLabel.insetsLayoutMarginsFromSafeArea = false
-//        descriptionLabel.text
-        descriptionLabel.textAlignment = .natural
-        descriptionLabel.lineBreakMode = .byTruncatingTail
-        descriptionLabel.numberOfLines = 3
-        descriptionLabel.baselineAdjustment = .alignBaselines
-        descriptionLabel.adjustsFontSizeToFitWidth = false
-        descriptionLabel.font = .systemFont(ofSize: 13)
-        
-        // MARK: Price label
-        priceLabel.isMultipleTouchEnabled = true
-        priceLabel.contentMode = .left
-        priceLabel.insetsLayoutMarginsFromSafeArea = false
-        //priceLabel.text = "Detail"
-        priceLabel.textAlignment = .right
-        priceLabel.lineBreakMode = .byTruncatingTail
-        priceLabel.baselineAdjustment = .alignBaselines
-        priceLabel.adjustsFontSizeToFitWidth = false
-        priceLabel.font = .systemFont(ofSize: 20)
-    }
-    
-    // MARK: Setup TableView
+    ///Настройка Таблицы
     func setupTableView() {
-        tableView.register(UITableViewCell.self,
-                           forCellReuseIdentifier: Constants.cellID)
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        registerCell()
+        setConstraints()
+    }
+    /// Регистрация ячейки
+    func registerCell() {
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+    ///Настройка констрейнтов таблицы
+    func setConstraints() {
+        NSLayoutConstraint.activate(
+            [
+                tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ]
+        )
     }
 }
 
@@ -218,13 +172,5 @@ private extension ShopListViewController {
         let okAktion = UIAlertAction(title: "Ок", style: .default)
         alert.addAction(okAktion)
         present(alert, animated: true)
-    }
-}
-
-// MARK: - Constants
-
-private extension ShopListViewController {
-    enum Constants {
-        static let cellID = "cellMarket"
     }
 }

@@ -2,7 +2,7 @@
 //  BasketListViewController.swift
 //  UiLuxury_TeamProject
 //
-//  Created by Бийбол Зулпукаров on 28/7/23.
+//  Created by Kirill Tokarev on 28/7/23.
 //
 
 import UIKit
@@ -12,32 +12,73 @@ protocol UpdateDataDelegate {
     func updateData(updateSelectCells: [Item])
 }
 
-final class BasketListViewController: UITableViewController {
-    
+final class BasketListViewController: UIViewController {
+    ///Массив с выбранными элементами из магазина
     var selectCells: [Item] = []
     var delegate: UpdateDataDelegate!
     
+    let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Basket"
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellBasket")
-}
+        setupViews()
+    }
     
-    // MARK: - Table view data source
+    private func setupViews() {
+        view.backgroundColor = .white
+        view.addSubview(tableView)
+        setupTableView()
+    }
+}
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+private extension BasketListViewController {
+    ///Настройка Таблицы
+    func setupTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        
+        registerCell()
+        setConstraints()
+    }
+    /// Регистрация ячейки
+    func registerCell() {
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    }
+    ///Настройка констрейнтов таблицы
+    func setConstraints() {
+        NSLayoutConstraint.activate(
+            [
+                tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ]
+        )
+    }
+}
+
+//MARK: - TableView DataSorce, Deligate
+
+extension BasketListViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         selectCells.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellBasket", for: indexPath)
-        cell.textLabel?.text = selectCells[indexPath.row].title
-        cell.detailTextLabel?.text = "$\(selectCells[indexPath.row].price.formatted())"
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        var content = cell.defaultContentConfiguration()
+        content.text = selectCells[indexPath.row].title
+        content.secondaryText = "$\(selectCells[indexPath.row].price.formatted())"
+        cell.contentConfiguration = content
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             selectCells.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
