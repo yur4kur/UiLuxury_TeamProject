@@ -7,17 +7,21 @@
 
 import UIKit
 
-protocol IUpdateDataDelegate {
+///Протокол обновления данных массива выбранных товаров
+protocol UpdateDataDelegate {
     func updateData(updateSelectCells: [Item])
 }
 
 final class BasketListViewController: UITableViewController {
     
     var selectCells: [Item] = []
-    var delegate: IUpdateDataDelegate!
+    var delegate: UpdateDataDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Basket"
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellBasket")
 }
     
     // MARK: - Table view data source
