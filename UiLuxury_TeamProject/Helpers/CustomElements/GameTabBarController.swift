@@ -39,7 +39,6 @@ final class GameTabBarController: UITabBarController {
     /// Метод устанавливает полоске навигации прозрачный цвет и черные шрифты
     private func setupNavigationBar(_ navigationController: UINavigationController) {
         navigationController.navigationBar.prefersLargeTitles = true
-        navigationController.navigationBar.prefersLargeTitles = true
         navigationController.navigationBar.tintColor = .black
         navigationController.navigationBar.backgroundColor = .clear
     }

@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - StartViewController
 
-final class StartViewController: UIViewController{
+final class StartViewController: UIViewController {
     
     // MARK: - Private properties
     
@@ -40,9 +40,9 @@ final class StartViewController: UIViewController{
 
 private extension StartViewController {
     func setupUI() {
+        addSubviews()
         setupViews()
         addActions()
-        addSubviews()
         setConstraints()
     }
 }
