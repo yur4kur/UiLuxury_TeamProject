@@ -15,7 +15,7 @@ final class ClickViewController: UIViewController {
     
     private let walletLabel = UILabel()
     private let clickStackView = UIStackView()
-    private let clickButton = UIButton()
+    private let clickButton = ShadowedButton()
     private let coinImage = UIImage(named: Constants.coinImage)
     
     // TODO: вынести во вьюмодель
@@ -32,14 +32,12 @@ final class ClickViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
     }
     
     // TODO: Проверить необходимость в методе после создания вьюмодели
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         modifySetup()
     }
     
@@ -47,6 +45,7 @@ final class ClickViewController: UIViewController {
     
     // TODO: весь блок по возможности перенести во вьюмодель
     @objc private func clickButtonTapped() {
+        clickButton.setShakeAnimation()
         score += clickModify
         updateCharacterWallet(with: score)
     }
@@ -137,22 +136,20 @@ private extension ClickViewController {
 private extension ClickViewController {
     func setConstraints() {
         NSLayoutConstraint.activate([
-            walletLabel.centerXAnchor.constraint(
-                equalTo: view.centerXAnchor
-            ),
-            walletLabel.topAnchor.constraint(
-                equalTo: view.topAnchor,
-                constant: 200
-            ),
+            
+            // MARK: Wallet label
+            walletLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            walletLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
             
             // TODO: Удалить, если кастомная кнопка будет заверстана фреймом
-            clickButton.centerXAnchor.constraint(
-                equalTo: view.centerXAnchor
-            ),
+            clickButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            clickButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            clickButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2),
             clickButton.bottomAnchor.constraint(
-                equalTo: view.bottomAnchor,
-                constant: -200
+                greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor,
+                constant: -80
             )
+            
         ])
     }
 }

@@ -92,7 +92,6 @@ private extension StartViewController {
         startButton.layer.cornerRadius = 10
         startButton.layer.borderWidth = 3
         startButton.layer.borderColor = UIColor.darkGray.cgColor
-        //startButton.configuration?.cornerStyle = .capsule
     }
     
     // MARK: Actions
