@@ -14,7 +14,7 @@ final class StartViewController: UIViewController {
     // MARK: - Private properties
     
     private let greetingLabel = UILabel()
-    private let startButton = ShadowedButton()
+    private let startButton = UIButton()
     
     // TODO: Удалить, если не потребуются в ВМ
 //    var nameTextField: UITextField!
@@ -84,6 +84,7 @@ private extension StartViewController {
     // MARK: Start button
     func setupStartButton() {
         startButton.backgroundColor = UIColor(red: 0, green: 0.8, blue: 1, alpha: 1)
+        startButton.setShadow()
         
         startButton.setTitle(Constants.startButtonTitle, for: .normal)
         startButton.setTitleColor(.white, for: .normal)

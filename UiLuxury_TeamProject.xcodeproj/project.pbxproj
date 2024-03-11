@@ -24,7 +24,7 @@
 		6AB7F8A72A7AA97D0026E5DC /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB7F8A62A7AA97D0026E5DC /* Item.swift */; };
 		6ADD25AC2B98C03000F3DD15 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADD25AB2B98C03000F3DD15 /* UIView+.swift */; };
 		6ADD25B42B9C531700F3DD15 /* GameTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADD25B32B9C531700F3DD15 /* GameTabBarController.swift */; };
-		6AE5E9592B9EE59B00810D91 /* ShadowedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE5E9582B9EE59B00810D91 /* ShadowedButton.swift */; };
+		6AE5E95B2B9F2A9F00810D91 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE5E95A2B9F2A9F00810D91 /* UIButton+.swift */; };
 		E99F36322A8EAE0300C96277 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99F36312A8EAE0300C96277 /* Protocol.swift */; };
 		E99F36342A8EAE2100C96277 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99F36332A8EAE2100C96277 /* Character.swift */; };
 /* End PBXBuildFile section */
@@ -49,7 +49,7 @@
 		6AB7F8A62A7AA97D0026E5DC /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		6ADD25AB2B98C03000F3DD15 /* UIView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		6ADD25B32B9C531700F3DD15 /* GameTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTabBarController.swift; sourceTree = "<group>"; };
-		6AE5E9582B9EE59B00810D91 /* ShadowedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowedButton.swift; sourceTree = "<group>"; };
+		6AE5E95A2B9F2A9F00810D91 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		E99F36312A8EAE0300C96277 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		E99F36332A8EAE2100C96277 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -168,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				6ADD25AB2B98C03000F3DD15 /* UIView+.swift */,
+				6AE5E95A2B9F2A9F00810D91 /* UIButton+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -176,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				6ADD25B32B9C531700F3DD15 /* GameTabBarController.swift */,
-				6AE5E9582B9EE59B00810D91 /* ShadowedButton.swift */,
 			);
 			path = CustomElements;
 			sourceTree = "<group>";
@@ -258,13 +258,13 @@
 				46227DEB2A73B2CE00C042F4 /* BasketListViewController.swift in Sources */,
 				E99F36342A8EAE2100C96277 /* Character.swift in Sources */,
 				6AB7F88B2A7303740026E5DC /* DataSource.swift in Sources */,
-				6AE5E9592B9EE59B00810D91 /* ShadowedButton.swift in Sources */,
 				6A778A472A909F4B006D96CE /* User.swift in Sources */,
 				6ADD25B42B9C531700F3DD15 /* GameTabBarController.swift in Sources */,
 				46227DE42A73AF4300C042F4 /* ClickViewController.swift in Sources */,
 				46C7C9DA2A7C2CC500FE5922 /* DevelopersInfoViewController.swift in Sources */,
 				6ADD25AC2B98C03000F3DD15 /* UIView+.swift in Sources */,
 				462738762A7A4AF2006138E8 /* StartViewController.swift in Sources */,
+				6AE5E95B2B9F2A9F00810D91 /* UIButton+.swift in Sources */,
 				46227DE82A73B25C00C042F4 /* InfoCharacterViewController.swift in Sources */,
 				46227DE62A73B1D600C042F4 /* ShopListViewController.swift in Sources */,
 				6AB7F8732A7302330026E5DC /* SceneDelegate.swift in Sources */,

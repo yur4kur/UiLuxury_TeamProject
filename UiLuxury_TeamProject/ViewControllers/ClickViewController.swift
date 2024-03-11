@@ -15,7 +15,7 @@ final class ClickViewController: UIViewController {
     
     private let walletLabel = UILabel()
     private let clickStackView = UIStackView()
-    private let clickButton = ShadowedButton()
+    private let clickButton = UIButton()
     private let coinImage = UIImage(named: Constants.coinImage)
     
     // TODO: вынести во вьюмодель
@@ -118,6 +118,7 @@ private extension ClickViewController {
     func setupClickButton() {
         clickButton.setImage(coinImage, for: .normal)
         clickButton.imageView?.contentMode = .scaleAspectFit
+        clickButton.setShadow()
     }
 
     

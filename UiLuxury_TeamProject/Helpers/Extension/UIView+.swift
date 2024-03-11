@@ -8,6 +8,7 @@
 import UIKit
 
 extension UIView {
+    
     /// Метод позволяет добавлять вьюхи на экран, в одном скоупе, через запятую
     func addSubviews(_ views: UIView...) {
         views.forEach { addSubview($0) }

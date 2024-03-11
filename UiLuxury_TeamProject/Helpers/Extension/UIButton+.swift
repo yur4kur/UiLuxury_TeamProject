@@ -1,5 +1,5 @@
 //
-//  ShadowedButton.swift
+//  UIButton+.swift
 //  UiLuxury_TeamProject
 //
 //  Created by Юрий Куринной on 11.03.2024.
@@ -7,25 +7,7 @@
 
 import UIKit
 
-
-// MARK: - ShadowedButton
-
-/// Rастомнвя кнопку с тенью и анимацией тряски
-class ShadowedButton: UIButton {
-    
-    // MARK: - Initializers
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupButton()
-    }
-    
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    // MARK: - Public properties
+extension UIButton {
     
     /// Метод устанавливает анимацию в виде потряхивания кнопки справа-налево.
     /// Можно использовать в соответствующем методе для анимирования кнопки при нажатии.
@@ -47,15 +29,8 @@ class ShadowedButton: UIButton {
         layer.add(shake, forKey: "position")
     }
     
-    // MARK: - Private methods
-    
-    /// Контейнер, в котором собираются все методы, настраивающие кнопку.
-    private func setupButton() {
-        setShadow()
-    }
-    
     /// Метод создает тень вокруг кнопки
-    private func setShadow() {
+    func setShadow() {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 6)
         layer.shadowRadius = 8
