@@ -13,20 +13,23 @@ final class ClickViewController: UIViewController {
     
     // MARK: - Private properties
     
+    // MARK: Views
     private let walletLabel = UILabel()
-    private let clickStackView = UIStackView()
     private let clickButton = UIButton()
     private let coinImage = UIImage(named: Constants.coinImage)
     
+    // MARK: Animation
+    private let randomizer = Float.random(in: 0.0...1.0)
+    private var animator: UIDynamicAnimator!
+    private var gravity: UIGravityBehavior!
+    private var itemBehavior: UIDynamicItemBehavior!
+    private var collider: UICollisionBehavior!
+    private var coinImageView: UIImageView!
+  
     // TODO: вынести во вьюмодель
     private var user = User.shared
     private var score = 0
     private var clickModify = 1
-    
-    // MARK: - Public properties
-    // TODO: вынести во вьюмодель или удалить
-    let itemsSegueTest: [Item] = []
-    var delegate: ISendInfoAboutCharacterDelegate?
     
     // MARK: - Lifecycle methods
     
@@ -46,6 +49,7 @@ final class ClickViewController: UIViewController {
     // TODO: весь блок по возможности перенести во вьюмодель
     @objc private func clickButtonTapped() {
         clickButton.setShakeAnimation()
+        animate()
         score += clickModify
         updateCharacterWallet(with: score)
     }
@@ -73,9 +77,10 @@ final class ClickViewController: UIViewController {
 
 private extension ClickViewController {
     func setupUI() {
+        addSubviews()
         setupViews()
         addActions()
-        addSubviews()
+        setupAnimation()
         setConstraints()
     }
 }
@@ -116,6 +121,8 @@ private extension ClickViewController {
     
     // MARK: ClickButton
     func setupClickButton() {
+        // TODO: Проанализировать возможность заверстать кнопку фреймом
+//        clickButton = UIButton(frame: CGRect(x: 90, y: 540, width: 250, height: 175))
         clickButton.setImage(coinImage, for: .normal)
         clickButton.imageView?.contentMode = .scaleAspectFit
         clickButton.setShadow()
@@ -129,6 +136,62 @@ private extension ClickViewController {
             action: #selector(clickButtonTapped),
             for: .touchUpInside
         )
+    }
+}
+
+ // MARK: - Setup Animation
+
+private extension ClickViewController {
+    
+    // MARK: Add animation
+    func animate() {
+        let item = setupCoinImageView()
+        gravity?.addItem(item)
+        collider?.addItem(item)
+        itemBehavior?.addItem(item)
+    }
+    
+    // MARK: Coin Image
+    func setupCoinImageView() -> UIImageView {
+        coinImageView = UIImageView(image: coinImage)
+        coinImageView.frame = CGRect(x: Int.random(in: 10...300), y: 0, width: 75, height: 60)
+        
+        // Subview добавляется каждый раз при нажатии кнопки, поэтому addSubview применяем здесь
+        view.addSubview(coinImageView)
+        return coinImageView
+    }
+    
+    // MARK: Setup animation
+    func setupAnimation() {
+        animator = UIDynamicAnimator(referenceView: view)
+        gravity = UIGravityBehavior()
+        collider = UICollisionBehavior()
+        itemBehavior = UIDynamicItemBehavior()
+        setupCollider()
+        setupItemBehavior()
+        setupAnimator()
+    }
+    
+    // MARK: Collider
+    func setupCollider() {
+        //делаем границы вью физическими границами для айтемов
+        collider?.translatesReferenceBoundsIntoBoundary = true
+        collider?.collisionMode = .items
+    }
+    
+    // MARK: Item behavior
+    func setupItemBehavior() {
+        itemBehavior?.elasticity = 4
+        itemBehavior?.density = CGFloat(randomizer)
+        itemBehavior?.allowsRotation = true
+    }
+    
+    // MARK: Animator
+    func setupAnimator() {
+        animator = UIDynamicAnimator(referenceView: self.view)
+        animator?.addBehavior(gravity)
+        animator?.addBehavior(collider)
+        animator?.addBehavior(itemBehavior)
     }
 }
 
