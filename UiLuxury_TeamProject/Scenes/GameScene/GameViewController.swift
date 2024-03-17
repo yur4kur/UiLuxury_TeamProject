@@ -9,27 +9,43 @@ import UIKit
 
 // MARK: - ClickViewController
 
-final class ClickViewController: UIViewController {
+final class GameViewController: UIViewController {
     
     // MARK: - Private properties
     
     // MARK: Views
-    private let walletLabel = UILabel()
+    
+    /// Лейбл с игровым счетом
+    private let scoreLabel = UILabel()
+    
+    /// Основная игровая кнопка
     private let clickButton = UIButton()
+    
+    /// Картинка с монетой
     private let coinImage = UIImage(named: Constants.coinImage)
     
     // MARK: Animation
+    
+    /// Рандомайзер, чтобы монетки разлетались по разному
     private let randomizer = Float.random(in: 0.0...1.0)
+    
+    /// Динамическая анимация
     private var animator: UIDynamicAnimator!
+    
+    /// Имитация силы тяжести
     private var gravity: UIGravityBehavior!
+    
+    /// Поведение анимируемых объектов
     private var itemBehavior: UIDynamicItemBehavior!
+    
+    /// Поведение при столкновении
     private var collider: UICollisionBehavior!
+    
+    /// Картинка анимируемых объектов
     private var coinImageView: UIImageView!
   
-    // TODO: вынести во вьюмодель
-    private var user = User.shared
-    private var score = 0
-    private var clickModify = 1
+    /// Экземпляр вью модели
+    private let viewModel = GameViewModel()
     
     // MARK: - Lifecycle methods
     
@@ -46,21 +62,20 @@ final class ClickViewController: UIViewController {
     
     // MARK: - Private methods
     
-    // TODO: весь блок по возможности перенести во вьюмодель
+    /// Метод запускает анимацию нажатия кнопки, анимирует падающие монеты и увеличивает счет игры
     @objc private func clickButtonTapped() {
-        clickButton.setShakeAnimation()
         animate()
-        score += clickModify
-        updateCharacterWallet(with: score)
+        viewModel.score += viewModel.clickModify
+        updateCharacterWallet(with: viewModel.score)
     }
-    
+    // TODO: весь блок по возможности перенести во вьюмодель
     private func modifySetup() {
-        user.items.forEach { item in
+        viewModel.user.items.forEach { item in
             switch item.actionOperator{
             case .add:
-                clickModify += item.modifier
+                viewModel.clickModify += item.modifier
             case .multiply:
-                clickModify *= item.modifier
+                viewModel.clickModify *= item.modifier
             case .assets:
                 return
             }
@@ -68,14 +83,16 @@ final class ClickViewController: UIViewController {
     }
     
     private func updateCharacterWallet(with newValue: Int) {
-        user.wallet += newValue
-        walletLabel.text = user.wallet.description
+        viewModel.user.wallet += newValue
+        //walletLabel.text = user.wallet.description
     }
 }
 
 // MARK: - Configure UI
 
-private extension ClickViewController {
+private extension GameViewController {
+    
+    /// Метод собирает в себе настройки вьюх и анимации и устанавливает констрейнты вьюх
     func setupUI() {
         addSubviews()
         setupViews()
@@ -83,43 +100,57 @@ private extension ClickViewController {
         setupAnimation()
         setConstraints()
     }
+    
+    /// Метод собирает в себе анимации, запускающиеся при нажатии кнопки
+    func animate() {
+        clickButton.shakeButton()
+        dropCoin()
+    }
 }
 
 // MARK: - Setup UI
 
-private extension ClickViewController {
+private extension GameViewController {
     
     // MARK: Add subviews
+    
+    /// Метод добавляет вьюхи на основное вью в качестве сабвьюх
     func addSubviews() {
         view.addSubviews(
-            walletLabel,
+            scoreLabel,
             clickButton
         )
     }
     
     // MARK: Setup views
+    
+    /// Метод настраивает основное вью и запускает методы настройки сабвьюх
     func setupViews() {
         view.addQuadroGradientLayer()
-        navigationItem.title = Constants.navigationTitle
+        navigationItem.title = Constants.navigationScoreTitle
         
         view.disableAutoresizingMask(
-            walletLabel,
+            scoreLabel,
             clickButton
         )
         
-        setupWalletLabel()
+        setupScoreLabel()
         setupClickButton()
     }
     
     // MARK: WalletLabel
-    func setupWalletLabel() {
-        walletLabel.text = String(user.wallet)
-        walletLabel.textColor = .black
-        walletLabel.font = .preferredFont(forTextStyle: .largeTitle)
-        walletLabel.textAlignment = .natural
+    
+    /// Метод настраивает лейбл
+    func setupScoreLabel() {
+        scoreLabel.text = String(viewModel.user.wallet)
+        scoreLabel.textColor = .black
+        scoreLabel.font = .preferredFont(forTextStyle: .largeTitle)
+        scoreLabel.textAlignment = .natural
     }
     
     // MARK: ClickButton
+    
+    /// Метод настраивает игровую кнопку
     func setupClickButton() {
         // TODO: Проанализировать возможность заверстать кнопку фреймом
 //        clickButton = UIButton(frame: CGRect(x: 90, y: 540, width: 250, height: 175))
@@ -130,6 +161,8 @@ private extension ClickViewController {
 
     
     // MARK: Actions
+    
+    /// Метод добавляет действия для активных элементов пользовательского интерфейса
     func addActions() {
         clickButton.addTarget(
             self,
@@ -141,10 +174,12 @@ private extension ClickViewController {
 
  // MARK: - Setup Animation
 
-private extension ClickViewController {
+private extension GameViewController {
     
     // MARK: Add animation
-    func animate() {
+    
+    /// Метод запускает анимацию с падающей монеткой
+    func dropCoin() {
         let item = setupCoinImageView()
         gravity?.addItem(item)
         collider?.addItem(item)
@@ -152,6 +187,8 @@ private extension ClickViewController {
     }
     
     // MARK: Coin Image
+    
+    /// Метод задает картинку монетки падающему объекту
     func setupCoinImageView() -> UIImageView {
         coinImageView = UIImageView(image: coinImage)
         coinImageView.frame = CGRect(x: Int.random(in: 10...300), y: 0, width: 75, height: 60)
@@ -162,6 +199,8 @@ private extension ClickViewController {
     }
     
     // MARK: Setup animation
+    
+    /// Метод настраивает внутреннюю логику анимации
     func setupAnimation() {
         animator = UIDynamicAnimator(referenceView: view)
         gravity = UIGravityBehavior()
@@ -173,6 +212,8 @@ private extension ClickViewController {
     }
     
     // MARK: Collider
+    
+    /// Метод настраивает элементы экрана, участвющие в столкновении
     func setupCollider() {
         //делаем границы вью физическими границами для айтемов
         collider?.translatesReferenceBoundsIntoBoundary = true
@@ -180,6 +221,8 @@ private extension ClickViewController {
     }
     
     // MARK: Item behavior
+    
+    /// Метод настраивает парамеметры анимируемых объектов, от которых зависит их поведение на экране
     func setupItemBehavior() {
         itemBehavior?.elasticity = 4
         itemBehavior?.density = CGFloat(randomizer)
@@ -187,6 +230,8 @@ private extension ClickViewController {
     }
     
     // MARK: Animator
+    
+    /// Метод добавляет виды анимируемого поведения
     func setupAnimator() {
         animator = UIDynamicAnimator(referenceView: self.view)
         animator?.addBehavior(gravity)
@@ -197,13 +242,15 @@ private extension ClickViewController {
 
 // MARK: - Constraints
 
-private extension ClickViewController {
+private extension GameViewController {
+    
+    /// Метод задает констрейнты для вьюх
     func setConstraints() {
         NSLayoutConstraint.activate([
             
             // MARK: Wallet label
-            walletLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            walletLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
+            scoreLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            scoreLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
             
             // TODO: Удалить, если кастомная кнопка будет заверстана фреймом
             clickButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -220,11 +267,11 @@ private extension ClickViewController {
 
 // MARK: - Constants
 
-private extension ClickViewController {
+private extension GameViewController {
     
     enum Constants {
         static let coinImage = "plainCoin"
-        static let navigationTitle = "Счет: "
+        static let navigationScoreTitle = "Счет: "
     }
 }
 

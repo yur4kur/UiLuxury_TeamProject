@@ -48,7 +48,7 @@ final class GameTabBarController: UITabBarController {
         let clickVC = createNavigationController(
             title: Constants.gameTabName,
             image: UIImage(systemName: Constants.gameTabIcon),
-            rootViewController: ClickViewController()
+            rootViewController: GameViewController()
         )
         
         let shopVC = createNavigationController(

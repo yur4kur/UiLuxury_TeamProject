@@ -11,7 +11,7 @@ extension UIButton {
     
     /// Метод устанавливает анимацию в виде потряхивания кнопки справа-налево.
     /// Можно использовать в соответствующем методе для анимирования кнопки при нажатии.
-    func setShakeAnimation() {
+    func shakeButton() {
         let shake = CABasicAnimation(keyPath: "position")
         shake.duration = 0.1
         shake.repeatCount = 2
