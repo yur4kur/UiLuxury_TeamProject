@@ -1,5 +1,5 @@
 //
-//  User.swift
+//  GameViewController.swift
 //  UiLuxury_TeamProject
 //
 //  Created by Юрий Куринной on 19.08.2023.
@@ -84,7 +84,7 @@ final class GameViewController: UIViewController {
     
     private func updateCharacterWallet(with newValue: Int) {
         viewModel.user.wallet += newValue
-        //walletLabel.text = user.wallet.description
+        scoreLabel.text = viewModel.user.wallet.description
     }
 }
 
@@ -94,8 +94,8 @@ private extension GameViewController {
     
     /// Метод собирает в себе настройки вьюх и анимации и устанавливает констрейнты вьюх
     func setupUI() {
-        addSubviews()
         setupViews()
+        addSubviews()
         addActions()
         setupAnimation()
         setConstraints()
@@ -112,16 +112,6 @@ private extension GameViewController {
 
 private extension GameViewController {
     
-    // MARK: Add subviews
-    
-    /// Метод добавляет вьюхи на основное вью в качестве сабвьюх
-    func addSubviews() {
-        view.addSubviews(
-            scoreLabel,
-            clickButton
-        )
-    }
-    
     // MARK: Setup views
     
     /// Метод настраивает основное вью и запускает методы настройки сабвьюх
@@ -136,6 +126,16 @@ private extension GameViewController {
         
         setupScoreLabel()
         setupClickButton()
+    }
+    
+    // MARK: Add subviews
+    
+    /// Метод добавляет вьюхи на основное вью в качестве сабвьюх
+    func addSubviews() {
+        view.addSubviews(
+            scoreLabel,
+            clickButton
+        )
     }
     
     // MARK: WalletLabel
@@ -191,7 +191,7 @@ private extension GameViewController {
     /// Метод задает картинку монетки падающему объекту
     func setupCoinImageView() -> UIImageView {
         coinImageView = UIImageView(image: coinImage)
-        coinImageView.frame = CGRect(x: Int.random(in: 10...300), y: 0, width: 75, height: 60)
+        coinImageView.frame = CGRect(x: Int.random(in: 10...300), y: 0, width: 75, height: 75)
         
         // Subview добавляется каждый раз при нажатии кнопки, поэтому addSubview применяем здесь
         view.addSubview(coinImageView)
