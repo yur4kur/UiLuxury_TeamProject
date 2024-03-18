@@ -14,7 +14,7 @@ final class StartViewController: UIViewController {
     // MARK: - Private properties
     
     private let greetingLabel = UILabel()
-    private let startButton = UIButton(configuration: .filled())
+    private let startButton = UIButton()
     
     // TODO: Удалить, если не потребуются в ВМ
 //    var nameTextField: UITextField!
@@ -75,7 +75,7 @@ private extension StartViewController {
     // MARK: Greeting label
     func setupGreetingLabel() {
         greetingLabel.text = Constants.greetingText
-        greetingLabel.font = UIFont.systemFont(ofSize: 30)
+        greetingLabel.font = UIFont(name: Constants.gameFont, size: 30)
         greetingLabel.textColor = .white
         greetingLabel.textAlignment = .center
         greetingLabel.numberOfLines = 5
@@ -83,8 +83,16 @@ private extension StartViewController {
     
     // MARK: Start button
     func setupStartButton() {
+        startButton.backgroundColor = UIColor(red: 0, green: 0.8, blue: 1, alpha: 1)
+        startButton.setShadow()
+        
         startButton.setTitle(Constants.startButtonTitle, for: .normal)
-        startButton.configuration?.cornerStyle = .capsule
+        startButton.setTitleColor(.white, for: .normal)
+        startButton.titleLabel?.font = UIFont(name: Constants.gameFont, size: 25)
+        
+        startButton.layer.cornerRadius = 10
+        startButton.layer.borderWidth = 1
+        startButton.layer.borderColor = UIColor.darkGray.cgColor
     }
     
     // MARK: Actions
@@ -103,34 +111,22 @@ private extension StartViewController {
     
     func setConstraints() {
         NSLayoutConstraint.activate([
-            greetingLabel.centerXAnchor.constraint(
-                equalTo: view.centerXAnchor
-            ),
-            greetingLabel.centerYAnchor.constraint(
-                equalTo: view.centerYAnchor
-            ),
-            greetingLabel.widthAnchor.constraint(
-                equalTo: view.widthAnchor,
-                multiplier: 0.8
-            ),
-            greetingLabel.heightAnchor.constraint(
-                equalTo: view.heightAnchor,
-                multiplier: 0.5
-            ),
             
-            startButton.centerXAnchor.constraint(
-                equalTo: view.centerXAnchor
-            ),
-            startButton.widthAnchor.constraint(
-                equalToConstant: 120
-            ),
-            startButton.heightAnchor.constraint(
-                equalToConstant: 40
-            ),
+            // MARK: Greeting label
+            greetingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            greetingLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            greetingLabel.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            greetingLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5),
+            
+            // MARK: Start button
+            startButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            startButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            startButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.08),
             startButton.bottomAnchor.constraint(
-                equalTo: view.bottomAnchor,
+                greaterThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor,
                 constant: -80
             )
+                
         ])
     }
 }
@@ -142,5 +138,6 @@ private extension StartViewController {
     enum Constants {
         static let greetingText = "Вперед за золотом! Дави на кнопку, зарабатывай монеты!"
         static let startButtonTitle = "Вперед!"
+        static let gameFont = "AvenirNext-DemiBold"
     }
 }
