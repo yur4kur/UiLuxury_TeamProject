@@ -13,30 +13,32 @@ final class ShopListViewController: UIViewController {
     
     //MARK: - Private properties
     
-    private let shoppings = Item.getItem()
+    private var shoppings = Item.getItem()
     private var selectCells: [Item] = []
-    private var selectIndexCells: [IndexPath] = []
+    
     private let descriptionLabel = UILabel()
     private let priceLabel = UILabel()
-    
-    let tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
-    
-    // MARK: - Public properties
-    
-    var delegate: ISendInfoAboutCharacterDelegate!
+    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
     // MARK: - Public methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
+        setupUI()
     }
+    
+    //MARK: - Private Metods
+    
     ///Настройка View
-    private func setupViews() {
+    private func setupUI() {
+        view.backgroundColor = .white
+        
+        setupNavView()
+        setupTableView()
+    }
+    
+    ///Настройка NavigationView
+    private func setupNavView() {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "basket"),
@@ -44,103 +46,19 @@ final class ShopListViewController: UIViewController {
             target: self,
             action: #selector(goBasket)
         )
-        
-        view.backgroundColor = .white
-        view.addSubview(tableView)
-        setupTableView()
     }
-    ///Метод перехода на экран корзины
-    @objc private func goBasket() {
-        let vc = BasketListViewController()
-        vc.selectCells = selectCells
-        vc.delegate = self
-        //vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
-    }
-}
-
-// MARK: - TableView DataSource
-
-extension ShopListViewController: UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        shoppings.count
-    }
-    
-    func tableView(_ tableView: UITableView,numberOfRowsInSection section: Int) -> Int {
-        1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        var content = cell.defaultContentConfiguration()
-        content.text = shoppings[indexPath.section].description
-        cell.contentConfiguration = content
-        return cell
-    }
-}
-
-// MARK: - TableView Delegate
-
-extension ShopListViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        shoppings[section].title
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.tintColor = .systemGray5
-    }
-    
-    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        "$\(shoppings[section].price.formatted())"
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
-        view.tintColor = .systemGray6
-    }
-    
-    // Метод нужно исправить, не отрабатывает
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let selectIndexCell = tableView.cellForRow(at: indexPath)
-        let selectCell = shoppings[indexPath.section]
-        
-        if selectIndexCells.contains(indexPath) {
-            selectIndexCell?.backgroundColor = .clear
-            if let index = selectIndexCells.firstIndex(of: indexPath) {
-                selectIndexCells.remove(at: index)
-                selectCells.remove(at: index)
-            }
-        } else {
-            if selectCells.count < 3 {
-                selectIndexCell?.backgroundColor = .purple
-                selectIndexCells.append(indexPath)
-                selectCells.append(selectCell)
-            } else {
-                showAlerAction()
-            }
-        }
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-}
-
-// MARK: - Configure UI
-
-private extension ShopListViewController {
     
     ///Настройка Таблицы
     func setupTableView() {
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
         tableView.dataSource = self
         tableView.delegate = self
-        
-        registerCell()
         setConstraints()
     }
-    /// Регистрация ячейки
-    func registerCell() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-    }
+    
     ///Настройка констрейнтов таблицы
     func setConstraints() {
         NSLayoutConstraint.activate(
@@ -152,14 +70,109 @@ private extension ShopListViewController {
             ]
         )
     }
+    
+    ///Метод отбора выбранных товаров
+    private func getPurchases() {
+        for item in shoppings {
+            if item.isOn {
+                selectCells.append(item)
+            }
+        }
+    }
+    
+    ///Метод перехода на экран корзины
+    @objc private func goBasket() {
+        getPurchases()
+        let basketVC = BasketListViewController()
+        basketVC.selectCells = selectCells
+        navigationController?.pushViewController(basketVC, animated: true)
+    }
 }
 
-//MARK: - Update Data Delegate
+// MARK: - TableView DataSource
 
-extension ShopListViewController: UpdateDataDelegate {
-    func updateData(updateSelectCells: [Item]) {
-        self.selectCells = updateSelectCells
+extension ShopListViewController: UITableViewDataSource {
+    
+    ///Колличество секций
+    func numberOfSections(in tableView: UITableView) -> Int {
+        shoppings.count
     }
+    
+    ///Колличество ячеек в секции
+    func tableView(_ tableView: UITableView,numberOfRowsInSection section: Int) -> Int {
+        1
+    }
+    
+    ///Настрорйка вида ячеки
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        var content = cell.defaultContentConfiguration()
+        content.text = "$\(shoppings[indexPath.section].price.formatted())"
+        content.secondaryText = shoppings[indexPath.section].title
+        cell.contentConfiguration = content
+        return cell
+    }
+}
+
+// MARK: - TableView Delegate
+
+extension ShopListViewController: UITableViewDelegate {
+    
+    //MARK: Setup Footers
+    
+    ///Текст футера
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        shoppings[section].description
+    }
+    
+    ///Цвет футурв
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        view.tintColor = .systemGray6
+    }
+    
+    //TODO: Добавить алерт
+    ///Метод выбора ячейки и смены тогла
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        if let cell = tableView.cellForRow(at: indexPath as IndexPath) {
+            if cell.accessoryType == .checkmark {
+                cell.accessoryType = .none
+                shoppings[indexPath.section].isOn.toggle()
+                //print(selectCells)
+            } else {
+                cell.accessoryType = .checkmark
+                // print(selectCells)
+                shoppings[indexPath.section].isOn.toggle()
+            }
+        }
+    }
+    
+    //TODO: Метод нужно исправить, не отрабатывает.
+    
+    /* func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     
+     let selectIndexCell = tableView.cellForRow(at: indexPath)
+     let selectCell = shoppings[indexPath.section]
+     
+     if selectIndexCells.contains(indexPath) {
+     selectIndexCell?.accessoryType = .none
+     if let index = selectIndexCells.firstIndex(of: indexPath) {
+     selectIndexCells.remove(at: index)
+     selectCells.remove(at: index)
+     }
+     } else {
+     if selectCells.count < 3 {
+     selectIndexCell?.accessoryType = .checkmark
+     //selectIndexCells.append(indexPath)
+     selectCells.append(selectCell)
+     } else {
+     showAlerAction()
+     }
+     }
+     tableView.deselectRow(at: indexPath, animated: true)
+     }*/
+    
 }
 
 // MARK: - Alert
