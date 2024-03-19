@@ -3,7 +3,7 @@
 //  UiLuxury_TeamProject
 //
 //  Created by Kirill Tokarev on 28/7/23.
-//
+// Delete
 
 import UIKit
 
