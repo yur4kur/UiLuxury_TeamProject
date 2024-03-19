@@ -29,6 +29,28 @@ final class ShopListViewController: UIViewController {
     
     //MARK: - Private Metods
     
+   ///Метод отбора выбранных товаров
+    private func getPurchases() {
+        for item in shoppings {
+            if item.isOn {
+                selectCells.append(item)
+            }
+        }
+    }
+    
+    ///Метод перехода на экран корзины
+    @objc private func goBasket() {
+        getPurchases()
+        let basketVC = BasketListViewController()
+        basketVC.selectCells = selectCells
+        navigationController?.pushViewController(basketVC, animated: true)
+    }
+}
+
+//MARK: - Configure UI
+
+extension ShopListViewController {
+    
     ///Настройка View
     private func setupUI() {
         view.backgroundColor = .white
@@ -41,7 +63,7 @@ final class ShopListViewController: UIViewController {
     private func setupNavView() {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "basket"),
+            image: UIImage(systemName: Constants.basket),
             style: .plain,
             target: self,
             action: #selector(goBasket)
@@ -52,7 +74,7 @@ final class ShopListViewController: UIViewController {
     func setupTableView() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.cell)
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -71,22 +93,7 @@ final class ShopListViewController: UIViewController {
         )
     }
     
-    ///Метод отбора выбранных товаров
-    private func getPurchases() {
-        for item in shoppings {
-            if item.isOn {
-                selectCells.append(item)
-            }
-        }
-    }
     
-    ///Метод перехода на экран корзины
-    @objc private func goBasket() {
-        getPurchases()
-        let basketVC = BasketListViewController()
-        basketVC.selectCells = selectCells
-        navigationController?.pushViewController(basketVC, animated: true)
-    }
 }
 
 // MARK: - TableView DataSource
@@ -105,7 +112,7 @@ extension ShopListViewController: UITableViewDataSource {
     
     ///Настрорйка вида ячеки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cell, for: indexPath)
         var content = cell.defaultContentConfiguration()
         content.text = "$\(shoppings[indexPath.section].price.formatted())"
         content.secondaryText = shoppings[indexPath.section].title
@@ -139,10 +146,8 @@ extension ShopListViewController: UITableViewDelegate {
             if cell.accessoryType == .checkmark {
                 cell.accessoryType = .none
                 shoppings[indexPath.section].isOn.toggle()
-                //print(selectCells)
             } else {
                 cell.accessoryType = .checkmark
-                // print(selectCells)
                 shoppings[indexPath.section].isOn.toggle()
             }
         }
@@ -180,11 +185,21 @@ extension ShopListViewController: UITableViewDelegate {
 private extension ShopListViewController {
     func showAlerAction() {
         let alert = UIAlertController(
-            title: "Упс",
-            message: "В корзину можно добавить только ТРИ апгрейда",
+            title: Constants.ups,
+            message: Constants.messege,
             preferredStyle: .alert)
-        let okAktion = UIAlertAction(title: "Ок", style: .default)
+        let okAktion = UIAlertAction(title: Constants.ok, style: .default)
         alert.addAction(okAktion)
         present(alert, animated: true)
+    }
+}
+
+private extension ShopListViewController {
+    enum Constants {
+        static let cell = "cell"
+        static let basket = "basket"
+        static let ok = "Ok"
+        static let ups = "Упс"
+        static let messege = "В корзину можно добавить только ТРИ апгрейда"
     }
 }

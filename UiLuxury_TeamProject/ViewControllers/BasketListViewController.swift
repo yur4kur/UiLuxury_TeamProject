@@ -23,6 +23,17 @@ final class BasketListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+    }
+}
+
+
+//MARK: - Configure UI
+
+extension BasketListViewController {
+    
+    ///Настройка UI
+    private func setupUI() {
         setupViews()
     }
     
@@ -37,7 +48,7 @@ final class BasketListViewController: UIViewController {
     func setupTableView() {
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.cell)
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -68,7 +79,7 @@ extension BasketListViewController: UITableViewDataSource, UITableViewDelegate {
     
     ///Настрорйка вида ячеки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cell, for: indexPath)
         var content = cell.defaultContentConfiguration()
         content.text = selectCells[indexPath.row].title
         content.secondaryText = "$\(selectCells[indexPath.row].price.formatted())"
@@ -85,4 +96,9 @@ extension BasketListViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-
+private extension BasketListViewController {
+    
+    enum Constants {
+        static let cell = "cell"
+    }
+}
