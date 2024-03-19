@@ -8,17 +8,26 @@
 import UIKit
 
 // MARK: - DevelopersInfo ViewController
+
+/// ViewController отображения информации о разработчиках
 final class DevelopersInfoViewController: UIViewController {
 
     // MARK: - Private properties
-    //private let mainLabel = UILabel()
+
+    /// Сегмент-контроллер для переключения между карточками о разработчиках
     private var developerSegments = UISegmentedControl()
+
+    /// Изображение разработчика
     private let developerImageView = UIImageView()
+
+    /// Контактная информация разработчика
     private let developerContactLabel = UILabel()
 
+    /// Индекс выбранного сегмента
     private var segmentIndex = 0
 
     // MARK: - Lifecycle methods
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -26,6 +35,8 @@ final class DevelopersInfoViewController: UIViewController {
     }
 
     // MARK: - Private Methods
+
+    /// Метод настройки карточки разработчика
     @objc private func showDeveloperInfo() {
         let selectedSegmentIndex = developerSegments.selectedSegmentIndex
         guard selectedSegmentIndex < DevelopersInfo.names.count else { return }
@@ -40,10 +51,12 @@ final class DevelopersInfoViewController: UIViewController {
 }
 
 // MARK: - Configure UI
+
 private extension DevelopersInfoViewController {
+
+    /// Метод настройки пользовательского интерфейса
     func setupUI() {
         setupView()
-        //setupMainLabel()
         setupDeveloperSegments()
         setupDeveloperImageView()
         setupDeveloperContactLabel()
@@ -52,6 +65,7 @@ private extension DevelopersInfoViewController {
         setConstraints()
     }
 
+    /// Метод добавления действия кнопке сегмента
     func setupBinding() {
         developerSegments.addTarget(
             self,
@@ -62,46 +76,43 @@ private extension DevelopersInfoViewController {
 }
 
 // MARK: - Setup UI
+
 private extension DevelopersInfoViewController {
+
+    /// Метод настройки главного экрана
     func setupView() {
         view.addQuadroGradientLayer()
     }
 
-
-//    func setupMainLabel() {
-//        mainLabel.text = "Developers"
-//        mainLabel.font = UIFont.boldSystemFont(ofSize: 17)
-//        mainLabel.textColor = .black
-//        mainLabel.textAlignment = .center
-//    }
-
+    /// Метод настройки сегмент-контроллера
     func setupDeveloperSegments() {
         developerSegments = UISegmentedControl(items: DevelopersInfo.names)
         developerSegments.selectedSegmentIndex = segmentIndex
         showDeveloperInfo()
     }
 
+    /// Метод настройки изображения пользователя
     func setupDeveloperImageView() {
         developerImageView.contentMode = .scaleAspectFill
         developerImageView.layer.cornerRadius = 8
         developerImageView.clipsToBounds = true
     }
 
+    /// Метод настройки текста контактной информации
     func setupDeveloperContactLabel() {
         developerContactLabel.font = UIFont.systemFont(ofSize: 17)
         developerContactLabel.textColor = .black
         developerContactLabel.textAlignment = .left
     }
 
+    /// Метод добавления элементов интерфейса на главный экран и отключения масок AutoLayout
     func addSubviews() {
         view.addSubviews(
-            //mainLabel,
             developerSegments,
             developerImageView,
             developerContactLabel
         )
         view.disableAutoresizingMask(
-            //mainLabel,
             developerSegments,
             developerImageView,
             developerContactLabel
@@ -110,14 +121,12 @@ private extension DevelopersInfoViewController {
 }
 
 // MARK: - Constraints
+
 private extension DevelopersInfoViewController {
+
+    /// Метод установки констреинтов элементов интерфейса
     func setConstraints() {
         NSLayoutConstraint.activate([
-//            mainLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-//            mainLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-//            mainLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-//            mainLabel.heightAnchor.constraint(equalToConstant: 22),
-
             developerSegments.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             developerSegments.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             developerSegments.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -137,7 +146,10 @@ private extension DevelopersInfoViewController {
 }
 
 // MARK: - Constants
+
 private extension DevelopersInfoViewController {
+
+    /// Информация о разработчиках
     enum DevelopersInfo {
         static let names = [
             "Миша",
