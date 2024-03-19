@@ -2,26 +2,23 @@
 //  ShopListViewController.swift
 //  UiLuxury_TeamProject
 //
-//  Created by Бийбол Зулпукаров on 28/7/23.
-//
+//  Created by Kirill Tokarev on 28/7/23.
+// Delete
 
 import UIKit
 
 // MARK: - ShopListViewController
 
-final class ShopListViewController: UITableViewController {
+final class ShopListViewController: UIViewController {
     
     //MARK: - Private properties
     
-    private let shoppings = Item.getItem()
+    private var shoppings = Item.getItem()
     private var selectCells: [Item] = []
-    private var selectIndexCells: [IndexPath] = []
+    
     private let descriptionLabel = UILabel()
     private let priceLabel = UILabel()
-    
-    // MARK: - Public properties
-    
-    var delegate: ISendInfoAboutCharacterDelegate!
+    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
     
     // MARK: - Public methods
     
@@ -30,154 +27,157 @@ final class ShopListViewController: UITableViewController {
         setupUI()
     }
     
-    // MARK: - Navigation
+    //MARK: - Private Metods
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let basketListVS = segue.destination as? BasketListViewController else { return }
-        basketListVS.selectCells = selectCells
-        basketListVS.delegate = self
-        
+   ///Метод отбора выбранных товаров
+    private func getPurchases() {
+        for item in shoppings {
+            if item.isOn {
+                selectCells.append(item)
+            }
+        }
     }
+    
+    ///Метод перехода на экран корзины
+    @objc private func goBasket() {
+        getPurchases()
+        let basketVC = BasketListViewController()
+        basketVC.selectCells = selectCells
+        navigationController?.pushViewController(basketVC, animated: true)
+    }
+}
+
+//MARK: - Configure UI
+
+extension ShopListViewController {
+    
+    ///Настройка View
+    private func setupUI() {
+        view.backgroundColor = .white
+        
+        setupNavView()
+        setupTableView()
+    }
+    
+    ///Настройка NavigationView
+    private func setupNavView() {
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: Constants.basket),
+            style: .plain,
+            target: self,
+            action: #selector(goBasket)
+        )
+    }
+    
+    ///Настройка Таблицы
+    func setupTableView() {
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.cell)
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+        setConstraints()
+    }
+    
+    ///Настройка констрейнтов таблицы
+    func setConstraints() {
+        NSLayoutConstraint.activate(
+            [
+                tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ]
+        )
+    }
+    
+    
 }
 
 // MARK: - TableView DataSource
 
-extension ShopListViewController {
+extension ShopListViewController: UITableViewDataSource {
     
-    // MARK: Section
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    ///Колличество секций
+    func numberOfSections(in tableView: UITableView) -> Int {
         shoppings.count
     }
     
-    // MARK: Row
-    override func tableView(_ tableView: UITableView,
-                            numberOfRowsInSection section: Int) -> Int {
+    ///Колличество ячеек в секции
+    func tableView(_ tableView: UITableView,numberOfRowsInSection section: Int) -> Int {
         1
     }
     
-    // MARK: Cell
-    override func tableView(_ tableView: UITableView,
-                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: Constants.cellID,
-            for: indexPath
-        )
-        
-//        let content = cell.contentConfiguration?.makeContentView()
-       
-//        cell.contentView.addSubview(descriptionLabel)
-//        cell.contentView.addSubview(priceLabel)
-        let textContent = shoppings[indexPath.section]
-        cell.textLabel?.text = textContent.description
-        cell.detailTextLabel?.text = "$\(textContent.price.formatted())"
-//        descriptionLabel.text = textContent.description
-//        priceLabel.text = "$\(textContent.price.formatted())"
-//        cell.contentConfiguration = content as! any UIContentConfiguration
-        
+    ///Настрорйка вида ячеки
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cell, for: indexPath)
+        var content = cell.defaultContentConfiguration()
+        content.text = "$\(shoppings[indexPath.section].price.formatted())"
+        content.secondaryText = shoppings[indexPath.section].title
+        cell.contentConfiguration = content
         return cell
     }
 }
 
 // MARK: - TableView Delegate
 
-extension ShopListViewController {
+extension ShopListViewController: UITableViewDelegate {
     
-    override func tableView(_ tableView: UITableView, 
-                            titleForHeaderInSection section: Int) -> String? {
-        shoppings[section].title
+    //MARK: Setup Footers
+    
+    ///Текст футера
+    func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        shoppings[section].description
     }
     
-    override func tableView(_ tableView: UITableView, 
-                            willDisplayHeaderView view: UIView,
-                            forSection section: Int) {
+    ///Цвет футурв
+    func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
         view.tintColor = .systemGray6
     }
     
-    override func tableView(_ tableView: UITableView, 
-                            didSelectRowAt indexPath: IndexPath) {
+    //TODO: Добавить алерт
+    ///Метод выбора ячейки и смены тогла
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
-        let selectIndexCell = tableView.cellForRow(at: indexPath)
-        let selectCell = shoppings[indexPath.section]
-        
-        if selectIndexCells.contains(indexPath) {
-            selectIndexCell?.backgroundColor = .clear
-            if let index = selectIndexCells.firstIndex(of: indexPath) {
-                selectIndexCells.remove(at: index)
-                selectCells.remove(at: index)
-            }
-        } else {
-            if selectCells.count < 3 {
-                selectIndexCell?.backgroundColor = .purple
-                selectIndexCells.append(indexPath)
-                selectCells.append(selectCell)
+        if let cell = tableView.cellForRow(at: indexPath as IndexPath) {
+            if cell.accessoryType == .checkmark {
+                cell.accessoryType = .none
+                shoppings[indexPath.section].isOn.toggle()
             } else {
-                showAlerAction()
+                cell.accessoryType = .checkmark
+                shoppings[indexPath.section].isOn.toggle()
             }
         }
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-}
-
-// MARK: - Configure UI
-
-private extension ShopListViewController {
-    
-    func setupUI() {
-        setupTableView()
-        
     }
     
-}
-
-// MARK: - Setup UI
-
-private extension ShopListViewController {
+    //TODO: Метод нужно исправить, не отрабатывает.
     
-    func addCellSubviews() {
-        
-    }
+    /* func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     
+     let selectIndexCell = tableView.cellForRow(at: indexPath)
+     let selectCell = shoppings[indexPath.section]
+     
+     if selectIndexCells.contains(indexPath) {
+     selectIndexCell?.accessoryType = .none
+     if let index = selectIndexCells.firstIndex(of: indexPath) {
+     selectIndexCells.remove(at: index)
+     selectCells.remove(at: index)
+     }
+     } else {
+     if selectCells.count < 3 {
+     selectIndexCell?.accessoryType = .checkmark
+     //selectIndexCells.append(indexPath)
+     selectCells.append(selectCell)
+     } else {
+     showAlerAction()
+     }
+     }
+     tableView.deselectRow(at: indexPath, animated: true)
+     }*/
     
-    // MARK: Setup cell labels
-    func setupCellLabels() {
-        
-        // MARK: Description Label
-        descriptionLabel.isMultipleTouchEnabled = true
-        descriptionLabel.contentMode = .left
-        descriptionLabel.insetsLayoutMarginsFromSafeArea = false
-//        descriptionLabel.text
-        descriptionLabel.textAlignment = .natural
-        descriptionLabel.lineBreakMode = .byTruncatingTail
-        descriptionLabel.numberOfLines = 3
-        descriptionLabel.baselineAdjustment = .alignBaselines
-        descriptionLabel.adjustsFontSizeToFitWidth = false
-        descriptionLabel.font = .systemFont(ofSize: 13)
-        
-        // MARK: Price label
-        priceLabel.isMultipleTouchEnabled = true
-        priceLabel.contentMode = .left
-        priceLabel.insetsLayoutMarginsFromSafeArea = false
-        //priceLabel.text = "Detail"
-        priceLabel.textAlignment = .right
-        priceLabel.lineBreakMode = .byTruncatingTail
-        priceLabel.baselineAdjustment = .alignBaselines
-        priceLabel.adjustsFontSizeToFitWidth = false
-        priceLabel.font = .systemFont(ofSize: 20)
-    }
-    
-    // MARK: Setup TableView
-    func setupTableView() {
-        tableView.register(UITableViewCell.self,
-                           forCellReuseIdentifier: Constants.cellID)
-    }
-}
-
-//MARK: - Update Data Delegate
-
-extension ShopListViewController: IUpdateDataDelegate {
-    func updateData(updateSelectCells: [Item]) {
-        self.selectCells = updateSelectCells
-    }
 }
 
 // MARK: - Alert
@@ -185,19 +185,21 @@ extension ShopListViewController: IUpdateDataDelegate {
 private extension ShopListViewController {
     func showAlerAction() {
         let alert = UIAlertController(
-            title: "Упс",
-            message: "В корзину можно добавить только ТРИ апгрейда",
+            title: Constants.ups,
+            message: Constants.messege,
             preferredStyle: .alert)
-        let okAktion = UIAlertAction(title: "Ок", style: .default)
+        let okAktion = UIAlertAction(title: Constants.ok, style: .default)
         alert.addAction(okAktion)
         present(alert, animated: true)
     }
 }
 
-// MARK: - Constants
-
 private extension ShopListViewController {
     enum Constants {
-        static let cellID = "cellMarket"
+        static let cell = "cell"
+        static let basket = "basket"
+        static let ok = "Ok"
+        static let ups = "Упс"
+        static let messege = "В корзину можно добавить только ТРИ апгрейда"
     }
 }
