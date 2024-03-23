@@ -87,7 +87,7 @@ class DataSource {
         20,
         1
     ]
-    
+  /*
     let gameItems = [
         Item(
             title: "Homeless hat",
@@ -177,6 +177,7 @@ class DataSource {
              modifier: 1,
              actionOperator: .assets)
     ]
+   */
     
     private init () {}
 }
