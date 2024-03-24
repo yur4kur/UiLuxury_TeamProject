@@ -14,20 +14,26 @@ class User {
         price: 15,
         description: "Plus one point to any tap",
         modifier: 1,
-        actionOperator: .add),
+        actionOperator: .add, 
+        isOn: false
+        ),
     
     Item(
         title: "Lost talent",
         price: 40,
         description: "Multiplies the number of points per touch by 2",
         modifier: 2,
-        actionOperator: .multiply),
+        actionOperator: .multiply, 
+        isOn: false
+    ),
         
         Item(title: "Win this game and take credits",
              price: 6000,
              description: "Good Job",
              modifier: 1,
-             actionOperator: .assets)
+             actionOperator: .assets, 
+             isOn: false
+            )
     ]
     
     static let shared = User()

@@ -11,6 +11,7 @@ struct Item {
     let description: String
     let modifier: Int
     let actionOperator: Operator
+    var isOn: Bool
     
     static func getItem() -> [Item] {
         var items: [Item] = []
@@ -22,7 +23,8 @@ struct Item {
                 price: dataSourse.prise[index],
                 description: dataSourse.description[index],
                 modifier: dataSourse.modifier[index],
-                actionOperator: .add
+                actionOperator: .add,
+                isOn: false
             )
             items.append(item)
         }
