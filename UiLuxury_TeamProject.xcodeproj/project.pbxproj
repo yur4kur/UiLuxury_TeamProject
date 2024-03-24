@@ -26,6 +26,9 @@
 		6ADD25B42B9C531700F3DD15 /* GameTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADD25B32B9C531700F3DD15 /* GameTabBarController.swift */; };
 		6AE5E95B2B9F2A9F00810D91 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE5E95A2B9F2A9F00810D91 /* UIButton+.swift */; };
 		6AE5E9752BA667BB00810D91 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE5E9742BA667BB00810D91 /* GameViewModel.swift */; };
+		B8979AB92BA9B85E00A2D725 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8979AB82BA9B85E00A2D725 /* SoundManager.swift */; };
+		B8979ABD2BA9B86C00A2D725 /* levelDown.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B8979ABA2BA9B86C00A2D725 /* levelDown.mp3 */; };
+		B8979ABE2BA9B86C00A2D725 /* levelUp.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B8979ABB2BA9B86C00A2D725 /* levelUp.mp3 */; };
 		E99F36322A8EAE0300C96277 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99F36312A8EAE0300C96277 /* Protocol.swift */; };
 		E99F36342A8EAE2100C96277 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99F36332A8EAE2100C96277 /* Character.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +55,9 @@
 		6ADD25B32B9C531700F3DD15 /* GameTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTabBarController.swift; sourceTree = "<group>"; };
 		6AE5E95A2B9F2A9F00810D91 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		6AE5E9742BA667BB00810D91 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		B8979AB82BA9B85E00A2D725 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
+		B8979ABA2BA9B86C00A2D725 /* levelDown.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = levelDown.mp3; sourceTree = "<group>"; };
+		B8979ABB2BA9B86C00A2D725 /* levelUp.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = levelUp.mp3; sourceTree = "<group>"; };
 		E99F36312A8EAE0300C96277 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		E99F36332A8EAE2100C96277 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				6AB7F8872A7303020026E5DC /* Storyboards */,
+				B8979ABC2BA9B86C00A2D725 /* Sound */,
 				6AB7F8792A7302340026E5DC /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -153,6 +160,7 @@
 				6AB7F88A2A7303740026E5DC /* DataSource.swift */,
 				E99F36332A8EAE2100C96277 /* Character.swift */,
 				E99F36312A8EAE0300C96277 /* Protocol.swift */,
+				B8979AB82BA9B85E00A2D725 /* SoundManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -198,6 +206,15 @@
 				6AE5E9742BA667BB00810D91 /* GameViewModel.swift */,
 			);
 			path = GameScene;
+			sourceTree = "<group>";
+		};
+		B8979ABC2BA9B86C00A2D725 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				B8979ABA2BA9B86C00A2D725 /* levelDown.mp3 */,
+				B8979ABB2BA9B86C00A2D725 /* levelUp.mp3 */,
+			);
+			path = Sound;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,8 +276,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A778A102A82C476006D96CE /* Main.storyboard in Resources */,
+				B8979ABE2BA9B86C00A2D725 /* levelUp.mp3 in Resources */,
 				6AB7F87D2A7302340026E5DC /* LaunchScreen.storyboard in Resources */,
 				6AB7F87A2A7302340026E5DC /* Assets.xcassets in Resources */,
+				B8979ABD2BA9B86C00A2D725 /* levelDown.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +307,7 @@
 				6AE5E9752BA667BB00810D91 /* GameViewModel.swift in Sources */,
 				46227DE62A73B1D600C042F4 /* ShopViewController.swift in Sources */,
 				6AB7F8732A7302330026E5DC /* SceneDelegate.swift in Sources */,
+				B8979AB92BA9B85E00A2D725 /* SoundManager.swift in Sources */,
 				E99F36322A8EAE0300C96277 /* Protocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

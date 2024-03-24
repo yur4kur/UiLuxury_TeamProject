@@ -5,7 +5,7 @@
 //  Created by Юрий Куринной on 19.08.2023.
 //
 
-final class User {
+class User {
     var name = ""
     var wallet = 0
     var items: [Item] = [
@@ -35,8 +35,8 @@ final class User {
              isOn: false
             )
     ]
-
+    
     static let shared = User()
-
+    
     private init() {}
 }
