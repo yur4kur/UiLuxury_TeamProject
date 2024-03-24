@@ -8,24 +8,38 @@
 import UIKit
 
 // MARK: - DevelopersInfo ViewController
+
+/// ViewController отображения информации о разработчиках
 final class DevelopersInfoViewController: UIViewController {
 
-    // MARK: - Private properties
-    //private let mainLabel = UILabel()
-    private var developerSegments = UISegmentedControl()
-    private let developerImageView = UIImageView()
-    private let developerContactLabel = UILabel()
+    // MARK: Private properties
 
+    /// Сегмент-контроллер для переключения между карточками о разработчиках
+    private var developerSegments = UISegmentedControl()
+
+    /// Изображение разработчика
+    private let developerImageView = UIImageView()
+
+    /// Кнопка перехода в Telegram
+    private let telegramButton = UIButton()
+
+    /// Текущий индекс сегмента
     private var segmentIndex = 0
 
-    // MARK: - Lifecycle methods
+    /// Текущая Telegram-ссылка разработчика
+    private var currentURL = DevelopersInfo.contacts[0]
+
+    // MARK: Lifecycle Methods
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupBinding()
+        addActions()
     }
 
-    // MARK: - Private Methods
+    // MARK: Private Methods
+
+    /// Метод настройки карточки разработчика
     @objc private func showDeveloperInfo() {
         let selectedSegmentIndex = developerSegments.selectedSegmentIndex
         guard selectedSegmentIndex < DevelopersInfo.names.count else { return }
@@ -35,89 +49,100 @@ final class DevelopersInfoViewController: UIViewController {
         let developerContact = DevelopersInfo.contacts[segmentIndex]
 
         developerImageView.image = developerImage
-        developerContactLabel.text = developerContact
+        currentURL = developerContact
+    }
+
+    /// Метод перехода в Telegram
+    @objc private func openURL() {
+        guard let url = URL(string: currentURL) else { return }
+        UIApplication.shared.open(url)
     }
 }
 
 // MARK: - Configure UI
+
 private extension DevelopersInfoViewController {
+
+    /// Метод настройки пользовательского интерфейса
     func setupUI() {
         setupView()
-        //setupMainLabel()
         setupDeveloperSegments()
         setupDeveloperImageView()
-        setupDeveloperContactLabel()
+        setupTelegramButton()
 
         addSubviews()
         setConstraints()
-    }
-
-    func setupBinding() {
-        developerSegments.addTarget(
-            self,
-            action: #selector(showDeveloperInfo),
-            for: .valueChanged
-        )
+        addActions()
     }
 }
 
 // MARK: - Setup UI
+
 private extension DevelopersInfoViewController {
+
+    /// Метод настройки главного экрана
     func setupView() {
         view.addQuadroGradientLayer()
     }
 
-
-//    func setupMainLabel() {
-//        mainLabel.text = "Developers"
-//        mainLabel.font = UIFont.boldSystemFont(ofSize: 17)
-//        mainLabel.textColor = .black
-//        mainLabel.textAlignment = .center
-//    }
-
+    /// Метод настройки сегмент-контроллера
     func setupDeveloperSegments() {
         developerSegments = UISegmentedControl(items: DevelopersInfo.names)
         developerSegments.selectedSegmentIndex = segmentIndex
         showDeveloperInfo()
     }
 
+    /// Метод настройки изображения пользователя
     func setupDeveloperImageView() {
         developerImageView.contentMode = .scaleAspectFill
         developerImageView.layer.cornerRadius = 8
         developerImageView.clipsToBounds = true
     }
 
-    func setupDeveloperContactLabel() {
-        developerContactLabel.font = UIFont.systemFont(ofSize: 17)
-        developerContactLabel.textColor = .black
-        developerContactLabel.textAlignment = .left
+    /// Метод настройки изображения кнопки перехода в Telegram
+    func setupTelegramButton() {
+        guard let image = UIImage(named: Images.telegramLogo) else { return }
+        telegramButton.setImage(image, for: .normal)
     }
 
+    /// Метод добавления элементов интерфейса на главный экран и отключения масок AutoLayout
     func addSubviews() {
         view.addSubviews(
-            //mainLabel,
             developerSegments,
             developerImageView,
-            developerContactLabel
+            telegramButton
         )
+
         view.disableAutoresizingMask(
-            //mainLabel,
             developerSegments,
             developerImageView,
-            developerContactLabel
+            telegramButton
+        )
+    }
+
+    /// Метод добавления действий  элементам интерфейса
+    func addActions() {
+        developerSegments.addTarget(
+            self,
+            action: #selector(showDeveloperInfo),
+            for: .valueChanged
+        )
+
+        telegramButton.addTarget(
+            self,
+            action: #selector(openURL),
+            for: .touchUpInside
         )
     }
 }
 
 // MARK: - Constraints
+
 private extension DevelopersInfoViewController {
+
+    /// Метод установки констреинтов элементов интерфейса
     func setConstraints() {
         NSLayoutConstraint.activate([
-//            mainLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-//            mainLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-//            mainLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-//            mainLabel.heightAnchor.constraint(equalToConstant: 22),
-
             developerSegments.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             developerSegments.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             developerSegments.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -128,16 +153,19 @@ private extension DevelopersInfoViewController {
             developerImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             developerImageView.widthAnchor.constraint(equalTo: developerImageView.heightAnchor, multiplier: 1),
 
-            developerContactLabel.topAnchor.constraint(equalTo: developerImageView.bottomAnchor, constant: 20),
-            developerContactLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            developerContactLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            developerContactLabel.heightAnchor.constraint(equalToConstant: 22)
+            telegramButton.trailingAnchor.constraint(equalTo: developerImageView.trailingAnchor, constant: -16),
+            telegramButton.bottomAnchor.constraint(equalTo: developerImageView.bottomAnchor, constant: -16),
+            telegramButton.heightAnchor.constraint(equalToConstant: 30),
+            telegramButton.widthAnchor.constraint(equalToConstant: 30)
         ])
     }
 }
 
 // MARK: - Constants
+
 private extension DevelopersInfoViewController {
+
+    /// Информация о разработчиках
     enum DevelopersInfo {
         static let names = [
             "Миша",
@@ -156,5 +184,10 @@ private extension DevelopersInfoViewController {
             "https://t.me/eldarovsky",
             "https://t.me/hellofox"
         ]
+    }
+
+    /// Изображения
+    enum Images {
+        static let telegramLogo = "logo_telegram"
     }
 }
