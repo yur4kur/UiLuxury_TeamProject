@@ -27,14 +27,14 @@ final class DevelopersInfoViewController: UIViewController {
     private var segmentIndex = 0
 
     /// Текущая Telegram-ссылка разработчика
-    private var currentURL = "https://t.me/AkiraReiTyan"
+    private var currentURL = DevelopersInfo.contacts[0]
 
     // MARK: - Lifecycle methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setupBinding()
+        addActions()
     }
 
     // MARK: - Private Methods
@@ -72,12 +72,7 @@ private extension DevelopersInfoViewController {
 
         addSubviews()
         setConstraints()
-    }
-
-    /// Метод добавления действий  элементам интерфейса
-    func setupBinding() {
-        developerSegments.addTarget(self, action: #selector(showDeveloperInfo), for: .valueChanged)
-        telegramButton.addTarget(self, action: #selector(openURL), for: .touchUpInside)
+        addActions()
     }
 }
 
@@ -106,7 +101,7 @@ private extension DevelopersInfoViewController {
 
     /// Метод настройки изображения кнопки перехода в Telegram
     func setupTelegramButton() {
-        guard let image = UIImage(named: "logo_telegram") else { return }
+        guard let image = UIImage(named: Images.telegramLogo) else { return }
         telegramButton.setImage(image, for: .normal)
     }
 
@@ -122,6 +117,21 @@ private extension DevelopersInfoViewController {
             developerSegments,
             developerImageView,
             telegramButton
+        )
+    }
+
+    /// Метод добавления действий  элементам интерфейса
+    func addActions() {
+        developerSegments.addTarget(
+            self,
+            action: #selector(showDeveloperInfo),
+            for: .valueChanged
+        )
+
+        telegramButton.addTarget(
+            self,
+            action: #selector(openURL),
+            for: .touchUpInside
         )
     }
 }
@@ -174,5 +184,10 @@ private extension DevelopersInfoViewController {
             "https://t.me/eldarovsky",
             "https://t.me/hellofox"
         ]
+    }
+
+    /// Изображения
+    enum Images {
+        static let telegramLogo = "logo_telegram"
     }
 }

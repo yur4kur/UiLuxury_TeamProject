@@ -101,7 +101,7 @@ final class InfoCharacterViewController: UIViewController {
     private func updateCreditsValue() {
         DispatchQueue.main.async {
             self.userItemsTableView.reloadData()
-            self.userCreditsLabel.text = "CREDITS: \(self.user.wallet)"
+            self.userCreditsLabel.text = "\(Text.creditsLabelText): \(self.user.wallet)"
         }
     }
 
@@ -109,6 +109,99 @@ final class InfoCharacterViewController: UIViewController {
     private func play(sound: String) {
         soundManager.setupAudioPlayer(fromSound: sound)
         soundManager.audioPlayer?.play()
+    }
+}
+
+// MARK: - TableView DataSource
+
+extension InfoCharacterViewController: UITableViewDataSource {
+
+    /// Метод определения количества секций таблицы
+    func numberOfSections(in tableView: UITableView) -> Int {
+        user.items.count
+    }
+
+    /// Метод присвоения названий секциям таблицы
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        user.items[section].title
+    }
+
+    /// Метод определения количества ячеек внутри одной секции таблицы
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
+    }
+
+    /// Метод настройки ячейки таблицы
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = userItemsTableView.dequeueReusableCell(withIdentifier: Text.cellIdentifier, for: indexPath)
+
+        var content = cell.defaultContentConfiguration()
+        content.text = user.items[indexPath.section].description
+        content.secondaryText = "\(Text.tableViewSecondaryText): \(user.items[indexPath.section].price)"
+
+        cell.backgroundColor = .white
+        cell.layer.cornerRadius = 8
+        cell.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+
+        cell.contentConfiguration = content
+
+        return cell
+    }
+}
+
+// MARK: - TableView Delegate
+
+extension InfoCharacterViewController: UITableViewDelegate {
+
+    /// Метод настройки отображения хедера секции
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let itemNameLabel = UILabel(frame: CGRect(x: 17, y: 3, width: tableView.frame.width, height: 20))
+        itemNameLabel.text = "\(user.items[section].title)"
+        itemNameLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        itemNameLabel.textColor = .gray
+
+        let contentView = UIView()
+        contentView.layer.cornerRadius = 8
+        contentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        contentView.addSubview(itemNameLabel)
+
+        return contentView
+    }
+
+    /// Метод настройки фона хедера секции
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.backgroundColor = .tertiarySystemGroupedBackground
+    }
+
+    /// Метод настройки поведения приложения при нажатии на ячейку таблицы
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
+            cell.selectedBackgroundView?.layer.cornerRadius = 8
+            cell.selectedBackgroundView?.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        }
+
+        showAlert(withTitle: Text.alertTitle, andMessage: Text.alertMessage) { [weak self] action in
+            switch action {
+            case .confirm:
+                guard let itemPrice = self?.user.items[indexPath.section].price else { return }
+                self?.user.wallet += itemPrice
+                self?.user.items.remove(at: indexPath.section)
+                self?.updateUserImage()
+                self?.updateCreditsValue()
+            case .refuse:
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
+        }
+    }
+}
+
+// TODO: - InfoCharacter ViewController Protocol
+
+extension InfoCharacterViewController: ISendInfoAboutCharacterDelegate {
+
+    /// Метод обновления количества кредитов
+    func updateCharacterWallet(with newValue: Int) {
+        //userNameLabel.text = newValue.description
     }
 }
 
@@ -157,7 +250,7 @@ private extension InfoCharacterViewController {
     func setupUserItemsTableView() {
         userItemsTableView.dataSource = self
         userItemsTableView.delegate = self
-        userItemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        userItemsTableView.register(UITableViewCell.self, forCellReuseIdentifier: Text.cellIdentifier)
 
         userItemsTableView.backgroundColor = .clear
         userItemsTableView.separatorStyle = .none
@@ -205,89 +298,6 @@ private extension InfoCharacterViewController {
     }
 }
 
-// MARK: - TableView DataSource
-
-extension InfoCharacterViewController: UITableViewDataSource {
-
-    /// Метод определения количества секций таблицы
-    func numberOfSections(in tableView: UITableView) -> Int {
-        user.items.count
-    }
-
-    /// Метод присвоения названий секциям таблицы
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        user.items[section].title
-    }
-
-    /// Метод определения количества ячеек внутри одной секции таблицы
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
-    }
-
-    /// Метод настройки ячейки таблицы
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = userItemsTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-
-        var content = cell.defaultContentConfiguration()
-        content.text = user.items[indexPath.section].description
-        content.secondaryText = "Sell: \(user.items[indexPath.section].price)"
-
-        cell.backgroundColor = .white
-        cell.layer.cornerRadius = 8
-        cell.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-
-        cell.contentConfiguration = content
-
-        return cell
-    }
-}
-
-// MARK: - TableView Delegate
-
-extension InfoCharacterViewController: UITableViewDelegate {
-
-    /// Метод настройки отображения хедера секции
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let itemNameLabel = UILabel(frame: CGRect(x: 17, y: 3, width: tableView.frame.width, height: 20))
-        itemNameLabel.text = "\(user.items[section].title)"
-        itemNameLabel.font = UIFont.boldSystemFont(ofSize: 17)
-        itemNameLabel.textColor = .gray
-
-        let contentView = UIView()
-        contentView.layer.cornerRadius = 8
-        contentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        contentView.addSubview(itemNameLabel)
-
-        return contentView
-    }
-
-    /// Метод настройки фона хедера секции
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.backgroundColor = .tertiarySystemGroupedBackground
-    }
-
-    /// Метод настройки поведения приложения при нажатии на ячейку таблицы
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) {
-            cell.selectedBackgroundView?.layer.cornerRadius = 8
-            cell.selectedBackgroundView?.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-        }
-
-        showAlert(withTitle: "Sell this item", andMessage: "Do you really want to sell it?") { [weak self] action in
-            switch action {
-            case .confirm:
-                guard let itemPrice = self?.user.items[indexPath.section].price else { return }
-                self?.user.wallet += itemPrice
-                self?.user.items.remove(at: indexPath.section)
-                self?.updateUserImage()
-                self?.updateCreditsValue()
-            case .refuse:
-                tableView.deselectRow(at: indexPath, animated: true)
-            }
-        }
-    }
-}
-
 // MARK: - Alert Controller
 
 private extension InfoCharacterViewController {
@@ -302,10 +312,10 @@ private extension InfoCharacterViewController {
     func showAlert(withTitle title: String, andMessage message: String, _ handler: @escaping (AlertAction) -> Void) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        let confirmAction = UIAlertAction(title: "Confirm", style: .default) { _ in
+        let confirmAction = UIAlertAction(title: Text.alertConfirmTitle, style: .default) { _ in
             handler(.confirm)
         }
-        let refuseAction = UIAlertAction(title: "Refuse", style: .destructive) { _ in
+        let refuseAction = UIAlertAction(title: Text.alertRefuseTitle, style: .destructive) { _ in
             handler(.refuse)
         }
 
@@ -319,6 +329,19 @@ private extension InfoCharacterViewController {
 // MARK: - Constants
 
 private extension InfoCharacterViewController {
+
+    /// Текстовые константы
+    enum Text {
+        static let creditsLabelText = "CREDITS"
+
+        static let cellIdentifier = "cell"
+        static let tableViewSecondaryText = "Sell"
+
+        static let alertConfirmTitle = "Confirm"
+        static let alertRefuseTitle = "Refuse"
+        static let alertTitle = "Sell this item"
+        static let alertMessage = "Do you really want to sell it?"
+    }
 
     /// Имена изображений
     enum StageImages {
@@ -334,15 +357,5 @@ private extension InfoCharacterViewController {
     enum Sounds {
         static let levelUp = "levelUp"
         static let levelDown = "levelDown"
-    }
-}
-
-// TODO: - InfoCharacter ViewController Protocol
-
-extension InfoCharacterViewController: ISendInfoAboutCharacterDelegate {
-
-    /// Метод обновления количества кредитов
-    func updateCharacterWallet(with newValue: Int) {
-        //userNameLabel.text = newValue.description
     }
 }
