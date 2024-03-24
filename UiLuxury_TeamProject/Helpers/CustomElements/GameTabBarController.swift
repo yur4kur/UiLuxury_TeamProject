@@ -40,7 +40,12 @@ final class GameTabBarController: UITabBarController {
     private func setupNavigationBar(_ navigationController: UINavigationController) {
         navigationController.navigationBar.prefersLargeTitles = true
         navigationController.navigationBar.tintColor = .black
-        navigationController.navigationBar.backgroundColor = .clear
+        
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.configureWithTransparentBackground()
+        navigationController.navigationBar.standardAppearance = navigationBarAppearance
+        navigationController.navigationBar.compactAppearance = navigationBarAppearance
+        navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
     /// Метода настраивает иконки и названия элементов ТабБара с привязкой к контроллерам
@@ -54,7 +59,7 @@ final class GameTabBarController: UITabBarController {
         let shopVC = createNavigationController(
             title: Constants.shopTabName,
             image: UIImage(systemName: Constants.shopTabIcon),
-            rootViewController: ShopListViewController()
+            rootViewController: ShopViewController()
         )
         
         let userVC = createNavigationController(
@@ -74,9 +79,32 @@ final class GameTabBarController: UITabBarController {
     
     /// Метод настраивает цвет иконок и делает таббар прозрачным
     private func setupTabBar() {
-        tabBar.barTintColor = .clear
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithTransparentBackground()
+        tabBarAppearance.backgroundColor = .clear
+        
+        let tabBarItemAppearance = UITabBarItemAppearance()
+        
+        tabBarItemAppearance.normal.iconColor = .darkGray
         tabBar.tintColor = .white
-        tabBar.unselectedItemTintColor = .darkGray
+        
+        tabBarItemAppearance.normal.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.darkGray,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)
+        ]
+        
+        tabBarItemAppearance.selected.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.white,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)
+        ]
+        
+        tabBarAppearance.stackedLayoutAppearance = tabBarItemAppearance
+        tabBar.standardAppearance = tabBarAppearance
+        tabBar.scrollEdgeAppearance = tabBarAppearance
+//        tabBar.barTintColor = .systemMint
+//        tabBar.backgroundColor = .systemMint
+//        tabBar.tintColor = .white
+//        tabBar.unselectedItemTintColor = .darkGray
     }
 }
 
