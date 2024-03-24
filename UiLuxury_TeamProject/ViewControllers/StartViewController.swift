@@ -13,7 +13,10 @@ final class StartViewController: UIViewController {
     
     // MARK: - Private properties
     
+    /// Лейбл с приветственной надписью
     private let greetingLabel = UILabel()
+    
+    /// Кнопка, переводящая на игровой экран
     private let startButton = UIButton()
     
     // TODO: Удалить, если не потребуются в ВМ
@@ -21,6 +24,7 @@ final class StartViewController: UIViewController {
 //    var user = User.shared
     
     // MARK: - Lifecycle methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -28,6 +32,7 @@ final class StartViewController: UIViewController {
     
     // MARK: - Private methods
     
+    /// Метода переход на игровой экран
     @objc private func startTapped() {
         let vc = GameTabBarController()
         vc.modalPresentationStyle = .fullScreen
@@ -39,9 +44,11 @@ final class StartViewController: UIViewController {
 // MARK: -  Configure UI
 
 private extension StartViewController {
+    
+    /// Метод собирает в себе настройки вьюх и анимации и устанавливает констрейнты вьюх
     func setupUI() {
-        addSubviews()
         setupViews()
+        addSubviews()
         addActions()
         setConstraints()
     }
@@ -51,15 +58,9 @@ private extension StartViewController {
 
 private extension StartViewController {
     
-    // MARK: Add subviews
-    func addSubviews() {
-        view.addSubviews(
-        greetingLabel,
-        startButton
-        )
-    }
-    
     // MARK: Setup views
+    
+    /// Метод настраивает основное вью и запускает методы настройки сабвьюх
     func setupViews() {
         view.addQuadroGradientLayer()
         
@@ -72,7 +73,19 @@ private extension StartViewController {
         setupStartButton()
     }
     
+    // MARK: Add subviews
+    
+    /// Метод добавляет вьюхи на основное вью в качестве сабвьюх
+    func addSubviews() {
+        view.addSubviews(
+        greetingLabel,
+        startButton
+        )
+    }
+    
     // MARK: Greeting label
+    
+    /// Метод настраивает лейбл с приветственной надписью
     func setupGreetingLabel() {
         greetingLabel.text = Constants.greetingText
         greetingLabel.font = UIFont(name: Constants.gameFont, size: 30)
@@ -82,6 +95,8 @@ private extension StartViewController {
     }
     
     // MARK: Start button
+    
+    /// Метод настраивает стартовую кнопку
     func setupStartButton() {
         startButton.backgroundColor = UIColor(red: 0, green: 0.8, blue: 1, alpha: 1)
         startButton.setShadow()
@@ -96,6 +111,8 @@ private extension StartViewController {
     }
     
     // MARK: Actions
+    
+    /// Метод добавляет действия для активных элементов пользовательского интерфейса
     func addActions() {
         startButton.addTarget(
             self,
@@ -109,6 +126,7 @@ private extension StartViewController {
 
 private extension StartViewController {
     
+    /// Метод задает констрейнты для вьюх
     func setConstraints() {
         NSLayoutConstraint.activate([
             
@@ -135,6 +153,7 @@ private extension StartViewController {
 
 private extension StartViewController {
     
+    /// Текстовые элементы, используемые в коде
     enum Constants {
         static let greetingText = "Вперед за золотом! Дави на кнопку, зарабатывай монеты!"
         static let startButtonTitle = "Вперед!"

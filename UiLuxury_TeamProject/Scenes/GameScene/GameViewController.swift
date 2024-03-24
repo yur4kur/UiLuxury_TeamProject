@@ -158,7 +158,6 @@ private extension GameViewController {
         clickButton.imageView?.contentMode = .scaleAspectFit
         clickButton.setShadow()
     }
-
     
     // MARK: Actions
     
@@ -269,6 +268,7 @@ private extension GameViewController {
 
 private extension GameViewController {
     
+    /// Текстовые элементы, используемые в коде
     enum Constants {
         static let coinImage = "plainCoin"
         static let navigationScoreTitle = "Счет: "
