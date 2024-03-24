@@ -13,12 +13,12 @@ import AVFoundation
 /// ViewController отображения информации о персонаже
 final class InfoCharacterViewController: UIViewController {
 
-    // MARK: - Public properties
+    // MARK: Public properties
     // var delegate: ISendInfoAboutCharacterDelegate?
     // var items: [Item] = DataSource.shared.gameItems
     // var userWallet = 0
 
-    // MARK: - Private properties
+    // MARK: Private properties
 
     /// Изображение пользователя
     private var userImageView = UIImageView()
@@ -38,7 +38,7 @@ final class InfoCharacterViewController: UIViewController {
     /// Текущий уровень пользователя
     private var userStage = 0
 
-    // MARK: - Lifecycle methods
+    // MARK: Lifecycle methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +55,7 @@ final class InfoCharacterViewController: UIViewController {
         updateUserImage()
     }
 
-    // MARK: - Private methods
+    // MARK: Private Methods
 
     /// Метод обновления изображения пользователя с анимацией и воспроизведением звука
     private func updateUserImage() {

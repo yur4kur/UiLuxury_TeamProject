@@ -12,7 +12,7 @@ import UIKit
 /// ViewController отображения информации о разработчиках
 final class DevelopersInfoViewController: UIViewController {
 
-    // MARK: - Private properties
+    // MARK: Private properties
 
     /// Сегмент-контроллер для переключения между карточками о разработчиках
     private var developerSegments = UISegmentedControl()
@@ -29,7 +29,7 @@ final class DevelopersInfoViewController: UIViewController {
     /// Текущая Telegram-ссылка разработчика
     private var currentURL = DevelopersInfo.contacts[0]
 
-    // MARK: - Lifecycle methods
+    // MARK: Lifecycle Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +37,7 @@ final class DevelopersInfoViewController: UIViewController {
         addActions()
     }
 
-    // MARK: - Private Methods
+    // MARK: Private Methods
 
     /// Метод настройки карточки разработчика
     @objc private func showDeveloperInfo() {
