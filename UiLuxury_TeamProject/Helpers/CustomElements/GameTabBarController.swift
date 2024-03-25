@@ -65,13 +65,13 @@ final class GameTabBarController: UITabBarController {
         let userVC = createNavigationController(
             title: Constants.userTabName,
             image: UIImage(systemName: Constants.userTabIcon),
-            rootViewController: InfoCharacterViewController()
+            rootViewController: UserViewController()
         )
         
         let teamVC = createNavigationController(
             title: Constants.teamTabName,
             image: UIImage(systemName: Constants.teamTabIcon),
-            rootViewController: DevelopersInfoViewController()
+            rootViewController: DevelopersViewController()
         )
         
         setViewControllers([clickVC, shopVC, userVC, teamVC], animated: true)

@@ -72,11 +72,18 @@ extension ShopViewController: UITableViewDataSource {
     ///Настройка вида ячеки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cell, for: indexPath)
+        
         var content = cell.defaultContentConfiguration()
-        content.text = "\(shoppings[indexPath.section].title): $\(shoppings[indexPath.section].price.formatted())"
-        content.secondaryText = shoppings[indexPath.section].description
-        cell.contentConfiguration = content
+        content.text = shoppings[indexPath.section].description
+        content.secondaryText = "\(Constants.buy)\(shoppings[indexPath.section].price.formatted())"
+        
         cell.backgroundColor = .clear
+        cell.layer.cornerRadius = 8
+        cell.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        cell.layer.borderWidth = 2
+        cell.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
+        cell.contentConfiguration = content
+        
         return cell
     }
 }
@@ -85,22 +92,28 @@ extension ShopViewController: UITableViewDataSource {
 
 extension ShopViewController: UITableViewDelegate {
     
-    // TODO: Удалить блок кода, если сохранится текущий вариант стиля
- /*   //MARK: Setup Footers
+    //MARK: Setup Footers
     
-    ///Текст футера
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        //shoppings[section].description
-       "$\(shoppings[section].price.formatted())"
+    /// Настройка заголовка секции таблицы
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let itemNameLabel = UILabel(frame: CGRect(x: 17, y: 3, width: tableView.frame.width, height: 20))
+        itemNameLabel.text = "\(shoppings[section].title)"
+        itemNameLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        itemNameLabel.textColor = .darkGray
+
+        let contentView = UIView()
+        contentView.layer.cornerRadius = 8
+        contentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        contentView.addSubview(itemNameLabel)
+
+        return contentView
     }
-    
-    // TODO: Проверить необходимость метода, сейчас он не отрабатывает
-    ///Цвет футера
+        
+    ///Цвет заголовка секции таблицы
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        view.tintColor = .yellow
+        view.backgroundColor = .tertiarySystemGroupedBackground
     }
-   */
-    
+   
     // MARK: Setup chosen cell
     
     //TODO: Добавить алерт
@@ -210,10 +223,10 @@ private extension ShopViewController {
         func setConstraints() {
             NSLayoutConstraint.activate(
                 [
-                    tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -30),
+                    tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                     tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
                     tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-                    tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -100)
+                    tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
                 ]
             )
         }
@@ -245,6 +258,7 @@ private extension ShopViewController {
     enum Constants {
         static let cell = "cell"
         static let basket = "basket"
+        static let buy = "Купить: $"
         static let ok = "Ok"
         static let ups = "Упс"
         static let messege = "В корзину можно добавить только ТРИ апгрейда"

@@ -1,5 +1,5 @@
 //
-//  InfoCharacterViewController.swift
+//  UserViewController.swift
 //  UiLuxury_TeamProject
 //
 //  Created by Eldar Abdullin on 7/3/24
@@ -8,17 +8,17 @@
 import UIKit
 import AVFoundation
 
-// MARK: - InfoCharacter ViewController
+// MARK: - UserViewController
 
 /// ViewController отображения информации о персонаже
-final class InfoCharacterViewController: UIViewController {
+final class UserViewController: UIViewController {
 
-    // MARK: Public properties
+    // MARK: - Public properties
     // var delegate: ISendInfoAboutCharacterDelegate?
     // var items: [Item] = DataSource.shared.gameItems
     // var userWallet = 0
 
-    // MARK: Private properties
+    // MARK: - Private properties
 
     /// Изображение пользователя
     private var userImageView = UIImageView()
@@ -38,7 +38,7 @@ final class InfoCharacterViewController: UIViewController {
     /// Текущий уровень пользователя
     private var userStage = 0
 
-    // MARK: Lifecycle methods
+    // MARK: - Lifecycle methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,8 +55,8 @@ final class InfoCharacterViewController: UIViewController {
         updateUserImage()
     }
 
-    // MARK: Private Methods
-
+    // MARK: - Private Methods
+    
     /// Метод обновления изображения пользователя с анимацией и воспроизведением звука
     private func updateUserImage() {
         let credits = user.wallet
@@ -68,13 +68,15 @@ final class InfoCharacterViewController: UIViewController {
         guard let userImage = UIImage(named: stageImage) else { return }
         userImageView.image = userImage
 
-        UIView.transition(with: userImageView,
-                          duration: 0.5,
-                          options: .transitionCrossDissolve,
-                          animations: { [weak self] in
-            self?.userImageView.image = userImage
-        },
-                          completion: nil)
+        UIView.transition(
+            with: userImageView,
+            duration: 0.5,
+            options: .transitionCrossDissolve,
+            animations: { [weak self] in
+                self?.userImageView.image = userImage
+            },
+            completion: nil
+        )
 
         if userStage > previousUserStage {
             play(sound: Sounds.levelUp)
@@ -82,7 +84,8 @@ final class InfoCharacterViewController: UIViewController {
             play(sound: Sounds.levelDown)
         }
     }
-
+    
+    // TODO: Вынести во вью-модель
     /// Метод определения уровня пользователя
     private func calculateUserStage(from credits: Int) -> Int {
         switch credits {
@@ -114,7 +117,7 @@ final class InfoCharacterViewController: UIViewController {
 
 // MARK: - TableView DataSource
 
-extension InfoCharacterViewController: UITableViewDataSource {
+extension UserViewController: UITableViewDataSource {
 
     /// Метод определения количества секций таблицы
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -139,9 +142,11 @@ extension InfoCharacterViewController: UITableViewDataSource {
         content.text = user.items[indexPath.section].description
         content.secondaryText = "\(Text.tableViewSecondaryText): \(user.items[indexPath.section].price)"
 
-        cell.backgroundColor = .white
+        cell.backgroundColor = .clear
         cell.layer.cornerRadius = 8
         cell.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        cell.layer.borderWidth = 2
+        cell.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
 
         cell.contentConfiguration = content
 
@@ -151,14 +156,14 @@ extension InfoCharacterViewController: UITableViewDataSource {
 
 // MARK: - TableView Delegate
 
-extension InfoCharacterViewController: UITableViewDelegate {
+extension UserViewController: UITableViewDelegate {
 
     /// Метод настройки отображения хедера секции
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let itemNameLabel = UILabel(frame: CGRect(x: 17, y: 3, width: tableView.frame.width, height: 20))
         itemNameLabel.text = "\(user.items[section].title)"
         itemNameLabel.font = UIFont.boldSystemFont(ofSize: 17)
-        itemNameLabel.textColor = .gray
+        itemNameLabel.textColor = .darkGray
 
         let contentView = UIView()
         contentView.layer.cornerRadius = 8
@@ -197,7 +202,7 @@ extension InfoCharacterViewController: UITableViewDelegate {
 
 // TODO: - InfoCharacter ViewController Protocol
 
-extension InfoCharacterViewController: ISendInfoAboutCharacterDelegate {
+extension UserViewController: ISendInfoAboutCharacterDelegate {
 
     /// Метод обновления количества кредитов
     func updateCharacterWallet(with newValue: Int) {
@@ -207,7 +212,7 @@ extension InfoCharacterViewController: ISendInfoAboutCharacterDelegate {
 
 // MARK: - Configure UI
 
-private extension InfoCharacterViewController {
+private extension UserViewController {
 
     /// Метод настройки пользовательского интерфейса
     func setupUI() {
@@ -223,7 +228,7 @@ private extension InfoCharacterViewController {
 
 // MARK: - Setup UI
 
-private extension InfoCharacterViewController {
+private extension UserViewController {
 
     /// Метод настройки главного экрана
     func setupView() {
@@ -275,7 +280,7 @@ private extension InfoCharacterViewController {
 
 // MARK: - Constraints
 
-private extension InfoCharacterViewController {
+private extension UserViewController {
 
     /// Метод установки констреинтов элементов интерфейса
     func setConstraints() {
@@ -300,7 +305,7 @@ private extension InfoCharacterViewController {
 
 // MARK: - Alert Controller
 
-private extension InfoCharacterViewController {
+private extension UserViewController {
 
     /// Действия алерт-контроллера
     enum AlertAction {
@@ -328,7 +333,7 @@ private extension InfoCharacterViewController {
 
 // MARK: - Constants
 
-private extension InfoCharacterViewController {
+private extension UserViewController {
 
     /// Текстовые константы
     enum Text {

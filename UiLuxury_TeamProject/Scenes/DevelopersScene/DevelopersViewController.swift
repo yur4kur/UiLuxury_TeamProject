@@ -1,5 +1,5 @@
 //
-//  DevelopersInfoViewController.swift
+//  DevelopersViewController.swift
 //  UiLuxury_TeamProject
 //
 //  Created by Eldar Abdullin on 7/3/24
@@ -7,10 +7,10 @@
 
 import UIKit
 
-// MARK: - DevelopersInfo ViewController
+// MARK: - DevelopersViewController
 
 /// ViewController отображения информации о разработчиках
-final class DevelopersInfoViewController: UIViewController {
+final class DevelopersViewController: UIViewController {
 
     // MARK: Private properties
 
@@ -61,7 +61,7 @@ final class DevelopersInfoViewController: UIViewController {
 
 // MARK: - Configure UI
 
-private extension DevelopersInfoViewController {
+private extension DevelopersViewController {
 
     /// Метод настройки пользовательского интерфейса
     func setupUI() {
@@ -78,7 +78,7 @@ private extension DevelopersInfoViewController {
 
 // MARK: - Setup UI
 
-private extension DevelopersInfoViewController {
+private extension DevelopersViewController {
 
     /// Метод настройки главного экрана
     func setupView() {
@@ -138,7 +138,7 @@ private extension DevelopersInfoViewController {
 
 // MARK: - Constraints
 
-private extension DevelopersInfoViewController {
+private extension DevelopersViewController {
 
     /// Метод установки констреинтов элементов интерфейса
     func setConstraints() {
@@ -163,7 +163,7 @@ private extension DevelopersInfoViewController {
 
 // MARK: - Constants
 
-private extension DevelopersInfoViewController {
+private extension DevelopersViewController {
 
     /// Информация о разработчиках
     enum DevelopersInfo {
