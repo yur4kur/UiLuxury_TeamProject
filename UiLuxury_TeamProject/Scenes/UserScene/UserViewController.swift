@@ -1,5 +1,5 @@
 //
-//  InfoCharacterViewController.swift
+//  UserViewController.swift
 //  UiLuxury_TeamProject
 //
 //  Created by Eldar Abdullin on 7/3/24
@@ -8,7 +8,7 @@
 import UIKit
 import AVFoundation
 
-// MARK: - InfoCharacter ViewController
+// MARK: - UserViewController
 
 /// ViewController отображения информации о персонаже
 final class UserViewController: UIViewController {

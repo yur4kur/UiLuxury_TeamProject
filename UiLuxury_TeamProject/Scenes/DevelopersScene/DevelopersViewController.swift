@@ -1,5 +1,5 @@
 //
-//  DevelopersInfoViewController.swift
+//  DevelopersViewController.swift
 //  UiLuxury_TeamProject
 //
 //  Created by Eldar Abdullin on 7/3/24
@@ -7,7 +7,7 @@
 
 import UIKit
 
-// MARK: - DevelopersInfo ViewController
+// MARK: - DevelopersViewController
 
 /// ViewController отображения информации о разработчиках
 final class DevelopersViewController: UIViewController {
