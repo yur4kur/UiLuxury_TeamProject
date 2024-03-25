@@ -7,12 +7,23 @@
 
 import AVFoundation
 
-/// Класс реализации применения звуков
+// MARK: - Sound Manager
+
+/// Класс реализации добавления звуков
 final class SoundManager {
+
+    // MARK: - Public Properties
+
+    /// Свойство для запуска аудио-файла
     var audioPlayer: AVAudioPlayer?
 
+    /// Точка доступа в Sound Manager
     static let shared = SoundManager()
+
+    // MARK: - Private Initializers
     private init() {}
+
+    // MARK: - Public Methods
 
     /// Метод, в который нужно передать имя mp3 файла
     func setupAudioPlayer(fromSound sound: String) {
