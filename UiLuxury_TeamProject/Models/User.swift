@@ -5,6 +5,12 @@
 //  Created by Юрий Куринной on 19.08.2023.
 //
 
+struct NewUser {
+    var name: String
+    var wallet: Int
+    var items: [Item]
+}
+
 final class User {
     var name = ""
     var wallet = 0
