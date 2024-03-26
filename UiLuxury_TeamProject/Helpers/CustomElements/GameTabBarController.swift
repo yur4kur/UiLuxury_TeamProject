@@ -9,8 +9,25 @@ import UIKit
 
 // MARK: - GameTabBarController
 
+/// Кастомный контроллер, в котором TabBar объединен с NavigationController
 final class GameTabBarController: UITabBarController {
-
+    
+//    // MARK: - Private properties
+//    
+//    /// Вью-модель, содержащая единый объект пользователя
+//    private var viewModel: StartViewModelProtocol
+//    
+//    // MARK: - Initializers
+//    
+//    init(viewModel: StartViewModelProtocol) {
+//        self.viewModel = viewModel
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError(GlobalConstants.fatalError)
+//    }
+    
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
