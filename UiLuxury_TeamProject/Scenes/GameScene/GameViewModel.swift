@@ -15,7 +15,11 @@ protocol GameViewModelProtocol {
     /// Свойство для подсчета очков за нажатие на кнопку
     var score: Int { get set }
     
+    /// Свойство оповещения об изменении количества заработанных очков
     var scoreDidChange: ((GameViewModelProtocol) -> Void)? { get set }
+    
+    /// Инициализация данных пользователя из стартовой вью-модели
+    init(userData: StartViewModelProtocol)
     
     /// Метод подсчета очков за нажатие на кнопку
     func updateScore()
@@ -29,16 +33,23 @@ protocol GameViewModelProtocol {
 /// Класс, описывающий игровую механику и связывающий ее со свойствами пользователя
 final class GameViewModel: GameViewModelProtocol {
   
+    // MARK: - Private properties
+    
+    /// Свойство с данными пользователя из стартовой вью-модели
     private var userData: StartViewModelProtocol
   
-    var score = 0
+    // MARK: - Public properties
     
-   
+    var score = 0
     var scoreDidChange: ((GameViewModelProtocol) -> Void)?
+    
+    // MARK: - Initializers
     
     init(userData: StartViewModelProtocol) {
         self.userData = userData
     }
+    
+    // MARK: - Public methods
     
     // TODO: доработать метод для применения модификатора айтемов
     func updateScore() {

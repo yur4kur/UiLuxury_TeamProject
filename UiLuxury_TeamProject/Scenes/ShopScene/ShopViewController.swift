@@ -28,10 +28,28 @@ final class ShopViewController: UIViewController {
     /// Выбранные ячейки, которые будут переданы в корзину
     private var selectCells: [Item] = []
     
+    // MARK: View Model
+    /// Данные пользователя из стартовой вью-модели
+    var userData: StartViewModelProtocol!
+    
+    /// Экземпляр вью модели
+    private var viewModel: ShopViewModelProtocol!
+    
+    // MARK: - Initializers
+    
+    init(userData: StartViewModelProtocol) {
+        self.userData = userData
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError(GlobalConstants.fatalError)
+    }
     // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupBinding()
         setupUI()
     }
     
@@ -159,6 +177,13 @@ extension ShopViewController: UITableViewDelegate {
     
 }
 
+// MARK: - Setup Binding
+
+private extension ShopViewController {
+    func setupBinding() {
+        viewModel = ShopViewModel(userData: userData)
+    }
+}
 
 //MARK: - Configure UI
 

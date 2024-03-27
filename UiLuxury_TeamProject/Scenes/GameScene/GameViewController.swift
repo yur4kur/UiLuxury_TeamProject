@@ -13,8 +13,6 @@ final class GameViewController: UIViewController {
     
     // MARK: - Private properties
     
-    // MARK: Views
-    
     /// Лейбл с игровым счетом
     private let scoreLabel = UILabel()
     
@@ -44,18 +42,22 @@ final class GameViewController: UIViewController {
     /// Картинка анимируемых объектов
     private var coinImageView: UIImageView!
   
-   
+   // MARK: - View model
     
     /// Экземпляр вью модели
     private var viewModel: GameViewModelProtocol! {
         didSet {
-            viewModel.scoreDidChange = { [unowned self ] score in
+            viewModel.scoreDidChange = { [unowned self ] viewModel in
                 scoreLabel.text = viewModel.score.description
+                //userData.user.wallet += viewModel.score
             }
         }
     }
     
+    /// Данные пользователя из стартовой вью-модели
     var userData: StartViewModelProtocol!
+    
+    // MARK: - Initializers
     
     init(userData: StartViewModelProtocol) {
         self.userData = userData
@@ -75,8 +77,8 @@ final class GameViewController: UIViewController {
     }
     
     // TODO: Проверить необходимость в методе после создания вьюмодели
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         viewModel.updateUserWallet()
     }
     

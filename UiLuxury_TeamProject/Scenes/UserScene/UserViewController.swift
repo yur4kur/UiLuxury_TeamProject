@@ -38,10 +38,29 @@ final class UserViewController: UIViewController {
     /// Текущий уровень пользователя
     private var userStage = 0
 
+    // MARK: View Model
+    /// Данные пользователя из стартовой вью-модели
+    var userData: StartViewModelProtocol!
+    
+    /// Экземпляр вью модели
+    private var viewModel: UserViewModelProtocol!
+    
+    // MARK: - Initializers
+    
+    init(userData: StartViewModelProtocol) {
+        self.userData = userData
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError(GlobalConstants.fatalError)
+    }
+    
     // MARK: - Lifecycle methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupBinding()
         setupUI()
     }
 
@@ -99,7 +118,9 @@ final class UserViewController: UIViewController {
             return 3
         }
     }
-
+    
+    // MARK:  Update credits label
+    
     /// Метод отображения обновленной информации о кредитах в таблице
     private func updateCreditsValue() {
         DispatchQueue.main.async {
@@ -210,6 +231,14 @@ extension UserViewController: ISendInfoAboutCharacterDelegate {
     }
 }
 
+// MARK: - Setup Binding
+
+private extension UserViewController {
+    func setupBinding() {
+        viewModel = UserViewModel(userData: userData)
+    }
+}
+
 // MARK: - Configure UI
 
 private extension UserViewController {
@@ -244,6 +273,8 @@ private extension UserViewController {
         userImageView.layer.shadowOffset = CGSize(width: 5, height: 5)
     }
 
+    // MARK: Wallet Label
+    
     /// Метод настройки отображения количества кредитов
     func setupWalletLabel() {
         userCreditsLabel.font = .boldSystemFont(ofSize: 17)

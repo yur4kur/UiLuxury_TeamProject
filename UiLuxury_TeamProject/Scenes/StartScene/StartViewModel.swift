@@ -23,6 +23,8 @@ protocol StartViewModelProtocol {
 
 /// Базовая вью-модель с данными о пользователе
 class StartViewModel: StartViewModelProtocol {
+   
+    // MARK: Public properties
     var user: NewUser {
         get {
             NewUser(name: "Akira", wallet: 300, items: [])
