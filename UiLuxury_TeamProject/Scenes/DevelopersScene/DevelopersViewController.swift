@@ -21,13 +21,19 @@ final class DevelopersViewController: UIViewController {
     private let developerImageView = UIImageView()
     
     /// Шапка
-    private let viewHeader = UIView()
+    private let headerView = UIView()
     
     /// Графический слой изображения
     private let containerView = UIView()
 
     /// Кнопка перехода в Telegram
     private let telegramButton = UIButton()
+    
+    /// Лейбл с именем разработчика
+    private let nameLabel = UILabel()
+    
+    /// Текст о себе
+    private let aboutMeLabel = UILabel()
 
     /// Текущий индекс сегмента
     private var segmentIndex = 0
@@ -77,6 +83,8 @@ private extension DevelopersViewController {
         setupTelegramButton()
         setupContainerView()
         setupHeader()
+        setupNameLabel()
+        setupAboutMeLabel()
 
         addSubviews()
         setConstraints()
@@ -95,7 +103,7 @@ private extension DevelopersViewController {
     
     /// Настройка шапки
     func setupHeader() {
-        viewHeader.backgroundColor = .white
+        headerView.backgroundColor = .white
     }
 
     /// Метод настройки сегмент-контроллера
@@ -115,6 +123,7 @@ private extension DevelopersViewController {
         developerImageView.layer.borderColor = UIColor.white.cgColor
     }
     
+    /// Настройка графического слоя под картинкой
     func setupContainerView() {
         containerView.layer.cornerRadius = 105
         containerView.layer.shadowColor = UIColor.black.cgColor
@@ -127,14 +136,31 @@ private extension DevelopersViewController {
         guard let image = UIImage(named: Images.telegramLogo) else { return }
         telegramButton.setImage(image, for: .normal)
     }
+    
+    /// Настройка имени разработчика
+    func setupNameLabel() {
+        nameLabel.text = "Акира Рей"
+//        nameLabel.textColor = .darkGray
+        nameLabel.textAlignment = .center
+        nameLabel.font = UIFont.boldSystemFont(ofSize: 29)
+    }
+    
+    /// Информация о разработчике
+    func setupAboutMeLabel() {
+    //TODO: - из модели подгружать данные о разработчиках
+        aboutMeLabel.text = " О себе : \n 111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+        aboutMeLabel.textAlignment = .center
+        aboutMeLabel.numberOfLines = .max
+    }
 
     /// Метод добавления элементов интерфейса на главный экран и отключения масок AutoLayout
     func addSubviews() {
-        
         view.addSubviews(
-            viewHeader,
+            headerView,
             developerSegments,
-            containerView
+            containerView,
+            nameLabel,
+            aboutMeLabel
         )
 
         view.disableAutoresizingMask(
@@ -142,7 +168,9 @@ private extension DevelopersViewController {
             developerImageView,
             telegramButton,
             containerView,
-            viewHeader
+            headerView,
+            nameLabel,
+            aboutMeLabel
         )
         
         containerView.addSubview(developerImageView)
@@ -172,10 +200,10 @@ private extension DevelopersViewController {
     /// Метод установки констреинтов элементов интерфейса
     func setConstraints() {
         NSLayoutConstraint.activate([
-            viewHeader.topAnchor.constraint(equalTo: view.topAnchor),
-            viewHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            viewHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            viewHeader.bottomAnchor.constraint(equalTo: containerView.centerYAnchor),
+            headerView.topAnchor.constraint(equalTo: view.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            headerView.bottomAnchor.constraint(equalTo: containerView.centerYAnchor),
             
             developerSegments.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             developerSegments.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -195,7 +223,16 @@ private extension DevelopersViewController {
             telegramButton.trailingAnchor.constraint(equalTo: developerImageView.trailingAnchor, constant: -16),
             telegramButton.bottomAnchor.constraint(equalTo: developerImageView.bottomAnchor, constant: -16),
             telegramButton.heightAnchor.constraint(equalToConstant: 40),
-            telegramButton.widthAnchor.constraint(equalToConstant: 40)
+            telegramButton.widthAnchor.constraint(equalToConstant: 40),
+            
+            nameLabel.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 16),
+            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            aboutMeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
+            aboutMeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            aboutMeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+            aboutMeLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2)
         ])
     }
 }
