@@ -99,7 +99,7 @@ private extension DevelopersViewController {
     /// Метод настройки изображения пользователя
     func setupDeveloperImageView() {
         developerImageView.contentMode = .scaleAspectFill
-        developerImageView.layer.cornerRadius = 135
+        developerImageView.layer.cornerRadius = 105
         developerImageView.clipsToBounds = true
         
         developerImageView.layer.borderWidth = 2
@@ -107,7 +107,7 @@ private extension DevelopersViewController {
     }
     
     func setupContainerView() {
-        containerView.layer.cornerRadius = 135
+        containerView.layer.cornerRadius = 105
         containerView.layer.shadowColor = UIColor.black.cgColor
         containerView.layer.shadowOpacity = 0.5
         containerView.layer.shadowRadius = 10
@@ -166,9 +166,9 @@ private extension DevelopersViewController {
             developerSegments.heightAnchor.constraint(equalToConstant: 32),
             
             containerView.topAnchor.constraint(equalTo: developerSegments.bottomAnchor, constant: 16),
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 56),
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -56),
-            containerView.widthAnchor.constraint(equalTo: developerImageView.heightAnchor, multiplier: 1),
+            containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            containerView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.55),
+            containerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.25),
 
             developerImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
             developerImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
