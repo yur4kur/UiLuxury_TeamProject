@@ -19,6 +19,9 @@ final class DevelopersViewController: UIViewController {
 
     /// Изображение разработчика
     private let developerImageView = UIImageView()
+    
+    /// Графический слой
+    private let containerView = UIView()
 
     /// Кнопка перехода в Telegram
     private let telegramButton = UIButton()
@@ -69,6 +72,7 @@ private extension DevelopersViewController {
         setupDeveloperSegments()
         setupDeveloperImageView()
         setupTelegramButton()
+        setupContainerView()
 
         addSubviews()
         setConstraints()
@@ -95,8 +99,18 @@ private extension DevelopersViewController {
     /// Метод настройки изображения пользователя
     func setupDeveloperImageView() {
         developerImageView.contentMode = .scaleAspectFill
-        developerImageView.layer.cornerRadius = 8
+        developerImageView.layer.cornerRadius = 135
         developerImageView.clipsToBounds = true
+        
+        developerImageView.layer.borderWidth = 2
+        developerImageView.layer.borderColor = UIColor.white.cgColor
+    }
+    
+    func setupContainerView() {
+        containerView.layer.cornerRadius = 135
+        containerView.layer.shadowColor = UIColor.black.cgColor
+        containerView.layer.shadowOpacity = 0.5
+        containerView.layer.shadowRadius = 10
     }
 
     /// Метод настройки изображения кнопки перехода в Telegram
@@ -109,15 +123,18 @@ private extension DevelopersViewController {
     func addSubviews() {
         view.addSubviews(
             developerSegments,
-            developerImageView,
-            telegramButton
+            containerView
         )
 
         view.disableAutoresizingMask(
             developerSegments,
             developerImageView,
-            telegramButton
+            telegramButton,
+            containerView
         )
+        
+        containerView.addSubview(developerImageView)
+        containerView.addSubview(telegramButton)
     }
 
     /// Метод добавления действий  элементам интерфейса
@@ -147,16 +164,21 @@ private extension DevelopersViewController {
             developerSegments.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             developerSegments.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             developerSegments.heightAnchor.constraint(equalToConstant: 32),
+            
+            containerView.topAnchor.constraint(equalTo: developerSegments.bottomAnchor, constant: 16),
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 56),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -56),
+            containerView.widthAnchor.constraint(equalTo: developerImageView.heightAnchor, multiplier: 1),
 
-            developerImageView.topAnchor.constraint(equalTo: developerSegments.bottomAnchor, constant: 20),
-            developerImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            developerImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            developerImageView.widthAnchor.constraint(equalTo: developerImageView.heightAnchor, multiplier: 1),
+            developerImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            developerImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            developerImageView.widthAnchor.constraint(equalTo: containerView.widthAnchor),
+            developerImageView.heightAnchor.constraint(equalTo: containerView.heightAnchor),
 
             telegramButton.trailingAnchor.constraint(equalTo: developerImageView.trailingAnchor, constant: -16),
             telegramButton.bottomAnchor.constraint(equalTo: developerImageView.bottomAnchor, constant: -16),
-            telegramButton.heightAnchor.constraint(equalToConstant: 30),
-            telegramButton.widthAnchor.constraint(equalToConstant: 30)
+            telegramButton.heightAnchor.constraint(equalToConstant: 40),
+            telegramButton.widthAnchor.constraint(equalToConstant: 40)
         ])
     }
 }

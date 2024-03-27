@@ -28,6 +28,7 @@
 		B8979AB92BA9B85E00A2D725 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8979AB82BA9B85E00A2D725 /* SoundManager.swift */; };
 		B8979ABD2BA9B86C00A2D725 /* levelDown.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B8979ABA2BA9B86C00A2D725 /* levelDown.mp3 */; };
 		B8979ABE2BA9B86C00A2D725 /* levelUp.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B8979ABB2BA9B86C00A2D725 /* levelUp.mp3 */; };
+		E978F67F2BB444DF00D23173 /* DevelopersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E978F67E2BB444DF00D23173 /* DevelopersViewModel.swift */; };
 		E99F36322A8EAE0300C96277 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99F36312A8EAE0300C96277 /* Protocol.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		B8979AB82BA9B85E00A2D725 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		B8979ABA2BA9B86C00A2D725 /* levelDown.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = levelDown.mp3; sourceTree = "<group>"; };
 		B8979ABB2BA9B86C00A2D725 /* levelUp.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = levelUp.mp3; sourceTree = "<group>"; };
+		E978F67E2BB444DF00D23173 /* DevelopersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopersViewModel.swift; sourceTree = "<group>"; };
 		E99F36312A8EAE0300C96277 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				46C7C9D92A7C2CC500FE5922 /* DevelopersViewController.swift */,
+				E978F67E2BB444DF00D23173 /* DevelopersViewModel.swift */,
 			);
 			path = DevelopersScene;
 			sourceTree = "<group>";
@@ -309,6 +312,7 @@
 			files = (
 				6AB7F88D2A7303B00026E5DC /* Developer.swift in Sources */,
 				6AB7F8712A7302330026E5DC /* AppDelegate.swift in Sources */,
+				E978F67F2BB444DF00D23173 /* DevelopersViewModel.swift in Sources */,
 				6AB7F8A72A7AA97D0026E5DC /* Item.swift in Sources */,
 				46227DEB2A73B2CE00C042F4 /* BasketViewController.swift in Sources */,
 				6AB7F88B2A7303740026E5DC /* DataSource.swift in Sources */,
