@@ -37,7 +37,7 @@ final class StartViewController: UIViewController {
     
     /// Метода переход на игровой экран
     @objc private func startTapped() {
-        let vc = GameTabBarController()
+        let vc = GameTabBarController(userData: viewModel)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }

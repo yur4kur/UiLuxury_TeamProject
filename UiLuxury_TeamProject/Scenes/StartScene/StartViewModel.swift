@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - StartViewModelProtocol
 
+/// Протокол основной модели, в которой описывается пользователь
 protocol StartViewModelProtocol {
     
     /// Экземпляр модели пользователя
@@ -20,6 +21,7 @@ protocol StartViewModelProtocol {
 
 // MARK: - StartViewModel
 
+/// Базовая вью-модель с данными о пользователе
 class StartViewModel: StartViewModelProtocol {
     var user: NewUser {
         get {
