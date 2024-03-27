@@ -20,7 +20,10 @@ final class DevelopersViewController: UIViewController {
     /// Изображение разработчика
     private let developerImageView = UIImageView()
     
-    /// Графический слой
+    /// Шапка
+    private let viewHeader = UIView()
+    
+    /// Графический слой изображения
     private let containerView = UIView()
 
     /// Кнопка перехода в Telegram
@@ -73,6 +76,7 @@ private extension DevelopersViewController {
         setupDeveloperImageView()
         setupTelegramButton()
         setupContainerView()
+        setupHeader()
 
         addSubviews()
         setConstraints()
@@ -87,6 +91,11 @@ private extension DevelopersViewController {
     /// Метод настройки главного экрана
     func setupView() {
         view.addQuadroGradientLayer()
+    }
+    
+    /// Настройка шапки
+    func setupHeader() {
+        viewHeader.backgroundColor = .white
     }
 
     /// Метод настройки сегмент-контроллера
@@ -121,7 +130,9 @@ private extension DevelopersViewController {
 
     /// Метод добавления элементов интерфейса на главный экран и отключения масок AutoLayout
     func addSubviews() {
+        
         view.addSubviews(
+            viewHeader,
             developerSegments,
             containerView
         )
@@ -130,7 +141,8 @@ private extension DevelopersViewController {
             developerSegments,
             developerImageView,
             telegramButton,
-            containerView
+            containerView,
+            viewHeader
         )
         
         containerView.addSubview(developerImageView)
@@ -160,6 +172,11 @@ private extension DevelopersViewController {
     /// Метод установки констреинтов элементов интерфейса
     func setConstraints() {
         NSLayoutConstraint.activate([
+            viewHeader.topAnchor.constraint(equalTo: view.topAnchor),
+            viewHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            viewHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            viewHeader.bottomAnchor.constraint(equalTo: containerView.centerYAnchor),
+            
             developerSegments.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             developerSegments.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             developerSegments.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
