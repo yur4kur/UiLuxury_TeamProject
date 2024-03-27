@@ -42,14 +42,13 @@ final class GameViewController: UIViewController {
     /// Картинка анимируемых объектов
     private var coinImageView: UIImageView!
   
-   // MARK: - View model
+   // MARK: View model
     
     /// Экземпляр вью модели
     private var viewModel: GameViewModelProtocol! {
         didSet {
             viewModel.scoreDidChange = { [unowned self ] viewModel in
                 scoreLabel.text = viewModel.score.description
-                //userData.user.wallet += viewModel.score
             }
         }
     }
@@ -76,16 +75,10 @@ final class GameViewController: UIViewController {
         setupUI()
     }
     
-    // TODO: Проверить необходимость в методе после создания вьюмодели
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         viewModel.updateUserWallet()
     }
-    
-//    override func viewWillDissapear(_ animated: Bool) {
-//        super.viewWillDissapear(animated)
-//        viewModel.updateUserWallet()
-//    }
     
     // MARK: - Private methods
     
@@ -94,11 +87,6 @@ final class GameViewController: UIViewController {
         animate()
         viewModel.updateScore()
     }
-    
-//    private func updateCharacterWallet(with newValue: Int) {
-//        viewModel.user.wallet += newValue
-//        scoreLabel.text = viewModel.user.wallet.description
-//    }
 }
 
 // MARK: - Setup Binding
