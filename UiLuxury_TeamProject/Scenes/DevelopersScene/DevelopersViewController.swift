@@ -15,7 +15,10 @@ final class DevelopersViewController: UIViewController {
     // MARK: Private properties
 
     /// Сегмент-контроллер для переключения между карточками о разработчиках
-    private var developerSegments = UISegmentedControl()
+//    private var developerSegments = UISegmentedControl()
+    
+    /// Скролл Вью для перехода между раработчиками
+    private var scrollView = UIScrollView()
 
     /// Изображение разработчика
     private let developerImageView = UIImageView()
@@ -50,6 +53,10 @@ final class DevelopersViewController: UIViewController {
         addActions()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.isHidden = true
+    }
+    
     /// Делаем из нашего изображения круг
     override func viewWillLayoutSubviews() {
         containerView.layer.cornerRadius = developerImageView.layer.frame.height / 2
@@ -59,17 +66,17 @@ final class DevelopersViewController: UIViewController {
     // MARK: Private Methods
 
     /// Метод настройки карточки разработчика
-    @objc private func showDeveloperInfo() {
-        let selectedSegmentIndex = developerSegments.selectedSegmentIndex
-        guard selectedSegmentIndex < DevelopersInfo.names.count else { return }
-        segmentIndex = selectedSegmentIndex
-
-        guard let developerImage = UIImage(named: String(segmentIndex)) else { return }
-        let developerContact = DevelopersInfo.contacts[segmentIndex]
-
-        developerImageView.image = developerImage
-        currentURL = developerContact
-    }
+//    @objc private func showDeveloperInfo() {
+//        let selectedSegmentIndex = developerSegments.selectedSegmentIndex
+//        guard selectedSegmentIndex < DevelopersInfo.names.count else { return }
+//        segmentIndex = selectedSegmentIndex
+//
+//        guard let developerImage = UIImage(named: String(segmentIndex)) else { return }
+//        let developerContact = DevelopersInfo.contacts[segmentIndex]
+//
+//        developerImageView.image = developerImage
+//        currentURL = developerContact
+//    }
 
     /// Метод перехода в Telegram
     @objc private func openURL() {
@@ -85,7 +92,7 @@ private extension DevelopersViewController {
     /// Метод настройки пользовательского интерфейса
     func setupUI() {
         setupView()
-        setupDeveloperSegments()
+//        setupDeveloperSegments()
         setupDeveloperImageView()
         setupTelegramButton()
         setupContainerView()
@@ -114,11 +121,11 @@ private extension DevelopersViewController {
     }
 
     /// Метод настройки сегмент-контроллера
-    func setupDeveloperSegments() {
-        developerSegments = UISegmentedControl(items: DevelopersInfo.names)
-        developerSegments.selectedSegmentIndex = segmentIndex
-        showDeveloperInfo()
-    }
+//    func setupDeveloperSegments() {
+//        developerSegments = UISegmentedControl(items: DevelopersInfo.names)
+//        developerSegments.selectedSegmentIndex = segmentIndex
+//        showDeveloperInfo()
+//    }
 
     /// Метод настройки изображения пользователя
     func setupDeveloperImageView() {
@@ -162,33 +169,36 @@ private extension DevelopersViewController {
     func addSubviews() {
         view.addSubviews(
             headerView,
-            developerSegments,
+//            developerSegments,
             containerView,
             nameLabel,
-            aboutMeLabel
+            aboutMeLabel,
+            scrollView
         )
 
         view.disableAutoresizingMask(
-            developerSegments,
+//            developerSegments,
             developerImageView,
             telegramButton,
             containerView,
             headerView,
             nameLabel,
-            aboutMeLabel
+            aboutMeLabel,
+            scrollView
         )
         
+        // TODO: - Поместить их в один метод
         containerView.addSubview(developerImageView)
         containerView.addSubview(telegramButton)
     }
 
     /// Метод добавления действий  элементам интерфейса
     func addActions() {
-        developerSegments.addTarget(
-            self,
-            action: #selector(showDeveloperInfo),
-            for: .valueChanged
-        )
+//        developerSegments.addTarget(
+//            self,
+//            action: #selector(showDeveloperInfo),
+//            for: .valueChanged
+//        )
 
         telegramButton.addTarget(
             self,
@@ -210,12 +220,12 @@ private extension DevelopersViewController {
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             headerView.bottomAnchor.constraint(equalTo: containerView.centerYAnchor),
             
-            developerSegments.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            developerSegments.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            developerSegments.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            developerSegments.heightAnchor.constraint(equalToConstant: 32),
+//            developerSegments.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+//            developerSegments.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+//            developerSegments.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+//            developerSegments.heightAnchor.constraint(equalToConstant: 32),
             
-            containerView.topAnchor.constraint(equalTo: developerSegments.bottomAnchor, constant: 16),
+            containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             containerView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.45),
             containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor),
