@@ -43,10 +43,17 @@ final class DevelopersViewController: UIViewController {
 
     // MARK: Lifecycle Methods
 
+    /// Настройка вью и вызов всех методов для этого
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         addActions()
+    }
+    
+    /// Делаем из нашего изображения круг
+    override func viewWillLayoutSubviews() {
+        containerView.layer.cornerRadius = developerImageView.layer.frame.height / 2
+        developerImageView.layer.cornerRadius = developerImageView.layer.frame.height / 2
     }
 
     // MARK: Private Methods
@@ -116,7 +123,6 @@ private extension DevelopersViewController {
     /// Метод настройки изображения пользователя
     func setupDeveloperImageView() {
         developerImageView.contentMode = .scaleAspectFill
-        developerImageView.layer.cornerRadius = 105
         developerImageView.clipsToBounds = true
         
         developerImageView.layer.borderWidth = 2
@@ -125,7 +131,6 @@ private extension DevelopersViewController {
     
     /// Настройка графического слоя под картинкой
     func setupContainerView() {
-        containerView.layer.cornerRadius = 105
         containerView.layer.shadowColor = UIColor.black.cgColor
         containerView.layer.shadowOpacity = 0.5
         containerView.layer.shadowRadius = 10
@@ -212,8 +217,8 @@ private extension DevelopersViewController {
             
             containerView.topAnchor.constraint(equalTo: developerSegments.bottomAnchor, constant: 16),
             containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            containerView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.55),
-            containerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.25),
+            containerView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.45),
+            containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor),
 
             developerImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
             developerImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
