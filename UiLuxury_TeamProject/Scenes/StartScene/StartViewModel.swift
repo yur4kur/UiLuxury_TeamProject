@@ -14,26 +14,24 @@ protocol StartViewModelProtocol {
     
     /// Экземпляр модели пользователя
     var user: NewUser { get set }
-    
-    /// Свойство для обновления данных пользователя
-    var userPropertiesDidChange: ((StartViewModelProtocol) -> Void)? { get set }
+
 }
 
 // MARK: - StartViewModel
 
 /// Базовая вью-модель с данными о пользователе
 class StartViewModel: StartViewModelProtocol {
-   
+    
+    /// Инициализация пользователя (из БД или с бэка)
+    private var uploadedUser = NewUser(name: "Akira", wallet: 300, items: [])
+    
     // MARK: Public properties
     var user: NewUser {
         get {
-            NewUser(name: "Akira", wallet: 300, items: [])
+            uploadedUser
         }
-        set {
-            userPropertiesDidChange?(self)
+        set(update) {
+            uploadedUser = update
         }
     }
-    
-    var userPropertiesDidChange: ((StartViewModelProtocol) -> Void)?
-
 }

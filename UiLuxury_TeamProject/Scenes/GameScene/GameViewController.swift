@@ -47,7 +47,7 @@ final class GameViewController: UIViewController {
     /// Экземпляр вью модели
     private var viewModel: GameViewModelProtocol! {
         didSet {
-            viewModel.scoreDidChange = { [unowned self ] viewModel in
+            viewModel.scoreDidChange = { [ unowned self ] viewModel in
                 scoreLabel.text = viewModel.score.description
             }
         }

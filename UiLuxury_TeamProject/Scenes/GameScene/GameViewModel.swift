@@ -12,6 +12,9 @@ import Foundation
 /// Протокол, описывающий методы игрового экрана и изменение счета кошелька пользователя
 protocol GameViewModelProtocol {
     
+    /// Свойство с данными пользователя из стартовой вью-модели
+    var userData: StartViewModelProtocol { get set }
+    
     /// Свойство для подсчета очков за нажатие на кнопку
     var score: Int { get set }
     
@@ -35,8 +38,7 @@ final class GameViewModel: GameViewModelProtocol {
   
     // MARK: - Private properties
     
-    /// Свойство с данными пользователя из стартовой вью-модели
-    private var userData: StartViewModelProtocol
+    var userData: StartViewModelProtocol
   
     // MARK: - Public properties
     
