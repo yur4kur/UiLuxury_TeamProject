@@ -6,133 +6,84 @@
 //
 
 import UIKit
-import AVFoundation
 
-// MARK: - UserViewController
+// MARK: - User ViewController
 
 /// ViewController отображения информации о персонаже
 final class UserViewController: UIViewController {
-
-    // MARK: - Public properties
-    // var delegate: ISendInfoAboutCharacterDelegate?
-    // var items: [Item] = DataSource.shared.gameItems
-    // var userWallet = 0
 
     // MARK: - Private properties
 
     /// Изображение пользователя
     private var userImageView = UIImageView()
 
-    /// Отображение количества кредитов
+    /// Количество кредитов
     private let userCreditsLabel = UILabel()
 
-    /// Таблица отображения купленных предметов
+    /// Таблица купленных предметов
     private let userItemsTableView = UITableView()
 
-    /// Точка доступа к SoundManager
-    private let soundManager = SoundManager.shared
-
-    /// Экземпляр модели User
-    private var user = User.shared
-
-    /// Текущий уровень пользователя
-    private var userStage = 0
-
     // MARK: View Model
+
     /// Данные пользователя из стартовой вью-модели
     var userData: StartViewModelProtocol!
-    
+
     /// Экземпляр вью модели
     private var viewModel: UserViewModelProtocol!
-    
+
     // MARK: - Initializers
-    
+
+    /// Инициализатор сцены с передачей данных из стартовой модели
     init(userData: StartViewModelProtocol) {
         self.userData = userData
         super.init(nibName: nil, bundle: nil)
     }
-    
+
+    /// Обязательный инициализатор сцены при переопределении родительского инициализатора
     required init?(coder: NSCoder) {
         fatalError(GlobalConstants.fatalError)
     }
-    
+
     // MARK: - Lifecycle methods
 
+    /// Метод жизненного цикла вью контроллера
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBinding()
         setupUI()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        updateCreditsValue()
-    }
-
+    /// Метод жизненного цикла вью контроллера
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        updateUserImage()
+        updateUI()
     }
 
     // MARK: - Private Methods
-    
-    /// Метод обновления изображения пользователя с анимацией и воспроизведением звука
-    private func updateUserImage() {
-        let credits = user.wallet
-        let previousUserStage = userStage
 
-        userStage = calculateUserStage(from: credits)
-
-        let stageImage = StageImages.images[userStage]
-        guard let userImage = UIImage(named: stageImage) else { return }
-        userImageView.image = userImage
+    /// Метод обновления изображения пользователя со звуковым оповещением
+    private func updateUserStage() {
+        guard let stageImage = UIImage(named: viewModel.userStageImageName) else { return }
+        userImageView.image = stageImage
 
         UIView.transition(
             with: userImageView,
             duration: 0.5,
             options: .transitionCrossDissolve,
             animations: { [weak self] in
-                self?.userImageView.image = userImage
+                self?.userImageView.image = stageImage
             },
             completion: nil
         )
 
-        if userStage > previousUserStage {
-            play(sound: Sounds.levelUp)
-        } else if userStage < previousUserStage {
-            play(sound: Sounds.levelDown)
-        }
-    }
-    
-    // TODO: Вынести во вью-модель
-    /// Метод определения уровня пользователя
-    private func calculateUserStage(from credits: Int) -> Int {
-        switch credits {
-        case 0...1499:
-            return 0
-        case 1500...2999:
-            return 1
-        case 3000...4499:
-            return 2
-        default:
-            return 3
-        }
-    }
-    
-    // MARK:  Update credits label
-    
-    /// Метод отображения обновленной информации о кредитах в таблице
-    private func updateCreditsValue() {
-        DispatchQueue.main.async {
-            self.userItemsTableView.reloadData()
-            self.userCreditsLabel.text = "\(Text.creditsLabelText): \(self.user.wallet)"
-        }
+        viewModel.playSound()
     }
 
-    /// Метод настройки и воспроизведения звука
-    private func play(sound: String) {
-        soundManager.setupAudioPlayer(fromSound: sound)
-        soundManager.audioPlayer?.play()
+    /// Метод обновления внешнего вида сцены
+    private func updateUI() {
+        updateUserStage()
+        userCreditsLabel.text = viewModel.userCreditsLabelText
+        userItemsTableView.reloadData()
     }
 }
 
@@ -142,12 +93,12 @@ extension UserViewController: UITableViewDataSource {
 
     /// Метод определения количества секций таблицы
     func numberOfSections(in tableView: UITableView) -> Int {
-        user.items.count
+        viewModel.userItems.count
     }
 
     /// Метод присвоения названий секциям таблицы
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        user.items[section].title
+        viewModel.userItems[section].title
     }
 
     /// Метод определения количества ячеек внутри одной секции таблицы
@@ -160,15 +111,10 @@ extension UserViewController: UITableViewDataSource {
         let cell = userItemsTableView.dequeueReusableCell(withIdentifier: Text.cellIdentifier, for: indexPath)
 
         var content = cell.defaultContentConfiguration()
-        content.text = user.items[indexPath.section].description
-        content.secondaryText = "\(Text.tableViewSecondaryText): \(user.items[indexPath.section].price)"
+        content.text = viewModel.userItems[indexPath.section].description
+        content.secondaryText = "\(Text.tableViewSecondaryText): \(viewModel.userItems[indexPath.section].price)"
 
-        cell.backgroundColor = .clear
-        cell.layer.cornerRadius = 8
-        cell.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
-        cell.layer.borderWidth = 2
-        cell.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
-
+        setupUserItemsTableViewCell(cell)
         cell.contentConfiguration = content
 
         return cell
@@ -182,7 +128,7 @@ extension UserViewController: UITableViewDelegate {
     /// Метод настройки отображения хедера секции
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let itemNameLabel = UILabel(frame: CGRect(x: 17, y: 3, width: tableView.frame.width, height: 20))
-        itemNameLabel.text = "\(user.items[section].title)"
+        itemNameLabel.text = "\(viewModel.userItems[section].title)"
         itemNameLabel.font = UIFont.boldSystemFont(ofSize: 17)
         itemNameLabel.textColor = .darkGray
 
@@ -209,11 +155,8 @@ extension UserViewController: UITableViewDelegate {
         showAlert(withTitle: Text.alertTitle, andMessage: Text.alertMessage) { [weak self] action in
             switch action {
             case .confirm:
-                guard let itemPrice = self?.user.items[indexPath.section].price else { return }
-                self?.user.wallet += itemPrice
-                self?.user.items.remove(at: indexPath.section)
-                self?.updateUserImage()
-                self?.updateCreditsValue()
+                self?.viewModel.sellItem(at: indexPath.section)
+                self?.updateUI()
             case .refuse:
                 tableView.deselectRow(at: indexPath, animated: true)
             }
@@ -221,25 +164,17 @@ extension UserViewController: UITableViewDelegate {
     }
 }
 
-// TODO: - InfoCharacter ViewController Protocol
-
-extension UserViewController: ISendInfoAboutCharacterDelegate {
-
-    /// Метод обновления количества кредитов
-    func updateCharacterWallet(with newValue: Int) {
-        //userNameLabel.text = newValue.description
-    }
-}
-
 // MARK: - Setup Binding
 
 private extension UserViewController {
+
+    /// Метод инициализации вью модели
     func setupBinding() {
         viewModel = UserViewModel(userData: userData)
     }
 }
 
-// MARK: - Configure UI
+// MARK: - Configure setupUI Method
 
 private extension UserViewController {
 
@@ -273,8 +208,6 @@ private extension UserViewController {
         userImageView.layer.shadowOffset = CGSize(width: 5, height: 5)
     }
 
-    // MARK: Wallet Label
-    
     /// Метод настройки отображения количества кредитов
     func setupWalletLabel() {
         userCreditsLabel.font = .boldSystemFont(ofSize: 17)
@@ -291,6 +224,15 @@ private extension UserViewController {
         userItemsTableView.backgroundColor = .clear
         userItemsTableView.separatorStyle = .none
         userItemsTableView.layer.cornerRadius = 8
+    }
+
+    /// Метод настройки ячейки таблицы
+    func setupUserItemsTableViewCell(_ cell: UITableViewCell) {
+        cell.backgroundColor = .clear
+        cell.layer.cornerRadius = 8
+        cell.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        cell.layer.borderWidth = 2
+        cell.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
     }
 
     /// Метод добавления элементов интерфейса на главный экран и отключения масок AutoLayout
@@ -368,30 +310,12 @@ private extension UserViewController {
 
     /// Текстовые константы
     enum Text {
-        static let creditsLabelText = "CREDITS"
-
         static let cellIdentifier = "cell"
-        static let tableViewSecondaryText = "Sell"
+        static let tableViewSecondaryText = "Price"
 
-        static let alertConfirmTitle = "Confirm"
-        static let alertRefuseTitle = "Refuse"
         static let alertTitle = "Sell this item"
         static let alertMessage = "Do you really want to sell it?"
-    }
-
-    /// Имена изображений
-    enum StageImages {
-        static let images = [
-            "stage01",
-            "stage02",
-            "stage03",
-            "stage04"
-        ]
-    }
-
-    /// Имена звуков
-    enum Sounds {
-        static let levelUp = "levelUp"
-        static let levelDown = "levelDown"
+        static let alertConfirmTitle = "Confirm"
+        static let alertRefuseTitle = "Refuse"
     }
 }
