@@ -5,7 +5,7 @@
 //  Created by Юрий Куринной on 02.08.2023.
 //
 
-struct Item {
+struct Item: Equatable {
     let title: String
     let price:  Int
     let description: String

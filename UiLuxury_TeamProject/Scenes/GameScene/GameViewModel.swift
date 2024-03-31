@@ -55,7 +55,18 @@ final class GameViewModel: GameViewModelProtocol {
     
     // TODO: доработать метод для применения модификатора айтемов
     func updateScore() {
-        score += 1
+        
+        //тест начало
+        var couter = 1
+        if !userData.user.items.isEmpty {
+            userData.user.items.forEach { item in
+                if item.modifier == 1 { couter = 2 }
+                if item.modifier == 3 { couter = 3 }
+            }
+        }
+        //тест конец
+        
+        score += couter
         scoreDidChange?(self)
     }
     
