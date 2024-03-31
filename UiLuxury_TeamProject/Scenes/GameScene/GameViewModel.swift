@@ -86,6 +86,8 @@ final class GameViewModel: GameViewModelProtocol {
     /// Метод воспроизведения звука
     func playSound() {
         DispatchQueue.main.async {
+            self.soundManager.audioPlayer?.stop()
+            self.soundManager.audioPlayer?.currentTime = 0
             self.soundManager.audioPlayer?.play()
         }
     }
