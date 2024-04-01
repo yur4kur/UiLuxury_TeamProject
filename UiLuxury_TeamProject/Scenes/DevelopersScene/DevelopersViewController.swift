@@ -29,6 +29,10 @@ final class DevelopersViewController: UIViewController {
     /// Изображение разработчика
     private let developerImageView = UIImageView()
     
+    private var developerImageViewOne = UIImageView()
+    private var developerImageViewTwo = UIImageView()
+    private var developerImageViewThree = UIImageView()
+    
     /// Шапка
     private let headerView = UIView()
     
@@ -40,6 +44,10 @@ final class DevelopersViewController: UIViewController {
     
     /// Лейбл с именем разработчика
     private let nameLabel = UILabel()
+    
+    private var nameLabelOne = UILabel()
+    private var nameLabelTwo = UILabel()
+    private var nameLabelThree = UILabel()
     
     /// Текст о себе
     private let aboutMeLabel = UILabel()
@@ -60,7 +68,7 @@ final class DevelopersViewController: UIViewController {
         nameLabel.isHidden = true
         
         pageControl.numberOfPages = pagesCount.count
-        scrollView.backgroundColor = .red
+//        scrollView.backgroundColor = .red
     }
     
     /// Скрываем нивгейшн бар
@@ -70,8 +78,14 @@ final class DevelopersViewController: UIViewController {
     
     /// Делаем из нашего изображения круг
     override func viewWillLayoutSubviews() {
-        containerView.layer.cornerRadius = developerImageView.layer.frame.height / 2
-        developerImageView.layer.cornerRadius = developerImageView.layer.frame.height / 2
+        let cornerRadiusReady = developerImageView.layer.frame.height / 2
+        
+        containerView.layer.cornerRadius = cornerRadiusReady
+        developerImageView.layer.cornerRadius = cornerRadiusReady
+        
+        developerImageViewOne.layer.cornerRadius = cornerRadiusReady
+        developerImageViewTwo.layer.cornerRadius = cornerRadiusReady
+        developerImageViewThree.layer.cornerRadius = cornerRadiusReady
     }
     
     // MARK: Private Methods
@@ -128,7 +142,7 @@ private extension DevelopersViewController {
         view.addQuadroGradientLayer()
     }
     
-    /// Настройка скролл вью
+    ///  Настройка скролл вью
     ///  В контент сайзе мы указываем высоту как 1 для того, чтобы отключить вертикальный скролл
     ///  И мы пользовались только свайпами вправо-влево
     func setupScrollView() {
@@ -137,29 +151,29 @@ private extension DevelopersViewController {
             height: Int(1) //Int(view.frame.height - 200)
         )
         scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
         
-        addLabel(title: pagesCount[0], position: 0)
-        addLabel(title: pagesCount[1], position: 1)
-        addLabel(title: pagesCount[2], position: 2)
+        nameLabelOne = addLabel(title: pagesCount[0], position: 0)
+        nameLabelTwo = addLabel(title: pagesCount[1], position: 1)
+        nameLabelThree = addLabel(title: pagesCount[2], position: 2)
+        
+        developerImageViewOne = addDeveloperImage(imageNamed: 0, position: 0)
+        developerImageViewTwo = addDeveloperImage(imageNamed: 1, position: 1)
+        developerImageViewThree = addDeveloperImage(imageNamed: 2, position: 2)
         
         scrollView.delegate = self
     }
     
-    func addLabel(title: String, position: CGFloat) {
+    
+    /// Добавляем лейблы на каждую из страниц
+    func addLabel(title: String, position: CGFloat) -> UILabel {
         let testLabel = UILabel()
-        testLabel.text = title
+        testLabel.text = DevelopersInfo.names[Int(position)]
         testLabel.textAlignment = .center
+        testLabel.font = UIFont.systemFont(ofSize: 25)
         
         scrollView.addSubview(testLabel)
         
-<<<<<<< Updated upstream
-        let screenWidth = UIScreen.main.bounds.width
-        testLabel.frame = CGRect(
-            x: screenWidth * position,
-            y: 100,
-            width: screenWidth,
-            height: 200)
-=======
         testLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             testLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 125),
@@ -171,6 +185,7 @@ private extension DevelopersViewController {
         return testLabel
     }
     
+    /// Добавляем Изображения на каждую из страниц
     func addDeveloperImage(imageNamed: Int, position: CGFloat) -> UIImageView {
         let imageView = UIImageView()
         
@@ -179,7 +194,7 @@ private extension DevelopersViewController {
         imageView.clipsToBounds = true
         
         imageView.layer.borderWidth = 2
-        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.layer.borderColor = UIColor.yellow.cgColor
         
         scrollView.addSubview(imageView)
         
@@ -193,7 +208,6 @@ private extension DevelopersViewController {
         ])
         
         return imageView
->>>>>>> Stashed changes
     }
     
     /// Настройка шапки
@@ -240,13 +254,8 @@ private extension DevelopersViewController {
     
     /// Информация о разработчике
     func setupAboutMeLabel() {
-<<<<<<< Updated upstream
-    //TODO: - из модели подгружать данные о разработчиках
-        aboutMeLabel.text = " aasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasda"
-=======
         //TODO: - из модели подгружать данные о разработчиках
         aboutMeLabel.text = ""
->>>>>>> Stashed changes
         aboutMeLabel.textAlignment = .center
         aboutMeLabel.numberOfLines = .max
         
@@ -311,10 +320,10 @@ private extension DevelopersViewController {
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.heightAnchor.constraint(equalToConstant: view.frame.height - 150),
             
-            headerView.topAnchor.constraint(equalTo: view.topAnchor),
-            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerView.bottomAnchor.constraint(equalTo: containerView.centerYAnchor),
+//            headerView.topAnchor.constraint(equalTo: view.topAnchor),
+//            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            headerView.bottomAnchor.constraint(equalTo: containerView.centerYAnchor),
             
             //            developerSegments.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             //            developerSegments.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
