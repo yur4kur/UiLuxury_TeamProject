@@ -46,14 +46,12 @@ final class UserViewController: UIViewController {
 
     // MARK: - Lifecycle methods
 
-    /// Метод жизненного цикла вью контроллера
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBinding()
         setupUI()
     }
 
-    /// Метод жизненного цикла вью контроллера
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         updateUI()
@@ -91,22 +89,18 @@ final class UserViewController: UIViewController {
 
 extension UserViewController: UITableViewDataSource {
 
-    /// Метод определения количества секций таблицы
     func numberOfSections(in tableView: UITableView) -> Int {
         viewModel.userItems.count
     }
 
-    /// Метод присвоения названий секциям таблицы
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         viewModel.userItems[section].title
     }
 
-    /// Метод определения количества ячеек внутри одной секции таблицы
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }
 
-    /// Метод настройки ячейки таблицы
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = userItemsTableView.dequeueReusableCell(withIdentifier: Text.cellIdentifier, for: indexPath)
 
@@ -125,7 +119,6 @@ extension UserViewController: UITableViewDataSource {
 
 extension UserViewController: UITableViewDelegate {
 
-    /// Метод настройки отображения хедера секции
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let itemNameLabel = UILabel(frame: CGRect(x: 17, y: 3, width: tableView.frame.width, height: 20))
         itemNameLabel.text = "\(viewModel.userItems[section].title)"
@@ -140,12 +133,10 @@ extension UserViewController: UITableViewDelegate {
         return contentView
     }
 
-    /// Метод настройки фона хедера секции
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.backgroundColor = .tertiarySystemGroupedBackground
     }
 
-    /// Метод настройки поведения приложения при нажатии на ячейку таблицы
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
             cell.selectedBackgroundView?.layer.cornerRadius = 8
