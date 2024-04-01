@@ -17,8 +17,14 @@ final class DevelopersViewController: UIViewController {
     /// Сегмент-контроллер для переключения между карточками о разработчиках
 //    private var developerSegments = UISegmentedControl()
     
+    /// Заглушка
+    private var pagesCount = ["one", "two", "Three"]
+    
     /// Скролл Вью для перехода между раработчиками
     private var scrollView = UIScrollView()
+    
+    /// Пейдж Контрол
+    private let pageControl = UIPageControl()
 
     /// Изображение разработчика
     private let developerImageView = UIImageView()
@@ -51,8 +57,13 @@ final class DevelopersViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         addActions()
+        nameLabel.isHidden = true
+        
+        pageControl.numberOfPages = pagesCount.count
+        scrollView.backgroundColor = .red
     }
     
+    /// Скрываем нивгейшн бар
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.isHidden = true
     }
@@ -64,6 +75,7 @@ final class DevelopersViewController: UIViewController {
     }
 
     // MARK: Private Methods
+   
 
     /// Метод настройки карточки разработчика
 //    @objc private func showDeveloperInfo() {
@@ -92,6 +104,7 @@ private extension DevelopersViewController {
     /// Метод настройки пользовательского интерфейса
     func setupUI() {
         setupView()
+        setupScrollView()
 //        setupDeveloperSegments()
         setupDeveloperImageView()
         setupTelegramButton()
@@ -113,6 +126,38 @@ private extension DevelopersViewController {
     /// Метод настройки главного экрана
     func setupView() {
         view.addQuadroGradientLayer()
+    }
+    
+    /// Настройка скролл вью
+    ///  В контент сайзе мы указываем высоту как 1 для того, чтобы отключить вертикальный скролл
+    ///  И мы пользовались только свайпами вправо-влево
+    func setupScrollView() {
+        scrollView.contentSize = CGSize(
+            width: Int(UIScreen.main.bounds.width) * pagesCount.count,
+            height: Int(1) //Int(view.frame.height - 200)
+        )
+        scrollView.isPagingEnabled = true
+        
+        addLabel(title: pagesCount[0], position: 0)
+        addLabel(title: pagesCount[1], position: 1)
+        addLabel(title: pagesCount[2], position: 2)
+        
+        scrollView.delegate = self
+    }
+    
+    func addLabel(title: String, position: CGFloat) {
+        let testLabel = UILabel()
+        testLabel.text = title
+        testLabel.textAlignment = .center
+        
+        scrollView.addSubview(testLabel)
+        
+        let screenWidth = UIScreen.main.bounds.width
+        testLabel.frame = CGRect(
+            x: screenWidth * position,
+            y: 100,
+            width: screenWidth,
+            height: 200)
     }
     
     /// Настройка шапки
@@ -160,23 +205,21 @@ private extension DevelopersViewController {
     /// Информация о разработчике
     func setupAboutMeLabel() {
     //TODO: - из модели подгружать данные о разработчиках
-        aboutMeLabel.text = " О себе : \n 111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+        aboutMeLabel.text = " aasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasdaaasdsadsadsadsadsadsadsadsadasdasdsadasdsadaaaaaaaaaasda"
         aboutMeLabel.textAlignment = .center
         aboutMeLabel.numberOfLines = .max
+        
     }
 
     /// Метод добавления элементов интерфейса на главный экран и отключения масок AutoLayout
     func addSubviews() {
         view.addSubviews(
-            headerView,
-//            developerSegments,
-            containerView,
-            nameLabel,
-            aboutMeLabel,
-            scrollView
+            scrollView,
+            pageControl
         )
 
         view.disableAutoresizingMask(
+            scrollView,
 //            developerSegments,
             developerImageView,
             telegramButton,
@@ -184,12 +227,19 @@ private extension DevelopersViewController {
             headerView,
             nameLabel,
             aboutMeLabel,
-            scrollView
+            pageControl
+        )
+        
+        scrollView.addSubviews(
+            headerView,
+//            developerSegments,
+            containerView,
+            nameLabel,
+            aboutMeLabel
         )
         
         // TODO: - Поместить их в один метод
-        containerView.addSubview(developerImageView)
-        containerView.addSubview(telegramButton)
+        containerView.addSubviews(developerImageView, telegramButton)
     }
 
     /// Метод добавления действий  элементам интерфейса
@@ -215,6 +265,11 @@ private extension DevelopersViewController {
     /// Метод установки констреинтов элементов интерфейса
     func setConstraints() {
         NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.heightAnchor.constraint(equalToConstant: view.frame.height - 150),
+            
             headerView.topAnchor.constraint(equalTo: view.topAnchor),
             headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -225,8 +280,8 @@ private extension DevelopersViewController {
 //            developerSegments.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
 //            developerSegments.heightAnchor.constraint(equalToConstant: 32),
             
-            containerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-            containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            containerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
+            containerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
             containerView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.45),
             containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor),
 
@@ -247,8 +302,18 @@ private extension DevelopersViewController {
             aboutMeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
             aboutMeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
             aboutMeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            aboutMeLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2)
+          aboutMeLabel.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.2),
+//            aboutMeLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 50),
+            
+            pageControl.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 16),
+            pageControl.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
         ])
+    }
+}
+
+extension DevelopersViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        pageControl.currentPage = Int(scrollView.contentOffset.x / UIScreen.main.bounds.width)
     }
 }
 
