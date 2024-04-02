@@ -23,7 +23,7 @@ final class ShopViewController: UIViewController {
     private let tableView = UITableView()
     
     /// Покупки пользователя
-    private var shoppings = Item.getItem()
+    private var shoppings = Item.getItems()
     
     /// Выбранные ячейки, которые будут переданы в корзину
     private var selectCells: [Item] = []
