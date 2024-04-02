@@ -11,7 +11,7 @@ import UIKit
 
 final class StartViewController: UIViewController {
     
-    // MARK: - Private properties
+    // MARK: Private properties
     
     /// Лейбл с приветственной надписью
     private let greetingLabel = UILabel()
@@ -20,10 +20,6 @@ final class StartViewController: UIViewController {
     private let startButton = UIButton()
     
     private var viewModel: StartViewModelProtocol!
-    
-    // TODO: Удалить, если не потребуются в ВМ
-//    var nameTextField: UITextField!
-//    var user = User.shared
     
     // MARK: - Lifecycle methods
     
