@@ -11,11 +11,23 @@ import AVFoundation
 // MARK: - User ViewModelProtocol
 
 protocol UserViewModelProtocol {
+
+    /// Имя изображения пользователя
     var userStageImageName: String { get }
+
+    /// Количество кредитов пользователя
     var userCreditsLabelText: String { get }
+
+    /// Количество купленных предметов пользователя
     var userItems: [Item] { get }
+
+    /// Инициализация данными пользователя из UserViewController
     init(userData: StartViewModelProtocol)
+
+    /// Метод продажи предметов
     func sellItem(at index: Int)
+
+    /// Метод воспроизведения звука
     func playSound()
 }
 
@@ -25,18 +37,15 @@ final class UserViewModel: UserViewModelProtocol {
 
     // MARK: Public properties
 
-    /// Имя изображения пользователя
     var userStageImageName: String {
         let imageIndex = calculateUserStage(from: userData.user.wallet)
         return StageImages.images[imageIndex]
     }
 
-    /// Количество кредитов пользователя
     var userCreditsLabelText: String {
         "\(Text.creditsLabelText): \(userData.user.wallet)"
     }
 
-    /// Количество купленных предметов пользователя
     var userItems: [Item] {
         userData.user.items
     }
@@ -54,14 +63,12 @@ final class UserViewModel: UserViewModelProtocol {
 
     // MARK: Initializers
 
-    /// Инициализация данными пользователя из UserViewController
     init(userData: StartViewModelProtocol) {
         self.userData = userData
     }
 
     // MARK: Public methods
 
-    /// Метод продажи предметов
     func sellItem(at index: Int) {
         guard index >= 0 && index < userData.user.items.count else { return }
         let itemPrice = userData.user.items[index].price
@@ -69,7 +76,6 @@ final class UserViewModel: UserViewModelProtocol {
         userData.user.items.remove(at: index)
     }
 
-    /// Метод воспроизведения звука
     func playSound() {
         let previousUserStage = userStage
         userStage = calculateUserStage(from: userData.user.wallet)
@@ -106,7 +112,7 @@ private extension UserViewModel {
 
     /// Текстовые константы
     enum Text {
-        static let creditsLabelText = "CREDITS"
+        static let creditsLabelText = "СЧЕТ"
     }
 
     /// Имена изображений
