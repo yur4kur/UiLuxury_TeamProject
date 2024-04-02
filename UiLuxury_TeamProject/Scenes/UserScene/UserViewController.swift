@@ -194,9 +194,9 @@ private extension UserViewController {
     func setupUserImageView() {
         userImageView.contentMode = .scaleAspectFit
         userImageView.layer.shadowColor = UIColor.black.cgColor
-        userImageView.layer.shadowRadius = 5
-        userImageView.layer.shadowOpacity = 0.15
-        userImageView.layer.shadowOffset = CGSize(width: 5, height: 5)
+        userImageView.layer.shadowRadius = 8
+        userImageView.layer.shadowOpacity = 0.5
+        userImageView.layer.shadowOffset = CGSize(width: 0, height: 6)
     }
 
     /// Метод настройки отображения количества кредитов
@@ -259,7 +259,7 @@ private extension UserViewController {
             userCreditsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             userCreditsLabel.heightAnchor.constraint(equalToConstant: 22),
 
-            userItemsTableView.topAnchor.constraint(equalTo: view.centerYAnchor),
+            userItemsTableView.topAnchor.constraint(equalTo: userCreditsLabel.bottomAnchor, constant: 32),
             userItemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             userItemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             userItemsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
