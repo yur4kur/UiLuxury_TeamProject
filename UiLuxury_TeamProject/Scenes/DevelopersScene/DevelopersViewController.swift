@@ -14,12 +14,6 @@ final class DevelopersViewController: UIViewController {
     
     // MARK: Private properties
     
-    /// Сегмент-контроллер для переключения между карточками о разработчиках
-    //    private var developerSegments = UISegmentedControl()
-    
-    /// Заглушка
-    private var pagesCount = ["one", "two", "Three"]
-    
     /// Скролл Вью для перехода между раработчиками
     private var scrollView = UIScrollView()
     
@@ -27,8 +21,6 @@ final class DevelopersViewController: UIViewController {
     private let pageControl = UIPageControl()
     
     /// Изображение разработчика
-    private let developerImageView = UIImageView()
-    
     private var developerImageViewOne = UIImageView()
     private var developerImageViewTwo = UIImageView()
     private var developerImageViewThree = UIImageView()
@@ -39,12 +31,7 @@ final class DevelopersViewController: UIViewController {
     /// Шапка
     private let headerView = UIView()
     
-    /// Графический слой изображения
-    private let containerView = UIView()
-    
     /// Кнопка перехода в Telegram
-    private let telegramButton = UIButton()
-    
     private var telegramButtonOne = UIButton()
     private var telegramButtonTwo = UIButton()
     private var telegramButtonThree = UIButton()
@@ -53,7 +40,6 @@ final class DevelopersViewController: UIViewController {
     private var telegramButtonSix = UIButton()
     
     /// Лейбл с именем разработчика
-    private let nameLabel = UILabel()
     
     private var nameLabelOne = UILabel()
     private var nameLabelTwo = UILabel()
@@ -61,12 +47,6 @@ final class DevelopersViewController: UIViewController {
     private var nameLabelFour = UILabel()
     private var nameLabelFive = UILabel()
     private var nameLabelSix = UILabel()
-    
-    /// Текст о себе
-    private let aboutMeLabel = UILabel()
-    
-    /// Текущий индекс сегмента
-    private var segmentIndex = 0
     
     /// Текущая Telegram-ссылка разработчика
     private var currentURL = DevelopersInfo.contacts[0]
@@ -78,7 +58,6 @@ final class DevelopersViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         addActions()
-        nameLabel.isHidden = true
         
         pageControl.numberOfPages = DevelopersInfo.names.count
     }
@@ -90,10 +69,7 @@ final class DevelopersViewController: UIViewController {
     
     /// Делаем из нашего изображения круг
     override func viewWillLayoutSubviews() {
-        let cornerRadiusReady = developerImageView.layer.frame.height / 2
-        
-        containerView.layer.cornerRadius = cornerRadiusReady
-        developerImageView.layer.cornerRadius = cornerRadiusReady
+        let cornerRadiusReady = developerImageViewOne.layer.frame.height / 2
         
         developerImageViewOne.layer.cornerRadius = cornerRadiusReady
         developerImageViewTwo.layer.cornerRadius = cornerRadiusReady
@@ -139,13 +115,8 @@ private extension DevelopersViewController {
     func setupUI() {
         setupView()
         setupScrollView()
-        //        setupDeveloperSegments()
-        setupDeveloperImageView()
-        setupTelegramButton()
-        setupContainerView()
+
         setupHeader()
-        setupNameLabel()
-        setupAboutMeLabel()
         
         addSubviews()
         setConstraints()
@@ -207,10 +178,11 @@ private extension DevelopersViewController {
         scrollView.addSubview(testLabel)
         
         testLabel.translatesAutoresizingMaskIntoConstraints = false
+        let screenWidth: CGFloat = UIScreen.main.bounds.width
         NSLayoutConstraint.activate([
             testLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 125),
-            testLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: UIScreen.main.bounds.width * position),
-            testLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+            testLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: screenWidth * position),
+            testLabel.widthAnchor.constraint(equalToConstant: screenWidth),
             testLabel.heightAnchor.constraint(equalToConstant: 200)
         ])
         
@@ -231,11 +203,12 @@ private extension DevelopersViewController {
         scrollView.addSubview(imageView)
         
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        let screenWidth: CGFloat = UIScreen.main.bounds.width
         
         NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: UIScreen.main.bounds.width * position),
+            imageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: screenWidth * position),
             imageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
-            imageView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width / 2.25),
+            imageView.widthAnchor.constraint(equalToConstant: screenWidth / 2.25),
             imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
         ])
         
@@ -276,45 +249,6 @@ private extension DevelopersViewController {
     //        showDeveloperInfo()
     //    }
     
-    /// Метод настройки изображения пользователя
-    func setupDeveloperImageView() {
-        developerImageView.contentMode = .scaleAspectFill
-        developerImageView.clipsToBounds = true
-        
-        developerImageView.layer.borderWidth = 2
-        developerImageView.layer.borderColor = UIColor.white.cgColor
-    }
-    
-    /// Настройка графического слоя под картинкой
-    func setupContainerView() {
-        containerView.layer.shadowColor = UIColor.black.cgColor
-        containerView.layer.shadowOpacity = 0.5
-        containerView.layer.shadowRadius = 10
-    }
-    
-    /// Метод настройки изображения кнопки перехода в Telegram
-    func setupTelegramButton() {
-        guard let image = UIImage(named: Images.telegramLogo) else { return }
-        telegramButton.setImage(image, for: .normal)
-    }
-    
-    /// Настройка имени разработчика
-    func setupNameLabel() {
-        nameLabel.text = "Акира Рей"
-        //        nameLabel.textColor = .darkGray
-        nameLabel.textAlignment = .center
-        nameLabel.font = UIFont.boldSystemFont(ofSize: 29)
-    }
-    
-    /// Информация о разработчике
-    func setupAboutMeLabel() {
-        //TODO: - из модели подгружать данные о разработчиках
-        aboutMeLabel.text = ""
-        aboutMeLabel.textAlignment = .center
-        aboutMeLabel.numberOfLines = .max
-        
-    }
-    
     /// Метод добавления элементов интерфейса на главный экран и отключения масок AutoLayout
     func addSubviews() {
         view.addSubviews(
@@ -324,23 +258,14 @@ private extension DevelopersViewController {
         
         view.disableAutoresizingMask(
             scrollView,
-            developerImageView,
-            telegramButton,
-            containerView,
             headerView,
-            nameLabel,
-            aboutMeLabel,
             pageControl
         )
         
         scrollView.addSubviews(
-            headerView,
-            containerView,
-            nameLabel,
-            aboutMeLabel
+            headerView
         )
         
-        containerView.addSubviews(developerImageView, telegramButton)
     }
     
     /// Метод добавления действий  элементам интерфейса
@@ -375,31 +300,6 @@ private extension DevelopersViewController {
             //            developerSegments.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             //            developerSegments.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             //            developerSegments.heightAnchor.constraint(equalToConstant: 32),
-            
-            containerView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
-            containerView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            containerView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.45),
-            containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor),
-            
-            developerImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
-            developerImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            developerImageView.widthAnchor.constraint(equalTo: containerView.widthAnchor),
-            developerImageView.heightAnchor.constraint(equalTo: containerView.heightAnchor),
-            
-            telegramButton.trailingAnchor.constraint(equalTo: developerImageView.trailingAnchor, constant: -16),
-            telegramButton.bottomAnchor.constraint(equalTo: developerImageView.bottomAnchor, constant: -16),
-            telegramButton.heightAnchor.constraint(equalToConstant: 40),
-            telegramButton.widthAnchor.constraint(equalToConstant: 40),
-            
-            nameLabel.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 16),
-            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
-            aboutMeLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 16),
-            aboutMeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            aboutMeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
-            aboutMeLabel.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.2),
-            //            aboutMeLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 50),
             
             pageControl.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 16),
             pageControl.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
