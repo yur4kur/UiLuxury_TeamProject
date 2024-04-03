@@ -16,5 +16,6 @@ protocol CoordinatorProtocol {
     /// Навигационный контроллер для перехода на другие контроллеры
     var navigationController: UINavigationController { get set }
 
+    /// Инициализация и запуск обслуживаемого контроллера
     func start()
 }

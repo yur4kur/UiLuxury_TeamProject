@@ -20,11 +20,11 @@ final class StartViewController: UIViewController {
     /// Вью-модель этого контроллера
     var viewModel: StartViewModelProtocol!
     
-    var coordinator: MainCoordinator?
+    var coordinator: BaseCoordinator?
     
     // MARK: - Initializers
     
-    init(coordinator: MainCoordinator) {
+    init(coordinator: BaseCoordinator) {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
@@ -50,12 +50,8 @@ final class StartViewController: UIViewController {
     
     /// Метода переход на игровой экран
     @objc private func startTapped() {
-        coordinator?.moveToGame()
-//        let vc = GameTabBarController(userData: viewModel)
-//        vc.modalPresentationStyle = .fullScreen
-//        present(vc, animated: true)
+        coordinator?.moveToGame(receivedData: viewModel)
     }
-    
 }
 
 // MARK: - Setup Binding

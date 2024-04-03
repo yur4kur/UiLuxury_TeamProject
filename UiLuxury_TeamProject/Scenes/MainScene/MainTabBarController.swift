@@ -1,5 +1,5 @@
 //
-//  GameTabBarController.swift
+//  MainTabBarController.swift
 //  UiLuxury_TeamProject
 //
 //  Created by Юрий Куринной on 09.03.2024.
@@ -10,23 +10,7 @@ import UIKit
 // MARK: - GameTabBarController
 
 /// Кастомный контроллер, в котором TabBar объединен с NavigationController
-final class GameTabBarController: UITabBarController {
-    
-    // MARK: - Private properties
-    
-    /// Вью-модель, содержащая единый объект пользователя
-    private var userData: StartViewModelProtocol
-    
-    // MARK: - Initializers
-    
-    init(userData: StartViewModelProtocol) {
-        self.userData = userData
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError(GlobalConstants.fatalError)
-    }
+final class MainTabBarController: UITabBarController {
     
     // MARK: - Lifecycle Methods
     
@@ -67,7 +51,7 @@ final class GameTabBarController: UITabBarController {
     
     /// Метода настраивает иконки и названия элементов ТабБара с привязкой к контроллерам
     private func setUpTabs() {
-        let clickVC = createNavigationController(
+        let gameVC = createNavigationController(
             title: Constants.gameTabName,
             image: UIImage(systemName: Constants.gameTabIcon),
             rootViewController: GameViewController(userData: userData)
@@ -91,7 +75,7 @@ final class GameTabBarController: UITabBarController {
             rootViewController: DevelopersViewController()
         )
         
-        setViewControllers([clickVC, shopVC, userVC, teamVC], animated: true)
+        setViewControllers([gameVC, shopVC, userVC, teamVC], animated: true)
     }
     
     /// Метод настраивает цвет иконок и делает таббар прозрачным
@@ -118,16 +102,12 @@ final class GameTabBarController: UITabBarController {
         tabBarAppearance.stackedLayoutAppearance = tabBarItemAppearance
         tabBar.standardAppearance = tabBarAppearance
         tabBar.scrollEdgeAppearance = tabBarAppearance
-//        tabBar.barTintColor = .systemMint
-//        tabBar.backgroundColor = .systemMint
-//        tabBar.tintColor = .white
-//        tabBar.unselectedItemTintColor = .darkGray
     }
 }
 
 // MARK: - Constants
 
-private extension GameTabBarController {
+private extension MainTabBarController {
     enum Constants {
         static let gameTabName = "Игра"
         static let gameTabIcon = "cursorarrow.click.2"

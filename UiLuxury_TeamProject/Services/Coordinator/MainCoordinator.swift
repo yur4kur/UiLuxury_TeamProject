@@ -1,32 +1,35 @@
 //
-//  Coordinator.swift
+//  MainCoordinator.swift
 //  UiLuxury_TeamProject
 //
-//  Created by Юрий Куринной on 02.04.2024.
+//  Created by Юрий Куринной on 03.04.2024.
 //
 
 import UIKit
 
-/// Основной координатор, через который происходит запуск приложения
-final class MainCoordinator: CoordinatorProtocol {
+/// Протокол координаторов основной сцены
+protocol MainCoordinatorProtocol: CoordinatorProtocol {
+    
+    /// Данные пользователя из стартовой вью-модели
+    var userData: StartViewModelProtocol { get set }
+}
+
+/// Координатор таббара, объединяещего основные сцены
+final class MainCoordinator: MainCoordinatorProtocol {
     var childCoordinators = [CoordinatorProtocol]()
     var navigationController: UINavigationController
+    var userData: StartViewModelProtocol
     
+    weak var parentCoordinator: BaseCoordinator?
     
-
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, userData: StartViewModelProtocol) {
         self.navigationController = navigationController
-    }
-
-    func start() {
-        let startVC = StartViewController(coordinator: self)
-        navigationController.pushViewController(startVC, animated: false)
+        self.userData = userData
     }
     
-    func moveToGame() {
-        let child = GameTabBarCoordinator(navigationController: navigationController)
-        childCoordinators.append(child)
-        child.parent = self
-        child.start()
+    func start() {
+        let mainVM = MainViewModel(userData: userData)
+        let gameTabBarVC = MainTabBarController()
+        navigationController.pushViewController(gameTabBarVC, animated: true)
     }
 }
