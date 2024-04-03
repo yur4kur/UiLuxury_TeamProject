@@ -10,7 +10,7 @@ import Foundation
 // MARK: - ShopViewModelProtocol
 
 protocol ShopViewModelProtocol {
-    
+    var shopItems: [Item] { get }
     /// Инициализация данных пользователя из стартовой вью-модели
     init(userData: StartViewModelProtocol)
 }
@@ -19,9 +19,12 @@ protocol ShopViewModelProtocol {
 
 final class ShopViewModel: ShopViewModelProtocol {
     
+    var shopItems: [Item] { Item.getItem() }
+        
     // MARK: Private properties
     
     private var userData: StartViewModelProtocol
+    
     
     // MARK: Initializers
     

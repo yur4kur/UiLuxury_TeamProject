@@ -23,10 +23,10 @@ final class ShopViewController: UIViewController {
     private let tableView = UITableView()
     
     /// Покупки пользователя
-    private var shoppings = Item.getItem()
+    //private var shoppings = Item.getItem()
     
-    /// Выбранные ячейки, которые будут переданы в корзину
-    private var selectCells: [Item] = []
+//    /// Выбранные ячейки, которые будут переданы в корзину
+//    private var selectCells: [Item] = []
     
     // MARK: View Model
     /// Данные пользователя из стартовой вью-модели
@@ -81,7 +81,7 @@ extension ShopViewController: UITableViewDataSource {
     
     ///Количество секций
     func numberOfSections(in tableView: UITableView) -> Int {
-        shoppings.count
+        viewModel.shopItems.count
     }
     
     ///Количество ячеек в секции
@@ -94,8 +94,8 @@ extension ShopViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cell, for: indexPath)
         
         var content = cell.defaultContentConfiguration()
-        content.text = shoppings[indexPath.section].description
-        content.secondaryText = "\(Constants.buy)\(shoppings[indexPath.section].price.formatted())"
+        content.text = viewModel.shopItems[indexPath.section].description
+        content.secondaryText = "\(Constants.buy)\(viewModel.shopItems[indexPath.section].price.formatted())"
         
         cell.backgroundColor = .clear
         cell.layer.cornerRadius = 8
@@ -117,7 +117,7 @@ extension ShopViewController: UITableViewDelegate {
     /// Настройка заголовка секции таблицы
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let itemNameLabel = UILabel(frame: CGRect(x: 17, y: 3, width: tableView.frame.width, height: 20))
-        itemNameLabel.text = "\(shoppings[section].title)"
+        itemNameLabel.text = "\(viewModel.shopItems[section].title)"
         itemNameLabel.font = UIFont.boldSystemFont(ofSize: 17)
         itemNameLabel.textColor = .darkGray
         
@@ -140,7 +140,7 @@ extension ShopViewController: UITableViewDelegate {
     ///Метод выбора ячейки и смены тогла
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let selectedItem = shoppings[indexPath.section]
+        let selectedItem = viewModel.shopItems[indexPath.section]
         
         if let cell = tableView.cellForRow(at: indexPath) {
             if cell.accessoryType == .checkmark {
