@@ -13,8 +13,8 @@ import AVFoundation
 /// Протокол, описывающий методы игрового экрана и изменение счета кошелька пользователя
 protocol GameViewModelProtocol {
     
-    /// Свойство с данными пользователя из стартовой вью-модели
-    var userData: StartViewModelProtocol { get set }
+//    /// Свойство с данными пользователя
+//    var userData: UserDataTransferProtocol { get set }
     
     /// Свойство для подсчета очков за нажатие на кнопку
     var score: Int { get set }
@@ -22,8 +22,8 @@ protocol GameViewModelProtocol {
     /// Свойство оповещения об изменении количества заработанных очков
     var scoreDidChange: ((GameViewModelProtocol) -> Void)? { get set }
     
-    /// Инициализация данных пользователя из стартовой вью-модели
-    init(userData: StartViewModelProtocol)
+//    /// Инициализация данных пользователя из стартовой вью-модели
+//    init(userData: UserDataTransferProtocol)
     
     /// Метод подсчета очков за нажатие на кнопку
     func updateScore()
@@ -42,28 +42,22 @@ protocol GameViewModelProtocol {
 
 /// Класс, описывающий игровую механику и связывающий ее со свойствами пользователя
 final class GameViewModel: GameViewModelProtocol {
-
-    // MARK: - Public properties
-
+    
+    // MARK: Public properties
+    var userData: UserDataTransferProtocol
     var score = 0
-
     var scoreDidChange: ((GameViewModelProtocol) -> Void)?
-
-    // MARK: - Private properties
-
-    var userData: StartViewModelProtocol
-
+    
+    // MARK: Private properties
     /// Точка доступа к SoundManager
     private let soundManager = SoundManager.shared
     
-    // MARK: - Initializers
-    
-    init(userData: StartViewModelProtocol) {
+    // MARK: Initializers
+    init(userData: UserDataTransferProtocol) {
         self.userData = userData
     }
     
-    // MARK: - Public methods
-    
+    // MARK: Public methods
     // TODO: доработать метод для применения модификатора айтемов
     func updateScore() {
         score += 1
@@ -76,14 +70,12 @@ final class GameViewModel: GameViewModelProtocol {
         scoreDidChange?(self)
     }
 
-    /// Метод настройки плеера
     func setupAudioPlayer() {
         DispatchQueue.global().async {
             self.soundManager.setupAudioPlayer(fromSound: Sounds.buttonPressed)
         }
     }
 
-    /// Метод воспроизведения звука
     func playSound() {
         DispatchQueue.global(qos: .default).async {
             self.soundManager.audioPlayer?.stop()

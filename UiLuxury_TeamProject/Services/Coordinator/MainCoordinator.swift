@@ -7,29 +7,26 @@
 
 import UIKit
 
-/// Протокол координаторов основной сцены
-protocol MainCoordinatorProtocol: CoordinatorProtocol {
-    
-    /// Данные пользователя из стартовой вью-модели
-    var userData: StartViewModelProtocol { get set }
-}
+// MARK: - MainCoordinator
 
 /// Координатор таббара, объединяещего основные сцены
 final class MainCoordinator: MainCoordinatorProtocol {
+    
+    // MARK: Public properties
+    var userData: UserDataTransferProtocol
     var childCoordinators = [CoordinatorProtocol]()
     var navigationController: UINavigationController
-    var userData: StartViewModelProtocol
-    
     weak var parentCoordinator: BaseCoordinator?
     
-    init(navigationController: UINavigationController, userData: StartViewModelProtocol) {
+    // MARK: Initializers
+    init(navigationController: UINavigationController, userData: UserDataTransferProtocol) {
         self.navigationController = navigationController
         self.userData = userData
     }
     
+    // MARK: Public methods
     func start() {
-        let mainVM = MainViewModel(userData: userData)
-        let gameTabBarVC = MainTabBarController()
+        let gameTabBarVC = MainTabBarController(userData: userData)
         navigationController.pushViewController(gameTabBarVC, animated: true)
     }
 }

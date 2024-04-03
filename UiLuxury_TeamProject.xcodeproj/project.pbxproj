@@ -14,7 +14,7 @@
 		462738762A7A4AF2006138E8 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462738752A7A4AF2006138E8 /* StartViewController.swift */; };
 		46C7C9DA2A7C2CC500FE5922 /* DevelopersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C7C9D92A7C2CC500FE5922 /* DevelopersViewController.swift */; };
 		6A5E70382BBC37CD00FF4C14 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E70372BBC37CD00FF4C14 /* BaseCoordinator.swift */; };
-		6A5E703A2BBC3F4D00FF4C14 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E70392BBC3F4D00FF4C14 /* CoordinatorProtocol.swift */; };
+		6A5E703A2BBC3F4D00FF4C14 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E70392BBC3F4D00FF4C14 /* Protocols.swift */; };
 		6A5E703C2BBC446F00FF4C14 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E703B2BBC446F00FF4C14 /* StartView.swift */; };
 		6A5E70422BBD4D9000FF4C14 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E70412BBD4D9000FF4C14 /* MainCoordinator.swift */; };
 		6A5E70442BBD705600FF4C14 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E70432BBD705600FF4C14 /* MainViewModel.swift */; };
@@ -48,7 +48,7 @@
 		462738752A7A4AF2006138E8 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		46C7C9D92A7C2CC500FE5922 /* DevelopersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopersViewController.swift; sourceTree = "<group>"; };
 		6A5E70372BBC37CD00FF4C14 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
-		6A5E70392BBC3F4D00FF4C14 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
+		6A5E70392BBC3F4D00FF4C14 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		6A5E703B2BBC446F00FF4C14 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		6A5E70412BBD4D9000FF4C14 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		6A5E70432BBD705600FF4C14 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 		6A5E70342BBC339900FF4C14 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				6A5E70392BBC3F4D00FF4C14 /* CoordinatorProtocol.swift */,
+				6A5E70392BBC3F4D00FF4C14 /* Protocols.swift */,
 				6A5E70372BBC37CD00FF4C14 /* BaseCoordinator.swift */,
 				6A5E70412BBD4D9000FF4C14 /* MainCoordinator.swift */,
 				6A5E70452BBD7BE500FF4C14 /* GameCoordinator.swift */,
@@ -378,7 +378,7 @@
 				46227DE82A73B25C00C042F4 /* UserViewController.swift in Sources */,
 				6AE5E9752BA667BB00810D91 /* GameViewModel.swift in Sources */,
 				6A9C13AC2BB313DC0090000C /* StartViewModel.swift in Sources */,
-				6A5E703A2BBC3F4D00FF4C14 /* CoordinatorProtocol.swift in Sources */,
+				6A5E703A2BBC3F4D00FF4C14 /* Protocols.swift in Sources */,
 				46227DE62A73B1D600C042F4 /* ShopViewController.swift in Sources */,
 				6AB7F8732A7302330026E5DC /* SceneDelegate.swift in Sources */,
 				B8979AB92BA9B85E00A2D725 /* SoundManager.swift in Sources */,

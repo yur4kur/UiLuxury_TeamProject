@@ -17,9 +17,11 @@ final class StartViewController: UIViewController {
     private let startView = StartView(frame: UIScreen.main.bounds)
     
     // MARK: - Public properties
-    /// Вью-модель этого контроллера
-    var viewModel: StartViewModelProtocol!
     
+    /// Вью-модель с данными пользователя
+    var viewModel: UserDataTransferProtocol!
+    
+    /// Базовый координатор, управляющий этим контроллером
     var coordinator: BaseCoordinator?
     
     // MARK: - Initializers

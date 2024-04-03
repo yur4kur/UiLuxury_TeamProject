@@ -45,7 +45,7 @@ final class GameViewController: UIViewController {
    // MARK: View model
     
     /// Экземпляр вью модели
-    private var viewModel: GameViewModelProtocol! {
+    private var viewModel: GameViewModelProtocol {
         didSet {
             viewModel.scoreDidChange = { [ unowned self ] viewModel in
                 scoreLabel.text = viewModel.score.description
@@ -54,12 +54,12 @@ final class GameViewController: UIViewController {
     }
     
     /// Данные пользователя из стартовой вью-модели
-    var userData: StartViewModelProtocol!
+   // var userData: UserDataTransferProtocol!
     
     // MARK: - Initializers
     
-    init(userData: StartViewModelProtocol) {
-        self.userData = userData
+    init(viewModel: GameViewModelProtocol) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -101,7 +101,7 @@ final class GameViewController: UIViewController {
 private extension GameViewController {
     
     func setupBinding() {
-        viewModel = GameViewModel(userData: userData)
+        //viewModel = GameViewModel(userData: userData)
     }
 }
 

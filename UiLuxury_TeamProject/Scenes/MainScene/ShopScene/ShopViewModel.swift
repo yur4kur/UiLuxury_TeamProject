@@ -12,7 +12,7 @@ import Foundation
 protocol ShopViewModelProtocol {
     
     /// Инициализация данных пользователя из стартовой вью-модели
-    init(userData: StartViewModelProtocol)
+    init(userData: UserDataTransferProtocol)
 }
 
 // MARK: - UserViewModel
@@ -21,11 +21,11 @@ final class ShopViewModel: ShopViewModelProtocol {
     
     // MARK: Private properties
     
-    private var userData: StartViewModelProtocol
+    private var userData: UserDataTransferProtocol
     
     // MARK: Initializers
     
-    init(userData: StartViewModelProtocol) {
+    init(userData: UserDataTransferProtocol) {
         self.userData = userData
     }
 }

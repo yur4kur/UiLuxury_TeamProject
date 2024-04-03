@@ -8,6 +8,8 @@
 final class DataSource {
     static let shared = DataSource()
     
+    let user = User(name: "Akira", wallet: 300, items: [])
+    
     let titles = [
         "Потерянный навык",
         "Новый талант",

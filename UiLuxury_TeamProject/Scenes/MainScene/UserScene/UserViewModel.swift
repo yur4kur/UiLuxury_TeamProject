@@ -22,7 +22,7 @@ protocol UserViewModelProtocol {
     var userItems: [Item] { get }
 
     /// Инициализация данными пользователя из UserViewController
-    init(userData: StartViewModelProtocol)
+    init(userData: UserDataTransferProtocol)
 
     /// Метод продажи предметов
     func sellItem(at index: Int)
@@ -59,11 +59,11 @@ final class UserViewModel: UserViewModelProtocol {
     private var userStage = 0
 
     /// Данные пользователя из стартовой вью-модели
-    private var userData: StartViewModelProtocol
+    private var userData: UserDataTransferProtocol
 
     // MARK: Initializers
 
-    init(userData: StartViewModelProtocol) {
+    init(userData: UserDataTransferProtocol) {
         self.userData = userData
     }
 

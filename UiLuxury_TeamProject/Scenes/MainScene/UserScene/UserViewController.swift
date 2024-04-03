@@ -26,7 +26,7 @@ final class UserViewController: UIViewController {
     // MARK: View Model
 
     /// Данные пользователя из стартовой вью-модели
-    var userData: StartViewModelProtocol!
+    var userData: UserDataTransferProtocol!
 
     /// Экземпляр вью модели
     private var viewModel: UserViewModelProtocol!
@@ -34,7 +34,7 @@ final class UserViewController: UIViewController {
     // MARK: - Initializers
 
     /// Инициализатор сцены с передачей данных из стартовой модели
-    init(userData: StartViewModelProtocol) {
+    init(userData: UserDataTransferProtocol) {
         self.userData = userData
         super.init(nibName: nil, bundle: nil)
     }

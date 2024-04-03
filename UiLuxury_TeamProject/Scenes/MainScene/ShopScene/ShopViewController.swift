@@ -30,14 +30,14 @@ final class ShopViewController: UIViewController {
     
     // MARK: View Model
     /// Данные пользователя из стартовой вью-модели
-    var userData: StartViewModelProtocol!
+    var userData: UserDataTransferProtocol!
     
     /// Экземпляр вью модели
     private var viewModel: ShopViewModelProtocol!
     
     // MARK: - Initializers
     
-    init(userData: StartViewModelProtocol) {
+    init(userData: UserDataTransferProtocol) {
         self.userData = userData
         super.init(nibName: nil, bundle: nil)
     }

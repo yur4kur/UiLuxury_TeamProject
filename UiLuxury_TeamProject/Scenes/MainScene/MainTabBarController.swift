@@ -12,6 +12,18 @@ import UIKit
 /// Кастомный контроллер, в котором TabBar объединен с NavigationController
 final class MainTabBarController: UITabBarController {
     
+    // TODO: Удалить после проверки передачи данных
+    var userData: UserDataTransferProtocol
+    
+    init(userData: UserDataTransferProtocol) {
+        self.userData = userData
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
@@ -54,7 +66,7 @@ final class MainTabBarController: UITabBarController {
         let gameVC = createNavigationController(
             title: Constants.gameTabName,
             image: UIImage(systemName: Constants.gameTabIcon),
-            rootViewController: GameViewController(userData: userData)
+            rootViewController: GameCoordinator
         )
         
         let shopVC = createNavigationController(
