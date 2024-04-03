@@ -9,8 +9,15 @@ import Foundation
 
 // MARK: - StartViewModelProtocol
 
-/// Протокол основной модели, в которой описывается пользователь
-protocol StartViewModelProtocol {
+///// Протокол передачи данных пользователя между вью-моделями
+//protocol UserDataTransferProtocol {
+//    
+//   
+//
+//}
+
+/// Протокол основной модели, в которой загружается пользователь
+protocol StartViewModelProtocol: AnyObject {
     
     /// Экземпляр модели пользователя
     var user: User { get set }
