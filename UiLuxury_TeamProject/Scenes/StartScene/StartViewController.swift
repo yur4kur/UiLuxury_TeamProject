@@ -20,19 +20,19 @@ final class StartViewController: UIViewController {
     /// Вью-модель этого контроллера
     var viewModel: StartViewModelProtocol!
     
-    weak var coodinator: MainCoordinator?
+    var coordinator: MainCoordinator?
     
     // MARK: - Initializers
     
-//    init(viewModel: StartViewModelProtocol) {
-//        self.viewModel = viewModel
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//    
-//    @available(*, unavailable)
-//    required init?(coder: NSCoder) {
-//        fatalError(GlobalConstants.fatalError)
-//    }
+    init(coordinator: MainCoordinator) {
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError(GlobalConstants.fatalError)
+    }
     
     // MARK: - Lifecycle methods
     
@@ -50,9 +50,10 @@ final class StartViewController: UIViewController {
     
     /// Метода переход на игровой экран
     @objc private func startTapped() {
-        let vc = GameTabBarController(userData: viewModel)
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true)
+        coordinator?.moveToGame()
+//        let vc = GameTabBarController(userData: viewModel)
+//        vc.modalPresentationStyle = .fullScreen
+//        present(vc, animated: true)
     }
     
 }

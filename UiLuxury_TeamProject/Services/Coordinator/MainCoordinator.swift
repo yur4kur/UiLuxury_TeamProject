@@ -8,16 +8,25 @@
 import UIKit
 
 /// Основной координатор, через который происходит запуск приложения
-class MainCoordinator: CoordinatorProtocol {
+final class MainCoordinator: CoordinatorProtocol {
     var childCoordinators = [CoordinatorProtocol]()
     var navigationController: UINavigationController
+    
+    
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 
     func start() {
-        let startVC = StartViewController()
+        let startVC = StartViewController(coordinator: self)
         navigationController.pushViewController(startVC, animated: false)
+    }
+    
+    func moveToGame() {
+        let child = GameTabBarCoordinator(navigationController: navigationController)
+        childCoordinators.append(child)
+        child.parent = self
+        child.start()
     }
 }
