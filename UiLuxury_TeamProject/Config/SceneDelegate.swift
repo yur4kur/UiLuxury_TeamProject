@@ -20,6 +20,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: - Public methods
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
         let coordinator = BaseCoordinator(navigationController: navigationController)
         coordinator.start()
         

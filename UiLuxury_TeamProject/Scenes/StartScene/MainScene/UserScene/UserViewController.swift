@@ -25,21 +25,22 @@ final class UserViewController: UIViewController {
 
     // MARK: View Model
 
-    /// Данные пользователя из стартовой вью-модели
-    var userData: UserDataTransferProtocol!
+    /// Координатор контроллера
+    private let coordinator: TabCoordinatorProtocol!
 
     /// Экземпляр вью модели
     private var viewModel: UserViewModelProtocol!
 
     // MARK: - Initializers
 
-    /// Инициализатор сцены с передачей данных из стартовой модели
-    init(userData: UserDataTransferProtocol) {
-        self.userData = userData
+    // MARK: - Initializers
+    
+    init(coordinator: TabCoordinatorProtocol) {
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
-
-    /// Обязательный инициализатор сцены при переопределении родительского инициализатора
+    
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError(GlobalConstants.fatalError)
     }
@@ -161,7 +162,7 @@ private extension UserViewController {
 
     /// Метод инициализации вью модели
     func setupBinding() {
-        viewModel = UserViewModel(userData: userData)
+        viewModel = UserViewModel(userData: coordinator.userData)
     }
 }
 

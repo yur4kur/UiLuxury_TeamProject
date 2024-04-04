@@ -17,12 +17,12 @@ final class MainTabBarController: UITabBarController {
     
     // MARK: - Private properties
     
-    private let coordinator: TabBarCoordinatorProtocol
+    private let coordinator: MainCoordinatorProtocol
     
     
     // MARK: - Initializers
     
-    init(userData: UserDataTransferProtocol, coordinator: TabBarCoordinatorProtocol) {
+    init(userData: UserDataTransferProtocol, coordinator: MainCoordinatorProtocol) {
         self.userData = userData
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
@@ -80,19 +80,19 @@ final class MainTabBarController: UITabBarController {
         let shopVC = createNavigationController(
             title: Constants.shopTabName,
             image: UIImage(systemName: Constants.shopTabIcon),
-            rootViewController: ShopViewController(userData: userData)
+            rootViewController: coordinator.tabControllers[1]
         )
         
         let userVC = createNavigationController(
             title: Constants.userTabName,
             image: UIImage(systemName: Constants.userTabIcon),
-            rootViewController: UserViewController(userData: userData)
+            rootViewController: coordinator.tabControllers[2]
         )
         
         let teamVC = createNavigationController(
             title: Constants.teamTabName,
             image: UIImage(systemName: Constants.teamTabIcon),
-            rootViewController: DevelopersViewController()
+            rootViewController: coordinator.tabControllers[3]
         )
         
         setViewControllers([gameVC, shopVC, userVC, teamVC], animated: true)

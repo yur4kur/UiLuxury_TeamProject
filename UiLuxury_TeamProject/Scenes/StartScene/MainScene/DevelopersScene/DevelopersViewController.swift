@@ -28,7 +28,22 @@ final class DevelopersViewController: UIViewController {
 
     /// Текущая Telegram-ссылка разработчика
     private var currentURL = DevelopersInfo.contacts[0]
+    
+    /// Координатор контроллера
+    private let coordinator: TabCoordinatorProtocol!
 
+    // MARK: - Initializers
+    
+    init(coordinator: TabCoordinatorProtocol) {
+        self.coordinator = coordinator
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError(GlobalConstants.fatalError)
+    }
+    
     // MARK: Lifecycle Methods
 
     override func viewDidLoad() {

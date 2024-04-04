@@ -1,5 +1,5 @@
 //
-//  Coordinator.swift
+//  BaseCoordinatorProtocol.swift
 //  UiLuxury_TeamProject
 //
 //  Created by Юрий Куринной on 02.04.2024.

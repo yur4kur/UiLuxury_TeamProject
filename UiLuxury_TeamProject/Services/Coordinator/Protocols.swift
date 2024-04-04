@@ -1,5 +1,5 @@
 //
-//  CoordinatorProtocol.swift
+//  Protocols.swift
 //  UiLuxury_TeamProject
 //
 //  Created by Юрий Куринной on 02.04.2024.
@@ -22,21 +22,6 @@ protocol CoordinatorProtocol: AnyObject {
     func start()
 }
 
-// MARK: - TabBarCoordinatorProtocol
-
-/// Протокол координатора таббара основной сцены
-protocol TabBarCoordinatorProtocol: CoordinatorProtocol {
-    
-    /// Данные пользователя из стартовой вью-модели
-    var userData: UserDataTransferProtocol { get set }
-    
-    /// Экземпляр родительского координатора
-    var parentCoodinator: CoordinatorProtocol? { get }
-    
-    /// Контроллеры таббара
-    var tabControllers: [UIViewController] { get set }
-}
-
 // MARK: - TabCoordinatorProtocol
 
 /// Протокол координаторов контроллеров таббара
@@ -46,7 +31,7 @@ protocol TabCoordinatorProtocol: CoordinatorProtocol {
     var userData: UserDataTransferProtocol { get set }
     
     /// Экземпляр родительского координатора
-    var parentCoodinator: TabBarCoordinatorProtocol? { get }
+    var parentCoodinator: MainCoordinatorProtocol? { get }
     
 }
 

@@ -14,10 +14,13 @@
 		462738762A7A4AF2006138E8 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 462738752A7A4AF2006138E8 /* StartViewController.swift */; };
 		46C7C9DA2A7C2CC500FE5922 /* DevelopersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C7C9D92A7C2CC500FE5922 /* DevelopersViewController.swift */; };
 		6A5E70382BBC37CD00FF4C14 /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E70372BBC37CD00FF4C14 /* BaseCoordinator.swift */; };
-		6A5E703A2BBC3F4D00FF4C14 /* CoordinatorProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E70392BBC3F4D00FF4C14 /* CoordinatorProtocols.swift */; };
+		6A5E703A2BBC3F4D00FF4C14 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E70392BBC3F4D00FF4C14 /* Protocols.swift */; };
 		6A5E703C2BBC446F00FF4C14 /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E703B2BBC446F00FF4C14 /* StartView.swift */; };
 		6A5E70422BBD4D9000FF4C14 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E70412BBD4D9000FF4C14 /* MainCoordinator.swift */; };
 		6A5E70462BBD7BE500FF4C14 /* GameCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E70452BBD7BE500FF4C14 /* GameCoordinator.swift */; };
+		6A5E70492BBEB54E00FF4C14 /* ShopCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E70482BBEB54E00FF4C14 /* ShopCoordinator.swift */; };
+		6A5E704B2BBEB55E00FF4C14 /* UserCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E704A2BBEB55E00FF4C14 /* UserCoordinator.swift */; };
+		6A5E704D2BBEB57500FF4C14 /* DevelopersCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5E704C2BBEB57500FF4C14 /* DevelopersCoordinator.swift */; };
 		6A778A472A909F4B006D96CE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A778A462A909F4B006D96CE /* User.swift */; };
 		6A9C13AC2BB313DC0090000C /* StartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9C13AB2BB313DC0090000C /* StartViewModel.swift */; };
 		6A9C13AE2BB32AA90090000C /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9C13AD2BB32AA90090000C /* GlobalConstants.swift */; };
@@ -47,10 +50,13 @@
 		462738752A7A4AF2006138E8 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		46C7C9D92A7C2CC500FE5922 /* DevelopersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopersViewController.swift; sourceTree = "<group>"; };
 		6A5E70372BBC37CD00FF4C14 /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
-		6A5E70392BBC3F4D00FF4C14 /* CoordinatorProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocols.swift; sourceTree = "<group>"; };
+		6A5E70392BBC3F4D00FF4C14 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		6A5E703B2BBC446F00FF4C14 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		6A5E70412BBD4D9000FF4C14 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		6A5E70452BBD7BE500FF4C14 /* GameCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCoordinator.swift; sourceTree = "<group>"; };
+		6A5E70482BBEB54E00FF4C14 /* ShopCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopCoordinator.swift; sourceTree = "<group>"; };
+		6A5E704A2BBEB55E00FF4C14 /* UserCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCoordinator.swift; sourceTree = "<group>"; };
+		6A5E704C2BBEB57500FF4C14 /* DevelopersCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopersCoordinator.swift; sourceTree = "<group>"; };
 		6A778A462A909F4B006D96CE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6A9C13AB2BB313DC0090000C /* StartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewModel.swift; sourceTree = "<group>"; };
 		6A9C13AD2BB32AA90090000C /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
@@ -100,10 +106,10 @@
 		6A5E70342BBC339900FF4C14 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				6A5E70392BBC3F4D00FF4C14 /* CoordinatorProtocols.swift */,
+				6A5E70392BBC3F4D00FF4C14 /* Protocols.swift */,
 				6A5E70372BBC37CD00FF4C14 /* BaseCoordinator.swift */,
 				6A5E70412BBD4D9000FF4C14 /* MainCoordinator.swift */,
-				6A5E70452BBD7BE500FF4C14 /* GameCoordinator.swift */,
+				6A5E70472BBEB50900FF4C14 /* MainTabCoordinators */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -122,6 +128,17 @@
 				B8979AB82BA9B85E00A2D725 /* SoundManager.swift */,
 			);
 			path = SoundManager;
+			sourceTree = "<group>";
+		};
+		6A5E70472BBEB50900FF4C14 /* MainTabCoordinators */ = {
+			isa = PBXGroup;
+			children = (
+				6A5E70452BBD7BE500FF4C14 /* GameCoordinator.swift */,
+				6A5E70482BBEB54E00FF4C14 /* ShopCoordinator.swift */,
+				6A5E704A2BBEB55E00FF4C14 /* UserCoordinator.swift */,
+				6A5E704C2BBEB57500FF4C14 /* DevelopersCoordinator.swift */,
+			);
+			path = MainTabCoordinators;
 			sourceTree = "<group>";
 		};
 		6A9C13A12BB145EA0090000C /* ShopScene */ = {
@@ -371,12 +388,15 @@
 				6ADD25AC2B98C03000F3DD15 /* UIView+.swift in Sources */,
 				462738762A7A4AF2006138E8 /* StartViewController.swift in Sources */,
 				6AE5E95B2B9F2A9F00810D91 /* UIButton+.swift in Sources */,
+				6A5E704D2BBEB57500FF4C14 /* DevelopersCoordinator.swift in Sources */,
 				46227DE82A73B25C00C042F4 /* UserViewController.swift in Sources */,
 				6AE5E9752BA667BB00810D91 /* GameViewModel.swift in Sources */,
 				6A9C13AC2BB313DC0090000C /* StartViewModel.swift in Sources */,
-				6A5E703A2BBC3F4D00FF4C14 /* CoordinatorProtocols.swift in Sources */,
+				6A5E703A2BBC3F4D00FF4C14 /* Protocols.swift in Sources */,
 				46227DE62A73B1D600C042F4 /* ShopViewController.swift in Sources */,
 				6AB7F8732A7302330026E5DC /* SceneDelegate.swift in Sources */,
+				6A5E70492BBEB54E00FF4C14 /* ShopCoordinator.swift in Sources */,
+				6A5E704B2BBEB55E00FF4C14 /* UserCoordinator.swift in Sources */,
 				B8979AB92BA9B85E00A2D725 /* SoundManager.swift in Sources */,
 				6A9C13B02BB3DB5E0090000C /* UserViewModel.swift in Sources */,
 				6A5E70422BBD4D9000FF4C14 /* MainCoordinator.swift in Sources */,

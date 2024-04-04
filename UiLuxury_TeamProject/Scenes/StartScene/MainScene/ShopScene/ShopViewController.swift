@@ -28,20 +28,20 @@ final class ShopViewController: UIViewController {
     /// Выбранные ячейки, которые будут переданы в корзину
     private var selectCells: [Item] = []
     
-    // MARK: View Model
-    /// Данные пользователя из стартовой вью-модели
-    var userData: UserDataTransferProtocol!
+    /// Координатор контроллера
+    private let coordinator: TabCoordinatorProtocol!
     
     /// Экземпляр вью модели
     private var viewModel: ShopViewModelProtocol!
     
     // MARK: - Initializers
     
-    init(userData: UserDataTransferProtocol) {
-        self.userData = userData
+    init(coordinator: TabCoordinatorProtocol) {
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError(GlobalConstants.fatalError)
     }
@@ -181,7 +181,7 @@ extension ShopViewController: UITableViewDelegate {
 
 private extension ShopViewController {
     func setupBinding() {
-        viewModel = ShopViewModel(userData: userData)
+        viewModel = ShopViewModel(userData: coordinator.userData)
     }
 }
 

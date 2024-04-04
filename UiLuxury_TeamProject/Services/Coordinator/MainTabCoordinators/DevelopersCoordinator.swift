@@ -1,27 +1,27 @@
 //
-//  GameCoordinator.swift
+//  DevelopersCoordinator.swift
 //  UiLuxury_TeamProject
 //
-//  Created by Юрий Куринной on 03.04.2024.
+//  Created by Юрий Куринной on 04.04.2024.
 //
 
 import UIKit
 
-// MARK: - GameCoordinator
+// MARK: - DevelopersCoordinator
 
 /// Координаторов игровой сцены
-final class GameCoordinator: TabCoordinatorProtocol {
+final class DevelopersCoordinator: TabCoordinatorProtocol {
     
     // MARK: Public properties
     var userData: UserDataTransferProtocol
-    weak var parentCoodinator: TabBarCoordinatorProtocol?
+    weak var parentCoodinator: MainCoordinatorProtocol?
     var childCoordinators: [CoordinatorProtocol]?
     var navigationController: UINavigationController
     
     // MARK: Initializers
     init(
         userData: UserDataTransferProtocol,
-        parentCoodinator: TabBarCoordinatorProtocol,
+        parentCoodinator: MainCoordinatorProtocol,
         navigationController: UINavigationController
     ) {
         self.userData = userData
@@ -31,9 +31,7 @@ final class GameCoordinator: TabCoordinatorProtocol {
     
     // MARK: Public methods
     func start()  {
-        let gameVC = GameViewController(coordinator: self)
-        parentCoodinator?.tabControllers.append(gameVC)
+        let devsVC = DevelopersViewController(coordinator: self)
+        parentCoodinator?.tabControllers.append(devsVC)
     }
-    
-    
 }

@@ -53,7 +53,7 @@ final class GameViewController: UIViewController {
         }
     }
     
-    /// Данные пользователя из стартовой вью-модели
+    /// Координатор контроллера
     private let coordinator: TabCoordinatorProtocol!
     
     // MARK: - Initializers
