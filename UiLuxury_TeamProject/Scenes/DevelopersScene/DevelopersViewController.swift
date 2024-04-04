@@ -51,8 +51,9 @@ final class DevelopersViewController: UIViewController {
     private var nameLabelFive = UILabel()
     private var nameLabelSix = UILabel()
     
-    /// Текущая Telegram-ссылка разработчика
-    private var currentURL = DevelopersInfo.contacts[0]
+    /// Текущая Telegram-ссылка разработчика. Это свойство постоянно обновляется в методах
+    /// setupURL и openURL. Присваивается новая юрла другого разработчика.
+    private var currentURL = ""
     
     // MARK: Lifecycle Methods
     
@@ -62,7 +63,7 @@ final class DevelopersViewController: UIViewController {
         setupUI()
         addActions()
         
-        pageControl.numberOfPages = DevelopersInfo.names.count
+        pageControl.numberOfPages = viewModel.getNamesCount()
     }
     
     /// Скрываем нивгейшн бар
@@ -84,29 +85,18 @@ final class DevelopersViewController: UIViewController {
     
     // MARK: Private Methods
     
-    
-    /// Метод настройки карточки разработчика
-    //    @objc private func showDeveloperInfo() {
-    //        let selectedSegmentIndex = developerSegments.selectedSegmentIndex
-    //        guard selectedSegmentIndex < DevelopersInfo.names.count else { return }
-    //        segmentIndex = selectedSegmentIndex
-    //
-    //        guard let developerImage = UIImage(named: String(segmentIndex)) else { return }
-    //        let developerContact = DevelopersInfo.contacts[segmentIndex]
-    //
-    //        developerImageView.image = developerImage
-    //        currentURL = developerContact
-    //    }
-    
     /// Метод перехода в Telegram
     @objc private func openURL() {
         guard let url = URL(string: currentURL) else { return }
         UIApplication.shared.open(url)
     }
     
+    //MARK: - 1111111
     /// Тут мы изменяем ссылку на актульную
     private func setupURL(with position: Int) {
-        currentURL = DevelopersInfo.contacts[position]
+        viewModel.getTelegramURL { url in
+            self.currentURL = url[position]
+        }
     }
 }
 
@@ -140,19 +130,25 @@ private extension DevelopersViewController {
     ///  В контент сайзе мы указываем высоту как 1 для того, чтобы отключить вертикальный скролл
     ///  И мы пользовались только свайпами вправо-влево
     func setupScrollView() {
+        var developersNames = [""]
+        
+        viewModel.getNames { names in
+            developersNames = names
+        }
+        
         scrollView.contentSize = CGSize(
-            width: Int(UIScreen.main.bounds.width) * DevelopersInfo.names.count,
+            width: Int(UIScreen.main.bounds.width) * developersNames.count,
             height: Int(1) //Int(view.frame.height - 200)
         )
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         
-        nameLabelOne = addLabel(title: DevelopersInfo.names[0], position: 0)
-        nameLabelTwo = addLabel(title: DevelopersInfo.names[0], position: 1)
-        nameLabelThree = addLabel(title: DevelopersInfo.names[2], position: 2)
-        nameLabelFour = addLabel(title: DevelopersInfo.names[3], position: 3)
-        nameLabelFive = addLabel(title: DevelopersInfo.names[4], position: 4)
-        nameLabelSix = addLabel(title: DevelopersInfo.names[5], position: 5)
+        nameLabelOne = addLabel(title: developersNames[0], position: 0)
+        nameLabelTwo = addLabel(title: developersNames[0], position: 1)
+        nameLabelThree = addLabel(title: developersNames[2], position: 2)
+        nameLabelFour = addLabel(title: developersNames[3], position: 3)
+        nameLabelFive = addLabel(title: developersNames[4], position: 4)
+        nameLabelSix = addLabel(title: developersNames[5], position: 5)
         
         developerImageViewOne = addDeveloperImage(imageNamed: 0, position: 0)
         developerImageViewTwo = addDeveloperImage(imageNamed: 1, position: 1)
@@ -173,22 +169,28 @@ private extension DevelopersViewController {
     
     /// Добавляем лейблы на каждую из страниц
     func addLabel(title: String, position: CGFloat) -> UILabel {
-        let testLabel = UILabel()
-        testLabel.text = DevelopersInfo.names[Int(position)]
-        testLabel.textAlignment = .center
-        testLabel.font = UIFont.systemFont(ofSize: 25)
+        let nameLabel = UILabel()
+        var actualName = ""
         
-        scrollView.addSubview(testLabel)
+        viewModel.getNames { names in
+            actualName = names[Int(position)]
+        }
         
-        testLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.text = actualName
+        nameLabel.textAlignment = .center
+        nameLabel.font = UIFont.systemFont(ofSize: 25)
+        
+        scrollView.addSubview(nameLabel)
+        
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         let screenWidth: CGFloat = UIScreen.main.bounds.width
         NSLayoutConstraint.activate([
-            testLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 190),
-            testLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: screenWidth * position),
-            testLabel.widthAnchor.constraint(equalToConstant: screenWidth),
-            testLabel.heightAnchor.constraint(equalToConstant: 300)
+            nameLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 190),
+            nameLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: screenWidth * position),
+            nameLabel.widthAnchor.constraint(equalToConstant: screenWidth),
+            nameLabel.heightAnchor.constraint(equalToConstant: 300)
         ])
-        return testLabel
+        return nameLabel
     }
     
     /// Добавляем Изображения на каждую из страниц
@@ -220,9 +222,13 @@ private extension DevelopersViewController {
     /// Настраиваем кнопку телеграмма для каждого из разработчиков
     func addTelegramButton(position: CGFloat) -> UIButton {
         let telegramDeveloperButton = UIButton()
+        var telegramImage = UIImage()
         
-        guard let image = UIImage(named: Images.telegramLogo) else { return UIButton() }
-        telegramDeveloperButton.setImage(image, for: .normal)
+        viewModel.getTelegramImage { image in
+            telegramImage = UIImage(named: image) ?? UIImage()
+        }
+
+        telegramDeveloperButton.setImage(telegramImage, for: .normal)
         
         scrollView.addSubview(telegramDeveloperButton)
         
@@ -243,13 +249,6 @@ private extension DevelopersViewController {
     func setupHeader() {
         headerView.backgroundColor = .white
     }
-    
-    /// Метод настройки сегмент-контроллера
-    //    func setupDeveloperSegments() {
-    //        developerSegments = UISegmentedControl(items: DevelopersInfo.names)
-    //        developerSegments.selectedSegmentIndex = segmentIndex
-    //        showDeveloperInfo()
-    //    }
     
     /// Метод добавления элементов интерфейса на главный экран и отключения масок AutoLayout
     func addSubviews() {
@@ -293,16 +292,6 @@ private extension DevelopersViewController {
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.heightAnchor.constraint(equalToConstant: view.frame.height - 150),
             
-//            headerView.topAnchor.constraint(equalTo: view.topAnchor),
-//            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            headerView.bottomAnchor.constraint(equalTo: containerView.centerYAnchor),
-            
-            //            developerSegments.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            //            developerSegments.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            //            developerSegments.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            //            developerSegments.heightAnchor.constraint(equalToConstant: 32),
-            
             pageControl.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 32),
             pageControl.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
         ])
@@ -314,36 +303,5 @@ extension DevelopersViewController: UIScrollViewDelegate {
         pageControl.currentPage = Int(scrollView.contentOffset.x / UIScreen.main.bounds.width)
         
         setupURL(with: pageControl.currentPage)
-    }
-}
-
-// MARK: - Constants
-
-private extension DevelopersViewController {
-    
-    /// Информация о разработчиках
-    enum DevelopersInfo {
-        static let names = [
-            "AlexDarkStalker98",
-            "Кирилл",
-            "Юра",
-            "Бийбол",
-            "Эльдар",
-            "Рустам"
-        ]
-        
-        static let contacts = [
-            "https://t.me/AkiraReiTyan",
-            "https://t.me/kizi_mcfly",
-            "https://t.me/Radiator074",
-            "https://t.me/zubi312",
-            "https://t.me/eldarovsky",
-            "https://t.me/hellofox"
-        ]
-    }
-    
-    /// Изображения
-    enum Images {
-        static let telegramLogo = "logo_telegram"
     }
 }

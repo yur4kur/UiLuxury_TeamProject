@@ -16,6 +16,12 @@ class DevelopersViewModel {
         closure(names)
     }
     
+    func getNamesCount() -> Int{
+        let count = Developer.DevelopersInfo.names.count
+        
+        return count
+    }
+    
     /// Получаем масив юрлов телеграма
     func getTelegramURL(closure: @escaping ([String]) -> Void) {
         let url = Developer.DevelopersInfo.contacts
