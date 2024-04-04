@@ -91,7 +91,6 @@ final class DevelopersViewController: UIViewController {
         UIApplication.shared.open(url)
     }
     
-    //MARK: - 1111111
     /// Тут мы изменяем ссылку на актульную
     private func setupURL(with position: Int) {
         viewModel.getTelegramURL { url in

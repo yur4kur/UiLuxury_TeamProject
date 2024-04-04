@@ -16,6 +16,7 @@ class DevelopersViewModel {
         closure(names)
     }
     
+    /// Получаем количество имен
     func getNamesCount() -> Int{
         let count = Developer.DevelopersInfo.names.count
         
