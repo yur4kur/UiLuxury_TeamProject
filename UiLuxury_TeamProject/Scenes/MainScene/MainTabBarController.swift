@@ -14,9 +14,12 @@ final class MainTabBarController: UITabBarController {
     
     // TODO: Удалить после проверки передачи данных
     var userData: UserDataTransferProtocol
+    var coordinator: TabBarCoordinatorProtocol
+//    var tabControllers: [UIViewController]
     
-    init(userData: UserDataTransferProtocol) {
+    init(userData: UserDataTransferProtocol, coordinator: TabBarCoordinatorProtocol) {
         self.userData = userData
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -66,7 +69,7 @@ final class MainTabBarController: UITabBarController {
         let gameVC = createNavigationController(
             title: Constants.gameTabName,
             image: UIImage(systemName: Constants.gameTabIcon),
-            rootViewController: GameCoordinator
+            rootViewController: coordinator.tabControllers[0]
         )
         
         let shopVC = createNavigationController(

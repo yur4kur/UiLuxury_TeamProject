@@ -14,18 +14,26 @@ final class GameCoordinator: TabCoordinatorProtocol {
     
     // MARK: Public properties
     var userData: UserDataTransferProtocol
-    var childCoordinators: [CoordinatorProtocol] = []
+    weak var parentCoodinator: TabBarCoordinatorProtocol?
+    var childCoordinators: [CoordinatorProtocol]?
+    var navigationController: UINavigationController
     
     // MARK: Initializers
-    init(userData: UserDataTransferProtocol) {
+    init(
+        userData: UserDataTransferProtocol,
+        parentCoodinator: TabBarCoordinatorProtocol,
+        navigationController: UINavigationController
+    ) {
         self.userData = userData
+        self.parentCoodinator = parentCoodinator
+        self.navigationController = navigationController
     }
     
     // MARK: Public methods
-    func start() -> UIViewController {
+    func start()  {
         let gameVM = GameViewModel(userData: userData)
         let gameVC = GameViewController(viewModel: gameVM)
-        return gameVC
+        parentCoodinator?.tabControllers.append(gameVC)
     }
     
     

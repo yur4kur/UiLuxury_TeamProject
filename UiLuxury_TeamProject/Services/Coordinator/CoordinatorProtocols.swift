@@ -10,10 +10,10 @@ import UIKit
 // MARK: - CoordinatorProtocol
 
 /// Протокол координаторов
-protocol CoordinatorProtocol {
+protocol CoordinatorProtocol: AnyObject {
     
     /// Дочерние координаторы, которые вызывает родительский координатор
-    var childCoordinators: [CoordinatorProtocol] { get set }
+    var childCoordinators: [CoordinatorProtocol]? { get set }
     
     /// Навигационный контроллер для перехода на другие контроллеры
     var navigationController: UINavigationController { get set }
@@ -25,20 +25,30 @@ protocol CoordinatorProtocol {
 // MARK: - MainCoordinatorProtocol
 
 /// Протокол координатора основной сцены
-protocol MainCoordinatorProtocol: CoordinatorProtocol {
+protocol TabBarCoordinatorProtocol: CoordinatorProtocol {
     
     /// Данные пользователя из стартовой вью-модели
     var userData: UserDataTransferProtocol { get set }
+    
+    /// Экземпляр родительского координатора
+    var parentCoodinator: CoordinatorProtocol? { get }
+    
+    /// Контроллеры таббара
+    var tabControllers: [UIViewController] { get set }
 }
 
 // MARK: - TabCoordinatorProtocol
 
 /// Протокол координаторов контроллеров таббара
-protocol TabCoordinatorProtocol {
+protocol TabCoordinatorProtocol: CoordinatorProtocol {
     
-    /// Экземпляр пользователя для игровых контроллеров
+    /// Данные пользователя из стартовой вью-модели
     var userData: UserDataTransferProtocol { get set }
     
-    /// Инициализация обслуживаемого контроллера
-    func start() -> UIViewController
+    /// Экземпляр родительского координатора
+    var parentCoodinator: TabBarCoordinatorProtocol? { get }
+    
 }
+
+
+
