@@ -6,14 +6,32 @@
 //
 
 struct Developer {
+    /// Изображение
+    static let telegramLogo = "logo_telegram"
     
-    let name: String
-    let clan: String
-    var fullname: String {
-        "\(name) + \(clan)"
+    /// Данные разработчиков, скинутые в массив данных.
+    enum DevelopersInfo {
+        ///Имена
+        static let names = [
+            "AlexDarkStalker98",
+            "Кирилл",
+            "Юра",
+            "Бийбол",
+            "Эльдар",
+            "Рустам"
+        ]
+        
+        /// Контакт телеграмма. 
+        static let contacts = [
+            "https://t.me/AkiraReiTyan",
+            "https://t.me/kizi_mcfly",
+            "https://t.me/Radiator074",
+            "https://t.me/zubi312",
+            "https://t.me/eldarovsky",
+            "https://t.me/hellofox"
+        ]
     }
-    
-    let jobInfo: String
-    let reactionToApp: String
-    
 }
+
+
+

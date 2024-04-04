@@ -14,6 +14,9 @@ final class DevelopersViewController: UIViewController {
     
     // MARK: Private properties
     
+    /// Вью модель
+    private let viewModel = DevelopersViewModel()
+    
     /// Скролл Вью для перехода между раработчиками
     private var scrollView = UIScrollView()
     
@@ -180,12 +183,11 @@ private extension DevelopersViewController {
         testLabel.translatesAutoresizingMaskIntoConstraints = false
         let screenWidth: CGFloat = UIScreen.main.bounds.width
         NSLayoutConstraint.activate([
-            testLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 125),
+            testLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 190),
             testLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: screenWidth * position),
             testLabel.widthAnchor.constraint(equalToConstant: screenWidth),
-            testLabel.heightAnchor.constraint(equalToConstant: 200)
+            testLabel.heightAnchor.constraint(equalToConstant: 300)
         ])
-        
         return testLabel
     }
     
@@ -207,7 +209,7 @@ private extension DevelopersViewController {
         
         NSLayoutConstraint.activate([
             imageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: screenWidth * position),
-            imageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 16),
+            imageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 116),
             imageView.widthAnchor.constraint(equalToConstant: screenWidth / 2.25),
             imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
         ])
@@ -228,7 +230,7 @@ private extension DevelopersViewController {
         let screenWidth: CGFloat = UIScreen.main.bounds.width
         
         NSLayoutConstraint.activate([
-            telegramDeveloperButton.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 140),
+            telegramDeveloperButton.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 240),
             telegramDeveloperButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: screenWidth * position + screenWidth / 2 + screenWidth / 9),
             telegramDeveloperButton.widthAnchor.constraint(equalToConstant: screenWidth / 9),
             telegramDeveloperButton.heightAnchor.constraint(equalToConstant: screenWidth / 9)
@@ -301,7 +303,7 @@ private extension DevelopersViewController {
             //            developerSegments.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             //            developerSegments.heightAnchor.constraint(equalToConstant: 32),
             
-            pageControl.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 16),
+            pageControl.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 32),
             pageControl.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
         ])
     }
