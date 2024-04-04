@@ -31,8 +31,7 @@ final class GameCoordinator: TabCoordinatorProtocol {
     
     // MARK: Public methods
     func start()  {
-        let gameVM = GameViewModel(userData: userData)
-        let gameVC = GameViewController(viewModel: gameVM)
+        let gameVC = GameViewController(coordinator: self)
         parentCoodinator?.tabControllers.append(gameVC)
     }
     

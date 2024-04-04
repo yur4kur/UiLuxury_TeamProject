@@ -22,9 +22,9 @@ protocol CoordinatorProtocol: AnyObject {
     func start()
 }
 
-// MARK: - MainCoordinatorProtocol
+// MARK: - TabBarCoordinatorProtocol
 
-/// Протокол координатора основной сцены
+/// Протокол координатора таббара основной сцены
 protocol TabBarCoordinatorProtocol: CoordinatorProtocol {
     
     /// Данные пользователя из стартовой вью-модели

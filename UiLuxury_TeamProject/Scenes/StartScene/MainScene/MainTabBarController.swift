@@ -14,8 +14,13 @@ final class MainTabBarController: UITabBarController {
     
     // TODO: Удалить после проверки передачи данных
     var userData: UserDataTransferProtocol
-    var coordinator: TabBarCoordinatorProtocol
-//    var tabControllers: [UIViewController]
+    
+    // MARK: - Private properties
+    
+    private let coordinator: TabBarCoordinatorProtocol
+    
+    
+    // MARK: - Initializers
     
     init(userData: UserDataTransferProtocol, coordinator: TabBarCoordinatorProtocol) {
         self.userData = userData
@@ -25,13 +30,12 @@ final class MainTabBarController: UITabBarController {
     
     @available(*, unavailable)
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(GlobalConstants.fatalError)
     }
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setUpTabs()
         setupTabBar()
     }
@@ -43,6 +47,7 @@ final class MainTabBarController: UITabBarController {
                                             image: UIImage?,
                                             rootViewController: UIViewController) -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: rootViewController)
+        coordinator.navigationController.navigationBar.isHidden = true
         navigationController.tabBarItem.title = title
         navigationController.tabBarItem.image = image
         

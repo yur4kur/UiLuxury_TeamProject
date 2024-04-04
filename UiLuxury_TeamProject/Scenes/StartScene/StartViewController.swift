@@ -16,17 +16,15 @@ final class StartViewController: UIViewController {
     /// Объект вью этого контроллера
     private let startView = StartView(frame: UIScreen.main.bounds)
     
-    // MARK: - Public properties
-    
     /// Вью-модель с данными пользователя
-    var viewModel: UserDataTransferProtocol!
+    private var viewModel: UserDataTransferProtocol!
     
     /// Базовый координатор, управляющий этим контроллером
-    var coordinator: BaseCoordinator?
+    private let coordinator: BaseCoordinatorProtocol?
     
     // MARK: - Initializers
     
-    init(coordinator: BaseCoordinator) {
+    init(coordinator: BaseCoordinatorProtocol) {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }

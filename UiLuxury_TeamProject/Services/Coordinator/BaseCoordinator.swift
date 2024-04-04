@@ -19,7 +19,7 @@ protocol BaseCoordinatorProtocol: CoordinatorProtocol {
 // MARK: - BaseCoordinator
 
 /// Основной координатор, через который происходит запуск приложения
-final class BaseCoordinator: CoordinatorProtocol {
+final class BaseCoordinator: BaseCoordinatorProtocol {
     
     // MARK: Public properties
     var childCoordinators: [CoordinatorProtocol]? = []

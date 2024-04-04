@@ -34,11 +34,9 @@ final class MainCoordinator: TabBarCoordinatorProtocol {
     }
     
     func setupTabControllers() {
-        let gameChild = GameCoordinator(
-            userData: userData,
-            parentCoodinator: self,
-            navigationController: navigationController
-        )
+        let gameChild = GameCoordinator(userData: userData,
+                                        parentCoodinator: self,
+                                        navigationController: navigationController)
         childCoordinators?.append(gameChild)
         gameChild.parentCoodinator = self
         gameChild.start()
