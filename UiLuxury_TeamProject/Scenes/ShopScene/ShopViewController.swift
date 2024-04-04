@@ -12,22 +12,9 @@ final class ShopViewController: UIViewController {
     
     //MARK: - Private properties
     
-    // TODO: Проверить необходимость в полях после внедрения вью-модели
-    /// Описание товара
-    //private let descriptionLabel = UILabel()
-    
-    /// Цена товара
-    //private let priceLabel = UILabel()
-    
     /// Таблица с товарами
     private let tableView = UITableView()
-    
-    /// Покупки пользователя
-    //private var shoppings = Item.getItem()
-    
-//    /// Выбранные ячейки, которые будут переданы в корзину
-//    private var selectCells: [Item] = []
-    
+
     // MARK: View Model
     /// Данные пользователя из стартовой вью-модели
     var userData: StartViewModelProtocol!
@@ -49,31 +36,10 @@ final class ShopViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "$\(userData.user.wallet.formatted())"
         setupBinding()
         setupUI()
     }
 }
-//MARK: - Private Metods
-/*
- ///Метод отбора выбранных товаров
- private func getPurchases() {
- for item in shoppings {
- if item.isOn {
- selectCells.append(item)
- }
- }
- }
- 
- ///Метод перехода на экран корзины
- @objc private func goToBasket() {
- getPurchases()
- let basketVC = BasketViewController()
- basketVC.selectCells = selectCells
- navigationController?.pushViewController(basketVC, animated: true)
- }
- }
- */
 
 // MARK: - TableView DataSource
 
@@ -81,28 +47,25 @@ extension ShopViewController: UITableViewDataSource {
     
     ///Количество секций
     func numberOfSections(in tableView: UITableView) -> Int {
-        viewModel.shopItems.count
+        viewModel.numberOfSection
     }
     
     ///Количество ячеек в секции
     func tableView(_ tableView: UITableView,numberOfRowsInSection section: Int) -> Int {
-        1
+        viewModel.numberOfRowsInSection
     }
     
     ///Настройка вида ячеки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cell, for: indexPath)
-        
-        var content = cell.defaultContentConfiguration()
-        content.text = viewModel.shopItems[indexPath.section].description
-        content.secondaryText = "\(Constants.buy)\(viewModel.shopItems[indexPath.section].price.formatted())"
-        
         cell.backgroundColor = .clear
+        cell.tintColor = .white
         cell.layer.cornerRadius = 8
         cell.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         cell.layer.borderWidth = 2
         cell.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
-        cell.contentConfiguration = content
+        
+        viewModel.cellConfig(cell: cell, indexPath: indexPath, text: Constants.buy)
         
         return cell
     }
@@ -117,7 +80,7 @@ extension ShopViewController: UITableViewDelegate {
     /// Настройка заголовка секции таблицы
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let itemNameLabel = UILabel(frame: CGRect(x: 17, y: 3, width: tableView.frame.width, height: 20))
-        itemNameLabel.text = "\(viewModel.shopItems[section].title)"
+        itemNameLabel.text = viewModel.getTitleHeader(section: section)
         itemNameLabel.font = UIFont.boldSystemFont(ofSize: 17)
         itemNameLabel.textColor = .darkGray
         
@@ -140,57 +103,21 @@ extension ShopViewController: UITableViewDelegate {
     ///Метод выбора ячейки и смены тогла
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let selectedItem = viewModel.shopItems[indexPath.section]
         
-        if let cell = tableView.cellForRow(at: indexPath) {
-            if cell.accessoryType == .checkmark {
-                cell.accessoryType = .none
-                if let index = userData.user.items.firstIndex(of: selectedItem) {
-                    userData.user.items.remove(at: index)
-                    // Возвращаем деньги в кошелек
-                    userData.user.wallet += selectedItem.price
-                }
-            } else {
-                if userData.user.wallet >= selectedItem.price {
-                    cell.accessoryType = .checkmark
-                    userData.user.items.append(selectedItem)
-                    // Вычитаем деньги из кошелька
-                    userData.user.wallet -= selectedItem.price
-                } else {
-                    showAlerAction()
-                }
+        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        
+        if cell.accessoryType == .checkmark {
+            cell.accessoryType = .none
+            viewModel.sell(indexPath: indexPath)
+        } else {
+            viewModel.buy(indexPath: indexPath) {
+                cell.accessoryType = .checkmark
+            } alertComplition: {
+                showAlerAction()
             }
-            
         }
-        title = "$\(userData.user.wallet.formatted())"
-        print(userData.user.items)
+        title = viewModel.walletCount
     }
-    
-    //TODO: Метод нужно исправить, не отрабатывает.
-    
-    /* func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-     
-     let selectIndexCell = tableView.cellForRow(at: indexPath)
-     let selectCell = shoppings[indexPath.section]
-     
-     if selectIndexCells.contains(indexPath) {
-     selectIndexCell?.accessoryType = .none
-     if let index = selectIndexCells.firstIndex(of: indexPath) {
-     selectIndexCells.remove(at: index)
-     selectCells.remove(at: index)
-     }
-     } else {
-     if selectCells.count < 3 {
-     selectIndexCell?.accessoryType = .checkmark
-     //selectIndexCells.append(indexPath)
-     selectCells.append(selectCell)
-     } else {
-     showAlerAction()
-     }
-     }
-     tableView.deselectRow(at: indexPath, animated: true)
-     }*/
-    
 }
 
 // MARK: - Setup Binding
@@ -219,6 +146,7 @@ private extension ShopViewController {
     
     ///Метод настраивает основное вью и запускает методы настройки сабвьюх
     func setupViews() {
+        title = viewModel.walletCount
         view.addQuadroGradientLayer()
         view.addSubview(tableView) // При вынесении в отдельный метод - не срабатывает
         view.disableAutoresizingMask(
@@ -229,22 +157,7 @@ private extension ShopViewController {
         setupTableView()
     }
     
-    // MARK: Setup NavigationBar
-    /*
-     ///Настройка NavigationView
-     func setupNavBar() {
-     navigationItem.rightBarButtonItem = UIBarButtonItem(
-     image: UIImage(systemName: Constants.basket),
-     style: .plain,
-     target: self,
-     action: #selector(goToBasket)
-     )
-     }
-     */
-    // MARK: Setup TableView
-    
-    ///Настройка таблицы
-    func setupTableView() {
+  func setupTableView() {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.cell)
         tableView.backgroundColor = .clear
         
