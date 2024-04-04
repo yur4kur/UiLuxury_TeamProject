@@ -180,6 +180,8 @@ extension ShopViewController: UITableViewDelegate {
 // MARK: - Setup Binding
 
 private extension ShopViewController {
+    
+    /// Метод связывает контроллер с вьюмоделью
     func setupBinding() {
         viewModel = ShopViewModel(userData: coordinator.userData)
     }

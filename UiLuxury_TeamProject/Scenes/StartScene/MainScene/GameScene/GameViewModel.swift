@@ -12,18 +12,12 @@ import AVFoundation
 
 /// Протокол, описывающий методы игрового экрана и изменение счета кошелька пользователя
 protocol GameViewModelProtocol {
-    
-//    /// Свойство с данными пользователя
-//    var userData: UserDataTransferProtocol { get set }
-    
+
     /// Свойство для подсчета очков за нажатие на кнопку
     var score: Int { get set }
     
     /// Свойство оповещения об изменении количества заработанных очков
     var scoreDidChange: ((GameViewModelProtocol) -> Void)? { get set }
-    
-//    /// Инициализация данных пользователя из стартовой вью-модели
-//    init(userData: UserDataTransferProtocol)
     
     /// Метод подсчета очков за нажатие на кнопку
     func updateScore()
@@ -48,16 +42,16 @@ final class GameViewModel: GameViewModelProtocol {
     var score = 0
     var scoreDidChange: ((GameViewModelProtocol) -> Void)?
     
-    // MARK: Private properties
+    // MARK: - Private properties
     /// Точка доступа к SoundManager
     private let soundManager = SoundManager.shared
     
-    // MARK: Initializers
+    // MARK: - Initializers
     init(userData: UserDataTransferProtocol) {
         self.userData = userData
     }
     
-    // MARK: Public methods
+    // MARK: - Public methods
     // TODO: доработать метод для применения модификатора айтемов
     func updateScore() {
         score += 1

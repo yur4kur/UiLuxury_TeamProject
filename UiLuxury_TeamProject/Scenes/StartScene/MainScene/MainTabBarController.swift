@@ -12,18 +12,11 @@ import UIKit
 /// Кастомный контроллер, в котором TabBar объединен с NavigationController
 final class MainTabBarController: UITabBarController {
     
-    // TODO: Удалить после проверки передачи данных
-    var userData: UserDataTransferProtocol
-    
-    // MARK: - Private properties
-    
+    // MARK: Private properties
     private let coordinator: MainCoordinatorProtocol
     
-    
-    // MARK: - Initializers
-    
-    init(userData: UserDataTransferProtocol, coordinator: MainCoordinatorProtocol) {
-        self.userData = userData
+    // MARK: Initializers
+    init(coordinator: MainCoordinatorProtocol) {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
@@ -32,8 +25,8 @@ final class MainTabBarController: UITabBarController {
     required init?(coder: NSCoder) {
         fatalError(GlobalConstants.fatalError)
     }
-    // MARK: - Lifecycle Methods
     
+    // MARK: Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTabs()

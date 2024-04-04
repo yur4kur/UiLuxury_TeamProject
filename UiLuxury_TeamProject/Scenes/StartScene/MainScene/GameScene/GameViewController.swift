@@ -100,6 +100,7 @@ final class GameViewController: UIViewController {
 
 private extension GameViewController {
     
+    /// Метод связывает контроллер с вьюмоделью
     func setupBinding() {
         viewModel = GameViewModel(userData: coordinator.userData)
     }

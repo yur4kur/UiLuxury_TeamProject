@@ -1,5 +1,5 @@
 //
-//  UserDataViewModel.swift
+//  StartViewModel.swift
 //  UiLuxury_TeamProject
 //
 //  Created by Юрий Куринной on 26.03.2024.
@@ -15,6 +15,7 @@ protocol StartViewModelProtocol: UserDataTransferProtocol {}
 /// Базовая вью-модель с данными о пользователе
 final class StartViewModel: StartViewModelProtocol {
     
+    // MARK: Private properties
     /// Инициализация пользователя (из БД или с бэка), пока через моковые данные
     private var uploadedUser = DataSource.shared.user
     
