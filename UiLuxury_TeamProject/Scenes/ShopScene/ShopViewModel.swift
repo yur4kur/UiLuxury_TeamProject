@@ -9,6 +9,7 @@ import UIKit
 
 // MARK: - ShopViewModelProtocol
 
+///Shop View Model Protocol
 protocol ShopViewModelProtocol {
     
     var shopItems: [Item] { get }
