@@ -44,7 +44,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
     // MARK: Public methods
     func start() {
         startTabControllers()
-        let gameTabBarVC = MainTabBarController(userData: userData, coordinator: self)
+        let gameTabBarVC = MainTabBarController(coordinator: self)
         navigationController.pushViewController(gameTabBarVC, animated: true)
     }
     
