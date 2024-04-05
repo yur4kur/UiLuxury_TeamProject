@@ -54,7 +54,8 @@ final class GameViewModel: GameViewModelProtocol {
     // MARK: - Public methods
     // TODO: доработать метод для применения модификатора айтемов
     func updateScore() {
-        score += 1
+        let modifier = applyModifier(from: userData.user.items)
+        score += modifier
         scoreDidChange?(self)
     }
     
@@ -63,13 +64,13 @@ final class GameViewModel: GameViewModelProtocol {
         score = 0
         scoreDidChange?(self)
     }
-
+    
     func setupAudioPlayer() {
         DispatchQueue.global().async {
             self.soundManager.setupAudioPlayer(fromSound: Sounds.buttonPressed)
         }
     }
-
+    
     func playSound() {
         DispatchQueue.global(qos: .default).async {
             self.soundManager.audioPlayer?.stop()
@@ -77,21 +78,20 @@ final class GameViewModel: GameViewModelProtocol {
             self.soundManager.audioPlayer?.play()
         }
     }
-
-//    // TODO: переработать блок для расчета модификатора айтемов
-//    private func modifySetup() {
-//        viewModel.user.items.forEach { item in
-//            switch item.actionOperator{
-//            case .add:
-//                viewModel.clickModify += item.modifier
-//            case .multiply:
-//                viewModel.clickModify *= item.modifier
-//            case .assets:
-//                return
-//            }
-//        }
-//    }
     
+    /// Метод применяет модификаторы товаров купленные пользователем
+    private func applyModifier(from items: [Item]) -> Int {
+        var modifier = 1
+        items.forEach { item in
+            switch item.actionOperator{
+            case .add:
+                modifier += item.modifier
+            case .multiply:
+                modifier *= item.modifier
+            }
+        }
+        return modifier
+    }
 }
 
 // MARK: - Constants

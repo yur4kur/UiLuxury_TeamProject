@@ -52,5 +52,5 @@ struct Item {
 
 /// Тип оператора
 enum Operator {
-    case add, multiply, assets
+    case add, multiply
 }
