@@ -14,6 +14,9 @@ final class UserViewController: UIViewController {
 
     // MARK: - Private properties
 
+    /// Название стадии
+    private let userStageLabel = UILabel()
+
     /// Изображение пользователя
     private var userImageView = UIImageView()
 
@@ -79,6 +82,7 @@ final class UserViewController: UIViewController {
 
     /// Метод обновления внешнего вида сцены
     private func updateUI() {
+        userStageLabel.text = Text.currentStage + viewModel.userStageName
         updateUserStage()
         userCreditsLabel.text = viewModel.userCreditsLabelText
         userItemsTableView.reloadData()
@@ -172,6 +176,7 @@ private extension UserViewController {
     /// Метод настройки пользовательского интерфейса
     func setupUI() {
         setupView()
+        setupStageLabel()
         setupUserImageView()
         setupWalletLabel()
         setupUserItemsTableView()
@@ -187,7 +192,15 @@ private extension UserViewController {
 
     /// Метод настройки главного экрана
     func setupView() {
+        navigationController?.navigationBar.isHidden = true
         view.addQuadroGradientLayer()
+    }
+
+    /// Метод настройки текста стадии
+    func setupStageLabel() {
+        userStageLabel.font = .boldSystemFont(ofSize: 17)
+        userStageLabel.textColor = .black
+        userStageLabel.textAlignment = .center
     }
 
     /// Метод настройки изображения пользователя
@@ -229,12 +242,14 @@ private extension UserViewController {
     /// Метод добавления элементов интерфейса на главный экран и отключения масок AutoLayout
     func addSubviews() {
         view.addSubviews(
+            userStageLabel,
             userImageView,
             userCreditsLabel,
             userItemsTableView
         )
 
         view.disableAutoresizingMask(
+            userStageLabel,
             userImageView,
             userCreditsLabel,
             userItemsTableView
@@ -249,7 +264,12 @@ private extension UserViewController {
     /// Метод установки констреинтов элементов интерфейса
     func setConstraints() {
         NSLayoutConstraint.activate([
-            userImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            userStageLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
+            userStageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            userStageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            userStageLabel.heightAnchor.constraint(equalToConstant: 22),
+
+            userImageView.topAnchor.constraint(equalTo: userStageLabel.bottomAnchor, constant: 32),
             userImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             userImageView.heightAnchor.constraint(equalToConstant: 150),
             userImageView.widthAnchor.constraint(equalToConstant: 150),
@@ -302,11 +322,12 @@ private extension UserViewController {
     /// Текстовые константы
     enum Text {
         static let cellIdentifier = "cell"
-        static let tableViewSecondaryText = "Price"
+        static let currentStage = "УРОВЕНЬ: "
+        static let tableViewSecondaryText = "Цена"
 
-        static let alertTitle = "Sell this item"
-        static let alertMessage = "Do you really want to sell it?"
-        static let alertConfirmTitle = "Confirm"
-        static let alertRefuseTitle = "Refuse"
+        static let alertTitle = "Продать"
+        static let alertMessage = ""
+        static let alertConfirmTitle = "Да"
+        static let alertRefuseTitle = "Нет"
     }
 }
