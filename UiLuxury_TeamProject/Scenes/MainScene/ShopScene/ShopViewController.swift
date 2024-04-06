@@ -61,7 +61,7 @@ extension ShopViewController: UITableViewDataSource {
     
     ///Количество секций
     func numberOfSections(in tableView: UITableView) -> Int {
-        viewModel.numberOfSection
+        viewModel.numberOfSections
     }
     
     ///Количество ячеек в секции
@@ -72,13 +72,24 @@ extension ShopViewController: UITableViewDataSource {
     ///Настройка вида ячеки
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cell, for: indexPath)
+        
+        var content = cell.defaultContentConfiguration()
+        content.text = viewModel.getText(indexPath: indexPath)
+        content.textProperties.lineBreakMode = .byTruncatingHead
+        content.secondaryText = Constants.buy + viewModel.getSecondaryText(indexPath: indexPath)
+        content.secondaryTextProperties.font = .boldSystemFont(ofSize: 17)
+        
+        cell.contentConfiguration = content
         cell.backgroundColor = .clear
         cell.tintColor = .white
         cell.layer.cornerRadius = 8
         cell.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         cell.layer.borderWidth = 2
         cell.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
-        viewModel.cellConfig(cell: cell, indexPath: indexPath, text: Constants.buy)
+        
+        
+        
+        
         return cell
     }
 }
@@ -111,7 +122,7 @@ extension ShopViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let cell = tableView.cellForRow(at: indexPath) else { return }
+        //guard let cell = tableView.cellForRow(at: indexPath) else { return }
         viewModel.buy(indexPath: indexPath) {
             showLowCoinsAlert()
         }

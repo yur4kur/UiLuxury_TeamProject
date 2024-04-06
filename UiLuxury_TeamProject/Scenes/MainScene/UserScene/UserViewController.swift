@@ -93,7 +93,7 @@ final class UserViewController: UIViewController {
 extension UserViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        viewModel.numberOfSection
+        viewModel.numberOfSections
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

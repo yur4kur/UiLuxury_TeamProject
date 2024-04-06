@@ -265,7 +265,7 @@ private extension GameViewController {
             
             // MARK: Wallet label
             scoreLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            scoreLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200),
+            scoreLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 230),
             
             // TODO: Удалить, если кастомная кнопка будет заверстана фреймом
             clickButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),

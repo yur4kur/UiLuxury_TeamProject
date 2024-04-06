@@ -5,7 +5,7 @@
 //  Created by Юрий Куринной on 27.03.2024.
 //
 
-import UIKit
+import Foundation
 
 // MARK: - ShopViewModelProtocol
 
@@ -19,7 +19,7 @@ protocol ShopViewModelProtocol {
     var walletCount: String { get }
     
     ///Колличество секций в таблице
-    var numberOfSection: Int { get }
+    var numberOfSections: Int { get }
     
     ///Колличество ячеек в секции
     var numberOfRowsInSection: Int { get }
@@ -30,17 +30,18 @@ protocol ShopViewModelProtocol {
     /// Инициализация данных пользователя из стартовой вью-модели
     init(userData: UserDataTransferProtocol)
     
-    ///Метод настройки ячейки
-    func cellConfig(cell: UITableViewCell, indexPath: IndexPath, text: String)
-    
     ///Метод отображения названия секции
     func getTitleHeader(section: Int) -> String
     
+    /// Метод возвращает основной текст стандартной ячейки
+    func getText(indexPath: IndexPath) -> String
+
+    /// Метод возвращает второстепенный текст стандартной ячейки
+    func getSecondaryText(indexPath: IndexPath) -> String
+    
     ///Метод покупки айтема
     func buy(indexPath: IndexPath, completion: () -> Void)
-    
-//    ///Метод продажи айтема
-//    func sell(indexPath: IndexPath)
+
 }
 
 // MARK: - UserViewModel
@@ -52,7 +53,7 @@ final class ShopViewModel: ShopViewModelProtocol {
     
     var shopItems: [Item] { Item.getItems() }
     var walletCount: String { "$\(userData.user.wallet.formatted())" }
-    var numberOfSection: Int { shopItems.count }
+    var numberOfSections: Int { shopItems.count }
     var numberOfRowsInSection = 1
     var walletDidChange: ((ShopViewModelProtocol) -> Void)?
     
@@ -66,15 +67,6 @@ final class ShopViewModel: ShopViewModelProtocol {
         self.userData = userData
     }
     
-    func cellConfig(cell: UITableViewCell, indexPath: IndexPath, text: String) {
-        var content = cell.defaultContentConfiguration()
-        content.text = shopItems[indexPath.section].description
-        content.textProperties.lineBreakMode = .byTruncatingHead
-        content.secondaryText = "\(text)\(shopItems[indexPath.section].price.formatted())"
-        content.secondaryTextProperties.font = .boldSystemFont(ofSize: 17)
-        cell.contentConfiguration = content
-    }
-    
     func buy(indexPath: IndexPath, completion: () -> Void) {
         if userData.user.wallet >= shopItems[indexPath.section].price {
             userData.user.items.append(shopItems[indexPath.section])
@@ -84,16 +76,16 @@ final class ShopViewModel: ShopViewModelProtocol {
             completion()
         }
     }
-        
-//    func sell(indexPath: IndexPath) {
-//        if let index = userData.user.items.firstIndex(of: shopItems[indexPath.section]) {
-//            userData.user.items.remove(at: index)
-//            userData.user.wallet += shopItems[indexPath.section].price // Возвращаем деньги в кошелек
-//            walletDidChange?(self)
-//        }
-//    }
-//    
+          
     func getTitleHeader(section: Int) -> String {
         "\(shopItems[section].title)"
+    }
+    
+    func getText(indexPath: IndexPath) -> String {
+        shopItems[indexPath.section].description
+    }
+
+    func getSecondaryText(indexPath: IndexPath) -> String {
+        "\(shopItems[indexPath.section].price.formatted())"
     }
 }

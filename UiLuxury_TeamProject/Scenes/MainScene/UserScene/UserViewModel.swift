@@ -22,7 +22,7 @@ protocol UserViewModelProtocol {
     var userCreditsLabelText: String { get }
 
     /// Количество секций
-    var numberOfSection: Int { get }
+    var numberOfSections: Int { get }
 
     /// Количество строк в секции
     var numberOfRowsInSection: Int { get }
@@ -66,7 +66,7 @@ final class UserViewModel: UserViewModelProtocol {
         "\(Text.creditsLabelText): \(userData.user.wallet)"
     }
 
-    var numberOfSection: Int {
+    var numberOfSections: Int {
         userData.user.items.count
     }
 
@@ -132,9 +132,9 @@ final class UserViewModel: UserViewModelProtocol {
     /// Метод определения уровня пользователя
     private func calculateUserStage(from credits: Int) -> Int {
         switch credits {
-        case 0...1499:
+        case 0...1751:
             return 0
-        case 1500...2999:
+        case 1752...2999:
             return 1
         case 3000...4499:
             return 2
