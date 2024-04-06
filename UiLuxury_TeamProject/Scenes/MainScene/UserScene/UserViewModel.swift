@@ -12,7 +12,7 @@ import AVFoundation
 
 protocol UserViewModelProtocol {
 
-    /// Имя стадии пользователя
+    /// Имя уровня пользователя
     var userStageName: String { get }
 
     /// Имя изображения пользователя
@@ -21,14 +21,26 @@ protocol UserViewModelProtocol {
     /// Количество кредитов пользователя
     var userCreditsLabelText: String { get }
 
-    /// Количество купленных предметов пользователя
-    var userItems: [Item] { get }
+    /// Количество секций
+    var numberOfSection: Int { get }
+
+    /// Количество строк в секции
+    var numberOfRowsInSection: Int { get }
 
     /// Инициализация данными пользователя из UserViewController
     init(userData: UserDataTransferProtocol)
 
+    /// Метод возвращает название секции
+    func getTitleHeader(section: Int) -> String
+
+    /// Метод возвращает основной текст стандартной ячейки
+    func getText(indexPath: IndexPath) -> String
+
+    /// Метод возвращает второстепенный текст стандартной ячейки
+    func getSecondaryText(indexPath: IndexPath) -> String
+
     /// Метод продажи предметов
-    func sellItem(at index: Int)
+    func sellItem(indexPath: IndexPath)
 
     /// Метод воспроизведения звука
     func playSound()
@@ -54,9 +66,11 @@ final class UserViewModel: UserViewModelProtocol {
         "\(Text.creditsLabelText): \(userData.user.wallet)"
     }
 
-    var userItems: [Item] {
-        userData.user.items
+    var numberOfSection: Int {
+        userData.user.items.count
     }
+
+    var numberOfRowsInSection = 1
 
     // MARK: Private properties
 
@@ -77,12 +91,27 @@ final class UserViewModel: UserViewModelProtocol {
 
     // MARK: Public methods
 
-    func sellItem(at index: Int) {
-        guard index >= 0 && index < userData.user.items.count else { return }
-        let itemPrice = userData.user.items[index].price
+    func getTitleHeader(section: Int) -> String {
+        userData.user.items[section].title
+    }
+
+    func getText(indexPath: IndexPath) -> String {
+        userData.user.items[indexPath.section].description
+    }
+
+    func getSecondaryText(indexPath: IndexPath) -> String {
+        "\(userData.user.items[indexPath.section].price)"
+    }
+
+    func sellItem(indexPath: IndexPath) {
+        guard indexPath.section >= 0 && indexPath.section < userData.user.items.count else { return }
+        let itemPrice = userData.user.items[indexPath.section].price
         userData.user.wallet += itemPrice
-        userData.user.items[index].isOn.toggle()
-        userData.user.items.remove(at: index)
+
+        // TODO: Удалить, если не будет использоваться
+        //        userData.user.items[indexPath.section].isOn.toggle()
+
+        userData.user.items.remove(at: indexPath.section)
     }
 
     func playSound() {
@@ -124,13 +153,13 @@ private extension UserViewModel {
         static let creditsLabelText = "СЧЕТ"
     }
 
-    /// Названия стадий
+    /// Названия уровней
     enum StageNames {
         static let names = [
-            "МЕДИТАЦИЯ",
-            "ОСОЗНАННОСТЬ",
-            "МУДРОСТЬ",
-            "НИРВАНА"
+            "НОВИЧОК",
+            "ПРОДВИНУТЫЙ",
+            "ЭЛИТА",
+            "ЛЕГЕНДА"
         ]
     }
 
