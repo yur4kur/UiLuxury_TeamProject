@@ -31,9 +31,6 @@ final class DevelopersViewController: UIViewController {
     private var developerImageViewFive = UIImageView()
     private var developerImageViewSix = UIImageView()
     
-    /// Шапка
-    private let headerView = UIView()
-    
     /// Кнопка перехода в Telegram
     private var telegramButtonOne = UIButton()
     private var telegramButtonTwo = UIButton()
@@ -93,22 +90,17 @@ final class DevelopersViewController: UIViewController {
     
     /// Тут мы изменяем ссылку на актульную
     private func setupURL(with position: Int) {
-        viewModel.getTelegramURL { url in
-            self.currentURL = url[position]
-        }
+        currentURL = viewModel.getTelegramURL()[position]
     }
 }
 
 // MARK: - Configure UI
 
 private extension DevelopersViewController {
-    
     /// Метод настройки пользовательского интерфейса
     func setupUI() {
         setupView()
         setupScrollView()
-
-        setupHeader()
         
         addSubviews()
         setConstraints()
@@ -119,100 +111,111 @@ private extension DevelopersViewController {
 // MARK: - Setup UI
 
 private extension DevelopersViewController {
-    
     /// Метод настройки главного экрана
     func setupView() {
         view.addQuadroGradientLayer()
+        
+        setupLabels()
+        setupDeveloperImages()
+        setupTelegramButtons()
     }
     
-    ///  Настройка скролл вью
-    ///  В контент сайзе мы указываем высоту как 1 для того, чтобы отключить вертикальный скролл
-    ///  И мы пользовались только свайпами вправо-влево
-    func setupScrollView() {
-        var developersNames = [""]
+    /// Устанавливаем лейблы
+    func setupLabels() {
+        let developersNames = viewModel.getNames()
         
-        viewModel.getNames { names in
-            developersNames = names
-        }
-        
-        scrollView.contentSize = CGSize(
-            width: Int(UIScreen.main.bounds.width) * developersNames.count,
-            height: Int(1) //Int(view.frame.height - 200)
-        )
-        scrollView.isPagingEnabled = true
-        scrollView.showsHorizontalScrollIndicator = false
-        
-        nameLabelOne = addLabel(title: developersNames[0], position: 0)
-        nameLabelTwo = addLabel(title: developersNames[0], position: 1)
-        nameLabelThree = addLabel(title: developersNames[2], position: 2)
-        nameLabelFour = addLabel(title: developersNames[3], position: 3)
-        nameLabelFive = addLabel(title: developersNames[4], position: 4)
-        nameLabelSix = addLabel(title: developersNames[5], position: 5)
-        
+        nameLabelOne = addLabel(position: 0)
+        nameLabelTwo = addLabel(position: 1)
+        nameLabelThree = addLabel(position: 2)
+        nameLabelFour = addLabel(position: 3)
+        nameLabelFive = addLabel(position: 4)
+        nameLabelSix = addLabel(position: 5)
+    }
+    
+    /// Устанавливаем изображения
+    func setupDeveloperImages() {
         developerImageViewOne = addDeveloperImage(imageNamed: 0, position: 0)
         developerImageViewTwo = addDeveloperImage(imageNamed: 1, position: 1)
         developerImageViewThree = addDeveloperImage(imageNamed: 2, position: 2)
         developerImageViewFour = addDeveloperImage(imageNamed: 3, position: 3)
         developerImageViewFive = addDeveloperImage(imageNamed: 4, position: 4)
         developerImageViewSix = addDeveloperImage(imageNamed: 5, position: 5)
-        
+    }
+    
+    /// Устанавливаем ссылки на телеграм для кнопок
+    func setupTelegramButtons() {
         telegramButtonOne = addTelegramButton(position: 0)
         telegramButtonTwo = addTelegramButton(position: 1)
         telegramButtonThree = addTelegramButton(position: 2)
         telegramButtonFour = addTelegramButton(position: 3)
         telegramButtonFive = addTelegramButton(position: 4)
         telegramButtonSix = addTelegramButton(position: 5)
+    }
+    
+    ///  Настройка скролл вью
+    ///  В контент сайзе мы указываем высоту как 1 для того, чтобы отключить вертикальный скролл
+    ///  И мы пользовались только свайпами вправо-влево
+    func setupScrollView() {
+        scrollView.contentSize = CGSize(
+            width: Int(UIScreen.main.bounds.width) * viewModel.getNamesCount(),
+            height: Int(1)
+        )
+        
+        scrollView.isPagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
         
         scrollView.delegate = self
     }
     
     /// Добавляем лейблы на каждую из страниц
-    func addLabel(title: String, position: CGFloat) -> UILabel {
-        let nameLabel = UILabel()
-        var actualName = ""
-        
-        viewModel.getNames { names in
-            actualName = names[Int(position)]
-        }
-        
-        nameLabel.text = actualName
-        nameLabel.textAlignment = .center
-        nameLabel.font = UIFont.systemFont(ofSize: 25)
-        
+    func addLabel(position: CGFloat) -> UILabel {
+        let actualName = viewModel.getNames()[Int(position)]
+        let nameLabel = UILabel().setupDeveloperNameLabels(with: actualName)
+        let screenWidth: CGFloat = UIScreen.main.bounds.width
+
         scrollView.addSubview(nameLabel)
         
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        let screenWidth: CGFloat = UIScreen.main.bounds.width
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 190),
-            nameLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: screenWidth * position),
-            nameLabel.widthAnchor.constraint(equalToConstant: screenWidth),
-            nameLabel.heightAnchor.constraint(equalToConstant: 300)
+            nameLabel.topAnchor.constraint(
+                equalToSystemSpacingBelow: scrollView.topAnchor,
+                multiplier: 32
+            ),
+            nameLabel.leadingAnchor.constraint(
+                equalTo: scrollView.leadingAnchor,
+                constant: screenWidth * position
+            ),
+            nameLabel.widthAnchor.constraint(
+                equalToConstant: screenWidth
+            )
         ])
+        
         return nameLabel
     }
     
     /// Добавляем Изображения на каждую из страниц
+    /// ImageNames - это название изображения в Ассетах. Изображения под номерами 0-6
+    /// Position - это по факту страница. Т.е номер страницы, на которых располагаются данные
     func addDeveloperImage(imageNamed: Int, position: CGFloat) -> UIImageView {
-        let imageView = UIImageView()
-        
-        imageView.image = UIImage(named: String(imageNamed))
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        
-        imageView.layer.borderWidth = 2
-        imageView.layer.borderColor = UIColor.yellow.cgColor
+        let imageView = UIImageView().setupDeveloperImage(imageNamed: imageNamed)
+        let screenWidth: CGFloat = UIScreen.main.bounds.width
         
         scrollView.addSubview(imageView)
         
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        let screenWidth: CGFloat = UIScreen.main.bounds.width
-        
         NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor, constant: screenWidth * position),
-            imageView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 116),
-            imageView.widthAnchor.constraint(equalToConstant: screenWidth / 2.25),
-            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor)
+            imageView.centerXAnchor.constraint(
+                equalTo: scrollView.centerXAnchor,
+                constant: screenWidth * position
+            ),
+            imageView.topAnchor.constraint(
+                equalToSystemSpacingBelow: scrollView.topAnchor,
+                multiplier: 8
+            ),
+            imageView.widthAnchor.constraint(
+                equalToConstant: screenWidth / 2.25
+            ),
+            imageView.heightAnchor.constraint(
+                equalTo: imageView.widthAnchor
+            )
         ])
         
         return imageView
@@ -221,34 +224,34 @@ private extension DevelopersViewController {
     /// Настраиваем кнопку телеграмма для каждого из разработчиков
     func addTelegramButton(position: CGFloat) -> UIButton {
         let telegramDeveloperButton = UIButton()
-        var telegramImage = UIImage()
-        
-        viewModel.getTelegramImage { image in
-            telegramImage = UIImage(named: image) ?? UIImage()
-        }
+        let telegramImage = UIImage(named: viewModel.getTelegramImage())
+        let screenWidth: CGFloat = UIScreen.main.bounds.width
 
         telegramDeveloperButton.setImage(telegramImage, for: .normal)
         
         scrollView.addSubview(telegramDeveloperButton)
-        
         telegramDeveloperButton.translatesAutoresizingMaskIntoConstraints = false
-        let screenWidth: CGFloat = UIScreen.main.bounds.width
         
         NSLayoutConstraint.activate([
-            telegramDeveloperButton.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 240),
-            telegramDeveloperButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: screenWidth * position + screenWidth / 2 + screenWidth / 9),
-            telegramDeveloperButton.widthAnchor.constraint(equalToConstant: screenWidth / 9),
-            telegramDeveloperButton.heightAnchor.constraint(equalToConstant: screenWidth / 9)
+            telegramDeveloperButton.topAnchor.constraint(
+                equalToSystemSpacingBelow: scrollView.topAnchor,
+                multiplier: 23
+            ),
+            telegramDeveloperButton.leadingAnchor.constraint(
+                equalTo: scrollView.leadingAnchor,
+                constant: screenWidth * position + screenWidth / 2 + screenWidth / 9
+            ),
+            telegramDeveloperButton.widthAnchor.constraint(
+                equalToConstant: screenWidth / 9
+            ),
+            telegramDeveloperButton.heightAnchor.constraint(
+                equalToConstant: screenWidth / 9
+            )
         ])
         
         return telegramDeveloperButton
     }
-    
-    /// Настройка шапки
-    func setupHeader() {
-        headerView.backgroundColor = .white
-    }
-    
+
     /// Метод добавления элементов интерфейса на главный экран и отключения масок AutoLayout
     func addSubviews() {
         view.addSubviews(
@@ -258,14 +261,8 @@ private extension DevelopersViewController {
         
         view.disableAutoresizingMask(
             scrollView,
-            headerView,
             pageControl
         )
-        
-        scrollView.addSubviews(
-            headerView
-        )
-        
     }
     
     /// Метод добавления действий  элементам интерфейса
@@ -286,13 +283,26 @@ private extension DevelopersViewController {
     /// Метод установки констреинтов элементов интерфейса
     func setConstraints() {
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.heightAnchor.constraint(equalToConstant: view.frame.height - 150),
+            scrollView.topAnchor.constraint(
+                equalTo: view.topAnchor
+            ),
+            scrollView.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor
+            ),
+            scrollView.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor
+            ),
+            scrollView.heightAnchor.constraint(
+                equalToConstant: view.frame.height - 150
+            ),
             
-            pageControl.topAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 32),
-            pageControl.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
+            pageControl.topAnchor.constraint(
+                equalTo: scrollView.bottomAnchor,
+                constant: 32
+            ),
+            pageControl.centerXAnchor.constraint(
+                equalTo: scrollView.centerXAnchor
+            )
         ])
     }
 }

@@ -10,30 +10,30 @@ import Foundation
 class DevelopersViewModel {
     
     /// Получаем массив имен
-    func getNames(closure: @escaping ([String]) -> Void) {
+    func getNames() -> [String] {
         let names = Developer.DevelopersInfo.names
         
-        closure(names)
+        return names
     }
     
     /// Получаем количество имен
-    func getNamesCount() -> Int{
+    func getNamesCount() -> Int {
         let count = Developer.DevelopersInfo.names.count
         
         return count
     }
     
     /// Получаем масив юрлов телеграма
-    func getTelegramURL(closure: @escaping ([String]) -> Void) {
+    func getTelegramURL() -> [String] {
         let url = Developer.DevelopersInfo.contacts
         
-        closure(url)
+        return url
     }
     
     ///Получаем изображение телеграма
-    func getTelegramImage(closure: @escaping (String) -> Void) {
+    func getTelegramImage() -> String {
         let imageName = Developer.telegramLogo
         
-        closure(imageName)
+        return imageName
     }
 }
