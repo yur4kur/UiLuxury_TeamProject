@@ -14,8 +14,9 @@ final class ShopViewController: UIViewController {
     
     /// Таблица с товарами
     private let tableView = UITableView()
-
+    
     // MARK: View Model
+    
     /// Данные пользователя из стартовой вью-модели
     var userData: StartViewModelProtocol!
     
@@ -32,12 +33,18 @@ final class ShopViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError(GlobalConstants.fatalError)
     }
+    
     // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBinding()
         setupUI()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        title = viewModel.walletCount
     }
 }
 
@@ -64,9 +71,7 @@ extension ShopViewController: UITableViewDataSource {
         cell.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         cell.layer.borderWidth = 2
         cell.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
-        
         viewModel.cellConfig(cell: cell, indexPath: indexPath, text: Constants.buy)
-        
         return cell
     }
 }
@@ -77,7 +82,6 @@ extension ShopViewController: UITableViewDelegate {
     
     //MARK: Setup Footers
     
-    /// Настройка заголовка секции таблицы
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let itemNameLabel = UILabel(frame: CGRect(x: 17, y: 3, width: tableView.frame.width, height: 20))
         itemNameLabel.text = viewModel.getTitleHeader(section: section)
@@ -92,18 +96,14 @@ extension ShopViewController: UITableViewDelegate {
         return contentView
     }
     
-    ///Цвет заголовка секции таблицы
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.backgroundColor = .tertiarySystemGroupedBackground
     }
     
     // MARK: Setup chosen cell
     
-    //TODO: Добавить алерт
-    ///Метод выбора ячейки и смены тогла
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
         
         if cell.accessoryType == .checkmark {
@@ -138,6 +138,7 @@ private extension ShopViewController {
         setConstraints()
     }
 }
+
 // MARK: - Setup UI
 
 private extension ShopViewController {
@@ -146,18 +147,16 @@ private extension ShopViewController {
     
     ///Метод настраивает основное вью и запускает методы настройки сабвьюх
     func setupViews() {
-        title = viewModel.walletCount
         view.addQuadroGradientLayer()
         view.addSubview(tableView) // При вынесении в отдельный метод - не срабатывает
         view.disableAutoresizingMask(
             tableView
         )
-        
-        //            setupNavBar()
         setupTableView()
     }
     
-  func setupTableView() {
+    ///Метод настройки таблицы
+    func setupTableView() {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.cell)
         tableView.backgroundColor = .clear
         
@@ -166,8 +165,6 @@ private extension ShopViewController {
         setConstraints()
     }
 }
-
-
 
 // MARK: - Constraints
 
@@ -186,17 +183,15 @@ private extension ShopViewController {
     }
 }
 
-
 // MARK: - Alert
 
 private extension ShopViewController {
     
-    // TODO: Изменить алерт, если будет отказ от корзины
     /// Метод запускает алерт, если юзер пытается добавить в корзину больше 3 товаров
     func showAlerAction() {
         let alert = UIAlertController(
             title: Constants.ups,
-            message: Constants.messege,
+            message: Constants.message,
             preferredStyle: .alert)
         let okAktion = UIAlertAction(title: Constants.ok, style: .default)
         alert.addAction(okAktion)
@@ -214,7 +209,7 @@ private extension ShopViewController {
         static let basket = "basket"
         static let buy = "Купить: $"
         static let ok = "Ok"
-        static let ups = "Нехватает денег"
-        static let messege = "Твой балаланс ниже стоимости покупки"
+        static let ups = "Не хватает денег"
+        static let message = "Твой счет ниже стоимости покупки"
     }
 }
