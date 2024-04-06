@@ -37,10 +37,10 @@ protocol ShopViewModelProtocol {
     func getTitleHeader(section: Int) -> String
     
     ///Метод покупки айтема
-    func buy(indexPath: IndexPath, completion: () -> Void, alertCompletion: () -> Void)
+    func buy(indexPath: IndexPath, completion: () -> Void)
     
-    ///Метод продажи айтема
-    func sell(indexPath: IndexPath)
+//    ///Метод продажи айтема
+//    func sell(indexPath: IndexPath)
 }
 
 // MARK: - UserViewModel
@@ -75,25 +75,24 @@ final class ShopViewModel: ShopViewModelProtocol {
         cell.contentConfiguration = content
     }
     
-    func buy(indexPath: IndexPath, completion: () -> Void, alertCompletion: () -> Void) {
+    func buy(indexPath: IndexPath, completion: () -> Void) {
         if userData.user.wallet >= shopItems[indexPath.section].price {
-            completion()
             userData.user.items.append(shopItems[indexPath.section])
             userData.user.wallet -= shopItems[indexPath.section].price // Вычитаем деньги из кошелька
             walletDidChange?(self)
         } else {
-            alertCompletion()
+            completion()
         }
     }
         
-    func sell(indexPath: IndexPath) {
-        if let index = userData.user.items.firstIndex(of: shopItems[indexPath.section]) {
-            userData.user.items.remove(at: index)
-            userData.user.wallet += shopItems[indexPath.section].price // Возвращаем деньги в кошелек
-            walletDidChange?(self)
-        }
-    }
-    
+//    func sell(indexPath: IndexPath) {
+//        if let index = userData.user.items.firstIndex(of: shopItems[indexPath.section]) {
+//            userData.user.items.remove(at: index)
+//            userData.user.wallet += shopItems[indexPath.section].price // Возвращаем деньги в кошелек
+//            walletDidChange?(self)
+//        }
+//    }
+//    
     func getTitleHeader(section: Int) -> String {
         "\(shopItems[section].title)"
     }

@@ -112,16 +112,8 @@ extension ShopViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let cell = tableView.cellForRow(at: indexPath) else { return }
-        
-        if cell.accessoryType == .checkmark {
-            cell.accessoryType = .none
-            viewModel.sell(indexPath: indexPath)
-        } else {
-            viewModel.buy(indexPath: indexPath) {
-                cell.accessoryType = .checkmark
-            } alertCompletion: {
-                showAlerAction()
-            }
+        viewModel.buy(indexPath: indexPath) {
+            showLowCoinsAlert()
         }
     }
 }
@@ -214,7 +206,7 @@ private extension ShopViewController {
 private extension ShopViewController {
     
     /// Метод запускает алерт, если юзер пытается добавить в корзину больше 3 товаров
-    func showAlerAction() {
+    func showLowCoinsAlert() {
         let alert = UIAlertController(
             title: Constants.ups,
             message: Constants.message,

@@ -26,8 +26,6 @@ final class UserViewController: UIViewController {
     /// Таблица купленных предметов
     private let userItemsTableView = UITableView()
 
-    // MARK: View Model
-
     /// Координатор контроллера
     private let coordinator: TabCoordinatorProtocol!
 
@@ -111,7 +109,7 @@ extension UserViewController: UITableViewDataSource {
 
         var content = cell.defaultContentConfiguration()
         content.text = viewModel.userItems[indexPath.section].description
-        content.secondaryText = "\(Text.tableViewSecondaryText): \(viewModel.userItems[indexPath.section].price)"
+        content.secondaryText = "\(Text.tableViewSecondaryText): $\(viewModel.userItems[indexPath.section].price)"
 
         setupUserItemsTableViewCell(cell)
         cell.contentConfiguration = content
@@ -197,6 +195,7 @@ private extension UserViewController {
         view.addQuadroGradientLayer()
     }
 
+    // MARK: Stage Label
     /// Метод настройки текста стадии
     func setupStageLabel() {
         userStageLabel.font = .boldSystemFont(ofSize: 17)
@@ -204,6 +203,7 @@ private extension UserViewController {
         userStageLabel.textAlignment = .center
     }
 
+    // MARK: User Image
     /// Метод настройки изображения пользователя
     func setupUserImageView() {
         userImageView.contentMode = .scaleAspectFit
@@ -213,6 +213,7 @@ private extension UserViewController {
         userImageView.layer.shadowOffset = CGSize(width: 0, height: 6)
     }
 
+    // MARK: Wallet Label
     /// Метод настройки отображения количества кредитов
     func setupWalletLabel() {
         userCreditsLabel.font = .boldSystemFont(ofSize: 17)
@@ -220,6 +221,7 @@ private extension UserViewController {
         userCreditsLabel.textAlignment = .center
     }
 
+    // MARK: Items table
     /// Метод настройки таблицы купленных предметов
     func setupUserItemsTableView() {
         userItemsTableView.dataSource = self
@@ -240,6 +242,7 @@ private extension UserViewController {
         cell.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
     }
 
+    // MARK: Add subviews
     /// Метод добавления элементов интерфейса на главный экран и отключения масок AutoLayout
     func addSubviews() {
         view.addSubviews(
@@ -265,21 +268,26 @@ private extension UserViewController {
     /// Метод установки констреинтов элементов интерфейса
     func setConstraints() {
         NSLayoutConstraint.activate([
+            
+            // MARK: User Stage label
             userStageLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
             userStageLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             userStageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             userStageLabel.heightAnchor.constraint(equalToConstant: 22),
 
+            // MARK: User Image
             userImageView.topAnchor.constraint(equalTo: userStageLabel.bottomAnchor, constant: 32),
             userImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             userImageView.heightAnchor.constraint(equalToConstant: 150),
             userImageView.widthAnchor.constraint(equalToConstant: 150),
 
+            // MARK: User Credits Label
             userCreditsLabel.topAnchor.constraint(equalTo: userImageView.bottomAnchor, constant: 32),
             userCreditsLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             userCreditsLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             userCreditsLabel.heightAnchor.constraint(equalToConstant: 22),
 
+            // MARK: User Items Table
             userItemsTableView.topAnchor.constraint(equalTo: userCreditsLabel.bottomAnchor, constant: 32),
             userItemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             userItemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -324,7 +332,7 @@ private extension UserViewController {
     enum Text {
         static let cellIdentifier = "cell"
         static let currentStage = "УРОВЕНЬ: "
-        static let tableViewSecondaryText = "Цена"
+        static let tableViewSecondaryText = "Продать"
 
         static let alertTitle = "Продать"
         static let alertMessage = ""
