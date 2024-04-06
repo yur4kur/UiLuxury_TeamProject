@@ -59,8 +59,6 @@ final class DevelopersViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         addActions()
-        
-        pageControl.numberOfPages = viewModel.getNamesCount()
     }
     
     /// Скрываем нивгейшн бар
@@ -71,13 +69,16 @@ final class DevelopersViewController: UIViewController {
     /// Делаем из нашего изображения круг
     override func viewWillLayoutSubviews() {
         let cornerRadiusReady = developerImageViewOne.layer.frame.height / 2
+        let developerImages = [developerImageViewOne,
+                               developerImageViewTwo,
+                               developerImageViewThree,
+                               developerImageViewFour,
+                               developerImageViewFive,
+                               developerImageViewSix]
         
-        developerImageViewOne.layer.cornerRadius = cornerRadiusReady
-        developerImageViewTwo.layer.cornerRadius = cornerRadiusReady
-        developerImageViewThree.layer.cornerRadius = cornerRadiusReady
-        developerImageViewFour.layer.cornerRadius = cornerRadiusReady
-        developerImageViewFive.layer.cornerRadius = cornerRadiusReady
-        developerImageViewSix.layer.cornerRadius = cornerRadiusReady
+        developerImages.forEach { developerImage in
+            developerImage.layer.cornerRadius = cornerRadiusReady
+        }
     }
     
     // MARK: Private Methods
@@ -87,6 +88,24 @@ final class DevelopersViewController: UIViewController {
         guard let url = URL(string: currentURL) else { return }
         UIApplication.shared.open(url)
     }
+    
+    /// Метод показывает нужную картинку в зависимости от того, какую страницу
+    /// выбрал пользователь на пейдж индикаторе
+    /// Важно! Пользователь не может нажать на конкретную точку на пейдж индикаторе
+    /// То, что мы можем с эмулятора это сделать не означает, что на айфоне у пользователя
+    /// есть в принципе физически сделать такое т.к сначала пейдж индикатор выделяется, а
+    /// потом уже пользователь проводит этим пальцем из стороны в сторону в поисках нужного
+    /// экрана.
+    @objc func pageControlTapped(sender: UIPageControl) {
+           scrollView.setContentOffset(
+            CGPoint(
+                x: UIScreen.main.bounds.width * CGFloat(sender.currentPage),
+                y: 0
+            ),
+            animated: true)
+           
+           setupURL(with: sender.currentPage)
+       }
     
     /// Тут мы изменяем ссылку на актульную
     private func setupURL(with position: Int) {
@@ -115,25 +134,50 @@ private extension DevelopersViewController {
     func setupView() {
         view.addQuadroGradientLayer()
         
+        setupPageControl()
         setupLabels()
         setupDeveloperImages()
         setupTelegramButtons()
     }
     
+    /// Метод настройки пейдж контроллера
+    func setupPageControl() {
+        pageControl.numberOfPages = viewModel.getNamesCount()
+    }
+    
     /// Устанавливаем лейблы
     func setupLabels() {
         let developersNames = viewModel.getNames()
+        var nameLabels = [nameLabelOne,
+                          nameLabelTwo,
+                          nameLabelThree,
+                          nameLabelFour,
+                          nameLabelFive,
+                          nameLabelSix]
         
-        nameLabelOne = addLabel(position: 0)
-        nameLabelTwo = addLabel(position: 1)
-        nameLabelThree = addLabel(position: 2)
-        nameLabelFour = addLabel(position: 3)
-        nameLabelFive = addLabel(position: 4)
-        nameLabelSix = addLabel(position: 5)
+        for i in 0...viewModel.getNamesCount() - 1 {
+            nameLabels[i] = addLabel(position: CGFloat(i))
+        }
     }
     
     /// Устанавливаем изображения
     func setupDeveloperImages() {
+        //TODO: - 1
+        /// Я хер его знает почему при таком способе обхявления изображения пропадает
+        /// корнер радиус. Вроде перепроверил порядок вызовов - все гуд. Нет времени - потом сделаю
+        /// или дропните нахер
+//        var developerImages = [developerImageViewOne,
+//                               developerImageViewTwo,
+//                               developerImageViewThree,
+//                               developerImageViewFour,
+//                               developerImageViewFive,
+//                               developerImageViewSix]
+//
+//        for i in 0...viewModel.getNamesCount() - 1 {
+//            let index = CGFloat(i)
+//            developerImages[i] = addDeveloperImage(imageNamed: i, position: index)
+//        }
+        
         developerImageViewOne = addDeveloperImage(imageNamed: 0, position: 0)
         developerImageViewTwo = addDeveloperImage(imageNamed: 1, position: 1)
         developerImageViewThree = addDeveloperImage(imageNamed: 2, position: 2)
@@ -144,6 +188,19 @@ private extension DevelopersViewController {
     
     /// Устанавливаем ссылки на телеграм для кнопок
     func setupTelegramButtons() {
+        //TODO: - 2
+//        var telegramButtons = [telegramButtonOne,
+//                               telegramButtonTwo,
+//                               telegramButtonThree,
+//                               telegramButtonFour,
+//                               telegramButtonFive,
+//                               telegramButtonSix]
+//
+//        for i in 0...viewModel.getNamesCount() - 1 {
+//            let index = CGFloat(i)
+//            telegramButtons[i] = addTelegramButton(position: index)
+//        }
+        
         telegramButtonOne = addTelegramButton(position: 0)
         telegramButtonTwo = addTelegramButton(position: 1)
         telegramButtonThree = addTelegramButton(position: 2)
@@ -273,13 +330,14 @@ private extension DevelopersViewController {
         telegramButtonFour.addTarget(self, action: #selector(openURL), for: .touchUpInside)
         telegramButtonFive.addTarget(self, action: #selector(openURL), for: .touchUpInside)
         telegramButtonSix.addTarget(self, action: #selector(openURL), for: .touchUpInside)
+        
+        pageControl.addTarget(self, action: #selector(pageControlTapped), for: .touchUpInside)
     }
 }
 
 // MARK: - Constraints
 
 private extension DevelopersViewController {
-    
     /// Метод установки констреинтов элементов интерфейса
     func setConstraints() {
         NSLayoutConstraint.activate([
@@ -307,6 +365,11 @@ private extension DevelopersViewController {
     }
 }
 
+//MARK: - ScrollViewDelegate
+/// Тут мы настраиваем логику свайпа. При свайпе изменяется контент и, что главное, мы устанавливаем
+/// значение для пейджКонтрола.
+/// Плюсом, в этом же методе, мы обновляем ссылку для кнопки телеграма.
+/// В зависимости от страницы обновляется юрл
 extension DevelopersViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         pageControl.currentPage = Int(scrollView.contentOffset.x / UIScreen.main.bounds.width)
