@@ -45,7 +45,7 @@ protocol ShopViewModelProtocol {
 ///Класс  ВьюМодели для магазина
 final class ShopViewModel: ShopViewModelProtocol {
     
-    var shopItems: [Item] { Item.getItem() }
+    var shopItems: [Item] { Item.getItems() }
     var walletCount: String { "$\(userData.user.wallet.formatted())" }
     var numberOfSection: Int { shopItems.count }
     var numberOfRowsInSection = 1

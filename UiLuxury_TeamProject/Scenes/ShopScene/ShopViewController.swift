@@ -112,7 +112,7 @@ extension ShopViewController: UITableViewDelegate {
         } else {
             viewModel.buy(indexPath: indexPath) {
                 cell.accessoryType = .checkmark
-            } alertComplition: {
+            } alertCompletion: {
                 showAlerAction()
             }
         }
