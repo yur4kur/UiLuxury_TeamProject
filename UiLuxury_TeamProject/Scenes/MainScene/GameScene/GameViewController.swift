@@ -156,7 +156,7 @@ private extension GameViewController {
         )
     }
     
-    // MARK: WalletLabel
+    // MARK: ScoreLabel
     
     /// Метод настраивает лейбл
     func setupScoreLabel() {
@@ -170,8 +170,6 @@ private extension GameViewController {
     
     /// Метод настраивает игровую кнопку
     func setupClickButton() {
-        // TODO: Проанализировать возможность заверстать кнопку фреймом
-//        clickButton = UIButton(frame: CGRect(x: 90, y: 540, width: 250, height: 175))
         clickButton.setImage(coinImage, for: .normal)
         clickButton.imageView?.contentMode = .scaleAspectFit
         clickButton.setShadow()

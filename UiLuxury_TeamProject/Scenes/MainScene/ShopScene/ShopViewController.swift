@@ -14,8 +14,9 @@ final class ShopViewController: UIViewController {
     
     /// Таблица с товарами
     private let tableView = UITableView()
-    
-    // MARK: View Model
+
+    /// Лейбл с текущим счетом игрока
+    private let walletLabel = UILabel()
     
     /// Координатор контроллера
     private let coordinator: TabCoordinatorProtocol!
@@ -44,7 +45,7 @@ final class ShopViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        title = viewModel.walletCount
+        walletLabel.text = viewModel.walletCount.description
     }
 }
 
@@ -100,7 +101,7 @@ extension ShopViewController: UITableViewDelegate {
         view.backgroundColor = .tertiarySystemGroupedBackground
     }
     
-    // MARK: Setup chosen cell
+    // MARK: Setup selected cell
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -116,7 +117,6 @@ extension ShopViewController: UITableViewDelegate {
                 showAlerAction()
             }
         }
-        title = viewModel.walletCount
     }
 }
 
@@ -149,11 +149,16 @@ private extension ShopViewController {
     func setupViews() {
         view.addQuadroGradientLayer()
         view.addSubview(tableView) // При вынесении в отдельный метод - не срабатывает
+        view.addSubview(walletLabel)
         view.disableAutoresizingMask(
-            tableView
+            tableView,
+            walletLabel
         )
         setupTableView()
+        setupWalletLabel()
     }
+    
+    // MARK: TableView
     
     ///Метод настройки таблицы
     func setupTableView() {
@@ -163,6 +168,16 @@ private extension ShopViewController {
         tableView.dataSource = self
         tableView.delegate = self
         setConstraints()
+    }
+    
+    // MARK: Wallet label
+    
+    /// Метод настраивает лейбл
+    func setupWalletLabel() {
+        walletLabel.text = viewModel.walletCount.description
+        walletLabel.textColor = .black
+        walletLabel.font = .preferredFont(forTextStyle: .body)
+        walletLabel.textAlignment = .natural
     }
 }
 
@@ -177,7 +192,10 @@ private extension ShopViewController {
                 tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                 tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
                 tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-                tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+                tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+                
+                walletLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20),
+                walletLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
             ]
         )
     }
