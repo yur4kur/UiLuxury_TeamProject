@@ -74,7 +74,12 @@ final class GameViewController: UIViewController {
         setupBinding()
         setupUI()
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.setupAudioPlayer()
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         viewModel.updateUserWallet()
@@ -85,6 +90,7 @@ final class GameViewController: UIViewController {
     /// Метод запускает анимацию нажатия кнопки, анимирует падающие монеты и увеличивает счет игры
     @objc private func clickButtonTapped() {
         animate()
+        viewModel.playSound()
         viewModel.updateScore()
     }
 }
