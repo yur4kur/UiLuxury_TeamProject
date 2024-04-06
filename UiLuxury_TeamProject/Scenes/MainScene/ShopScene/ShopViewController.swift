@@ -22,7 +22,13 @@ final class ShopViewController: UIViewController {
     private let coordinator: TabCoordinatorProtocol!
     
     /// Экземпляр вью модели
-    private var viewModel: ShopViewModelProtocol!
+    private var viewModel: ShopViewModelProtocol! {
+        didSet {
+            viewModel.walletDidChange = { [unowned self] viewModel in
+                walletLabel.text = viewModel.walletCount
+            }
+        }
+    }
     
     // MARK: - Initializers
     
@@ -174,7 +180,7 @@ private extension ShopViewController {
     
     /// Метод настраивает лейбл
     func setupWalletLabel() {
-        walletLabel.text = viewModel.walletCount.description
+        walletLabel.text = viewModel.walletCount
         walletLabel.textColor = .black
         walletLabel.font = .preferredFont(forTextStyle: .body)
         walletLabel.textAlignment = .natural
@@ -189,11 +195,13 @@ private extension ShopViewController {
     func setConstraints() {
         NSLayoutConstraint.activate(
             [
+                // MARK: TableView
                 tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                 tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
                 tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
                 tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
                 
+                // MARK: Wallet label
                 walletLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20),
                 walletLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
             ]
@@ -227,7 +235,7 @@ private extension ShopViewController {
         static let basket = "basket"
         static let buy = "Купить: $"
         static let ok = "Ok"
-        static let ups = "Не хватает денег"
-        static let message = "Твой счет ниже стоимости покупки"
+        static let ups = "Не хватает монет!"
+        static let message = "На твоем счет недостаточно монет для покупки"
     }
 }

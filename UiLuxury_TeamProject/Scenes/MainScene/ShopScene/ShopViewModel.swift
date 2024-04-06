@@ -24,6 +24,9 @@ protocol ShopViewModelProtocol {
     ///Колличество ячеек в секции
     var numberOfRowsInSection: Int { get }
     
+    /// Свойство оповещения об изменении количества монет на счету при покупке
+    var walletDidChange: ((ShopViewModelProtocol) -> Void)? { get set }
+    
     /// Инициализация данных пользователя из стартовой вью-модели
     init(userData: UserDataTransferProtocol)
     
@@ -45,10 +48,13 @@ protocol ShopViewModelProtocol {
 ///Класс  ВьюМодели для магазина
 final class ShopViewModel: ShopViewModelProtocol {
     
+    // MARK: Public properties
+    
     var shopItems: [Item] { Item.getItems() }
     var walletCount: String { "$\(userData.user.wallet.formatted())" }
     var numberOfSection: Int { shopItems.count }
     var numberOfRowsInSection = 1
+    var walletDidChange: ((ShopViewModelProtocol) -> Void)?
     
     // MARK: Private properties
     
@@ -73,8 +79,8 @@ final class ShopViewModel: ShopViewModelProtocol {
         if userData.user.wallet >= shopItems[indexPath.section].price {
             completion()
             userData.user.items.append(shopItems[indexPath.section])
-            // Вычитаем деньги из кошелька
-            userData.user.wallet -= shopItems[indexPath.section].price
+            userData.user.wallet -= shopItems[indexPath.section].price // Вычитаем деньги из кошелька
+            walletDidChange?(self)
         } else {
             alertCompletion()
         }
@@ -83,8 +89,8 @@ final class ShopViewModel: ShopViewModelProtocol {
     func sell(indexPath: IndexPath) {
         if let index = userData.user.items.firstIndex(of: shopItems[indexPath.section]) {
             userData.user.items.remove(at: index)
-            // Возвращаем деньги в кошелек
-            userData.user.wallet += shopItems[indexPath.section].price
+            userData.user.wallet += shopItems[indexPath.section].price // Возвращаем деньги в кошелек
+            walletDidChange?(self)
         }
     }
     
