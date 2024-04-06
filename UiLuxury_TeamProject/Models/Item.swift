@@ -5,13 +5,15 @@
 //  Created by Юрий Куринной on 02.08.2023.
 //
 
+
 // MARK: - Item
 
 /// Модель товара
-struct Item {
+struct Item: Equatable {
     
     // MARK: Properties
     /// Название товара
+
     let title: String
     
     /// Цена товара
