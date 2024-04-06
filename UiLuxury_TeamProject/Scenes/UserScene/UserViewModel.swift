@@ -12,6 +12,9 @@ import AVFoundation
 
 protocol UserViewModelProtocol {
 
+    /// Имя стадии пользователя
+    var userStageName: String { get }
+
     /// Имя изображения пользователя
     var userStageImageName: String { get }
 
@@ -36,6 +39,11 @@ protocol UserViewModelProtocol {
 final class UserViewModel: UserViewModelProtocol {
 
     // MARK: Public properties
+
+    var userStageName: String {
+        let stageNameIndex = calculateUserStage(from: userData.user.wallet)
+        return StageNames.names[stageNameIndex]
+    }
 
     var userStageImageName: String {
         let imageIndex = calculateUserStage(from: userData.user.wallet)
@@ -73,6 +81,7 @@ final class UserViewModel: UserViewModelProtocol {
         guard index >= 0 && index < userData.user.items.count else { return }
         let itemPrice = userData.user.items[index].price
         userData.user.wallet += itemPrice
+        userData.user.items[index].isOn.toggle()
         userData.user.items.remove(at: index)
     }
 
@@ -113,6 +122,16 @@ private extension UserViewModel {
     /// Текстовые константы
     enum Text {
         static let creditsLabelText = "СЧЕТ"
+    }
+
+    /// Названия стадий
+    enum StageNames {
+        static let names = [
+            "НОВИЧОК",
+            "ПРОДВИНУТЫЙ",
+            "ЭЛИТА",
+            "ЛЕГЕНДА"
+        ]
     }
 
     /// Имена изображений

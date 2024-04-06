@@ -133,8 +133,8 @@ private extension GameTabBarController {
         static let gameTabIcon = "cursorarrow.click.2"
         static let shopTabName = "Магазин"
         static let shopTabIcon = "cart.fill"
-        static let userTabName = "Покупки"
-        static let userTabIcon = "bag.fill"
+        static let userTabName = "Игрок"
+        static let userTabIcon = "person.circle.fill"
         static let teamTabName = "Команда"
         static let teamTabIcon = "person.2.badge.gearshape.fill"
     }
