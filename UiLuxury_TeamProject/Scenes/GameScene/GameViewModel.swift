@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AVFoundation
 
 // MARK: - GameViewModelProtocol
 
@@ -29,21 +30,31 @@ protocol GameViewModelProtocol {
     
     /// Метод пополнения кошелька пользователя
     func updateUserWallet()
+
+    /// Метод настройки плеера
+    func setupAudioPlayer()
+
+    /// Метод воспроизведения звука
+    func playSound()
 }
 
 // MARK: - GameViewModel
 
 /// Класс, описывающий игровую механику и связывающий ее со свойствами пользователя
 final class GameViewModel: GameViewModelProtocol {
-  
-    // MARK: - Private properties
-    
-    var userData: StartViewModelProtocol
-  
+
     // MARK: - Public properties
-    
+
     var score = 0
+
     var scoreDidChange: ((GameViewModelProtocol) -> Void)?
+
+    // MARK: - Private properties
+
+    var userData: StartViewModelProtocol
+
+    /// Точка доступа к SoundManager
+    private let soundManager = SoundManager.shared
     
     // MARK: - Initializers
     
@@ -75,7 +86,23 @@ final class GameViewModel: GameViewModelProtocol {
         score = 0
         scoreDidChange?(self)
     }
-    
+
+    /// Метод настройки плеера
+    func setupAudioPlayer() {
+        DispatchQueue.global().async {
+            self.soundManager.setupAudioPlayer(fromSound: Sounds.buttonPressed)
+        }
+    }
+
+    /// Метод воспроизведения звука
+    func playSound() {
+        DispatchQueue.global(qos: .default).async {
+            self.soundManager.audioPlayer?.stop()
+            self.soundManager.audioPlayer?.currentTime = 0
+            self.soundManager.audioPlayer?.play()
+        }
+    }
+
 //    // TODO: переработать блок для расчета модификатора айтемов
 //    private func modifySetup() {
 //        viewModel.user.items.forEach { item in
@@ -90,4 +117,14 @@ final class GameViewModel: GameViewModelProtocol {
 //        }
 //    }
     
+}
+
+// MARK: - Constants
+
+private extension GameViewModel {
+
+    /// Имена звуков
+    enum Sounds {
+        static let buttonPressed = "coin"
+    }
 }

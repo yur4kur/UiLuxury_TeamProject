@@ -13,7 +13,7 @@ import Foundation
 protocol StartViewModelProtocol {
     
     /// Экземпляр модели пользователя
-    var user: NewUser { get set }
+    var user: User { get set }
 
 }
 
@@ -23,10 +23,10 @@ protocol StartViewModelProtocol {
 class StartViewModel: StartViewModelProtocol {
     
     /// Инициализация пользователя (из БД или с бэка)
-    private var uploadedUser = NewUser(name: "Akira", wallet: 300, items: [])
+    private var uploadedUser = User(name: "Akira", wallet: 300, items: [])
     
     // MARK: Public properties
-    var user: NewUser {
+    var user: User {
         get {
             uploadedUser
         }
