@@ -92,6 +92,7 @@ final class GameViewController: UIViewController {
     @objc private func clickButtonTapped() {
         animate()
         viewModel.playSound()
+        viewModel.enableFeedback()
         viewModel.updateScore()
     }
 }

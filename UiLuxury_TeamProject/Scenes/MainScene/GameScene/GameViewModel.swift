@@ -30,6 +30,9 @@ protocol GameViewModelProtocol {
 
     /// Метод воспроизведения звука
     func playSound()
+
+    /// Метод активации тактильной отдачи
+    func enableFeedback()
 }
 
 // MARK: - GameViewModel
@@ -45,7 +48,10 @@ final class GameViewModel: GameViewModelProtocol {
     // MARK: - Private properties
     /// Точка доступа к SoundManager
     private let soundManager = SoundManager.shared
-    
+
+    /// Точка доступа к HapticFeedbackManager
+    private let hapticFeedbackManager = HapticFeedbackManager.shared
+
     // MARK: - Initializers
     init(userData: UserDataTransferProtocol) {
         self.userData = userData
@@ -78,7 +84,11 @@ final class GameViewModel: GameViewModelProtocol {
             self.soundManager.audioPlayer?.play()
         }
     }
-    
+
+    func enableFeedback() {
+        hapticFeedbackManager.enableFeedback()
+    }
+
     /// Метод применяет модификаторы товаров купленные пользователем
     private func applyModifier(from items: [Item]) -> Int {
         var modifier = 1
