@@ -103,7 +103,8 @@ extension UserViewController: UITableViewDataSource {
         
         var content = cell.defaultContentConfiguration()
         content.text = viewModel.getText(indexPath: indexPath)
-        content.secondaryText = "\(Text.tableViewSecondaryText): \(viewModel.getSecondaryText(indexPath: indexPath))"
+        content.secondaryText = "\(Text.tableViewSecondaryText): $\(viewModel.getSecondaryText(indexPath: indexPath))"
+        content.secondaryTextProperties.font = .boldSystemFont(ofSize: 17)
         
         setupUserItemsTableViewCell(cell)
         cell.contentConfiguration = content
@@ -326,8 +327,8 @@ private extension UserViewController {
     /// Текстовые константы
     enum Text {
         static let cellIdentifier = "cell"
-        static let currentStage = "УРОВЕНЬ: "
-        static let tableViewSecondaryText = "Цена"
+        static let currentStage = "СТАДИЯ: "
+        static let tableViewSecondaryText = "Продать:"
         
         static let alertTitle = "Продать?"
         static let alertMessage = ""

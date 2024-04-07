@@ -25,9 +25,7 @@ struct Item: Equatable {
     
     /// Оператор, применямый к модификатору
     let actionOperator: Operator
-    
-    /// Свойство, показывающее, добавлен ли данный товар в корзину для покупки
-    var isOn: Bool
+
     
     // MARK: - Staic methods
     /// Метод формирования товаров для магазина
@@ -41,8 +39,7 @@ struct Item: Equatable {
                 price: dataSourse.prise[index],
                 description: dataSourse.description[index],
                 modifier: dataSourse.modifier[index],
-                actionOperator: .add,
-                isOn: false
+                actionOperator: .add
             )
             items.append(item)
         }
