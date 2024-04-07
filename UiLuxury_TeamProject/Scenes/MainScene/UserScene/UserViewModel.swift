@@ -10,9 +10,10 @@ import AVFoundation
 
 // MARK: - User ViewModelProtocol
 
+/// Протокол, описывающий свойства и методы экрана пользователя
 protocol UserViewModelProtocol {
 
-    /// Имя уровня пользователя
+    /// Название уровня пользователя
     var userStageName: String { get }
 
     /// Имя изображения пользователя
@@ -21,56 +22,61 @@ protocol UserViewModelProtocol {
     /// Количество кредитов пользователя
     var userCreditsLabelText: String { get }
 
-    /// Количество секций
+    /// Количество секций таблицы
     var numberOfSections: Int { get }
 
-    /// Количество строк в секции
+    /// Количество строк в секции таблицы
     var numberOfRowsInSection: Int { get }
 
     /// Инициализация данными пользователя из UserViewController
     init(userData: UserDataTransferProtocol)
 
-    /// Метод возвращает название секции
+    /// Метод возвращает название секции таблицы
     func getTitleHeader(section: Int) -> String
 
-    /// Метод возвращает основной текст стандартной ячейки
+    /// Метод возвращает основной текст стандартной ячейки таблицы
     func getText(indexPath: IndexPath) -> String
 
-    /// Метод возвращает второстепенный текст стандартной ячейки
+    /// Метод возвращает второстепенный текст стандартной ячейки таблицы
     func getSecondaryText(indexPath: IndexPath) -> String
 
-    /// Метод продажи предметов
+    /// Метод продажи купленных предметов
     func sellItem(indexPath: IndexPath)
 
-    /// Метод воспроизведения звука
-    func playSound()
+    /// Метод воспроизведения звука при увеличении уровня пользователя
+    func playSoundLevelUp()
+
+    /// Метод воспроизведения звука при продаже товара пользователя
+    func playSoundSell()
 }
 
 // MARK: - User ViewModel
 
+/// Класс, описывающий свойства и методы экрана пользователя
 final class UserViewModel: UserViewModelProtocol {
 
     // MARK: - Public properties
 
     var userStageName: String {
-        let stageNameIndex = calculateUserStage(from: userData.user.wallet)
+        let stageNameIndex = calculateStage(fromScore: wallet, andItems: items)
+
         return StageNames.names[stageNameIndex]
     }
 
     var userStageImageName: String {
-        let imageIndex = calculateUserStage(from: userData.user.wallet)
+        let imageIndex = calculateStage(fromScore: wallet, andItems: items)
         return StageImages.images[imageIndex]
     }
 
     var userCreditsLabelText: String {
-        "\(Text.creditsLabelText): \(userData.user.wallet)"
+        "\(Text.creditsLabelText): \(wallet)"
     }
 
     var numberOfSections: Int {
-        userData.user.items.count
+        items.count
     }
 
-    var numberOfRowsInSection = 1
+    let numberOfRowsInSection = 1
 
     // MARK: - Private properties
 
@@ -79,6 +85,9 @@ final class UserViewModel: UserViewModelProtocol {
 
     /// Уровень пользователя
     private var userStage = 0
+
+    /// Граница очков первого уровня
+    private var firstStageMaxScore = 1999
 
     /// Данные пользователя из стартовой вью-модели
     private var userData: UserDataTransferProtocol
@@ -93,6 +102,26 @@ final class UserViewModel: UserViewModelProtocol {
         }
     }
 
+    /// Сумма очков в кошельке пользователя
+    private var wallet: Int {
+        get {
+            userData.user.wallet
+        }
+        set {
+            userData.user.wallet += newValue
+        }
+    }
+
+    /// Массив купленных пользователем товаров
+    private var items: [Item] {
+        get {
+            userData.user.items
+        }
+        set {
+            userData.user.items = newValue
+        }
+    }
+
     // MARK: Initializers
 
     init(userData: UserDataTransferProtocol) {
@@ -102,6 +131,7 @@ final class UserViewModel: UserViewModelProtocol {
     // MARK: Public methods
 
     func getTitleHeader(section: Int) -> String {
+
         displayedItems[section].title
     }
 
@@ -120,10 +150,9 @@ final class UserViewModel: UserViewModelProtocol {
         displayedItems.remove(at: indexPath.section)
     }
 
-    func playSound() {
+    func playSoundLevelUp() {
         let previousUserStage = userStage
-        userStage = calculateUserStage(from: userData.user.wallet)
-
+        userStage = calculateStage(fromScore: wallet, andItems: items)
         soundManager.setupAudioPlayer(fromSound: Sounds.levelUp)
 
         if userStage > previousUserStage {
@@ -133,16 +162,29 @@ final class UserViewModel: UserViewModelProtocol {
         }
     }
 
+    func playSoundSell() {
+        DispatchQueue.main.async {
+            self.soundManager.setupAudioPlayer(fromSound: Sounds.cash)
+            self.soundManager.audioPlayer?.play()
+        }
+    }
+
     // MARK: Private Methods
 
     /// Метод определения уровня пользователя
-    private func calculateUserStage(from credits: Int) -> Int {
-        switch credits {
-        case 0...1751:
+    private func calculateStage(fromScore score: Int, andItems items: [Item]) -> Int {
+        let itemsPrice = items.reduce(0) { sum, item in
+            sum + item.price
+        }
+
+        let totalScore = score + itemsPrice
+
+        switch totalScore {
+        case 0...firstStageMaxScore:
             return 0
-        case 1752...2999:
+        case firstStageMaxScore + 1...2 * firstStageMaxScore:
             return 1
-        case 3000...4499:
+        case 2 * firstStageMaxScore + 1...6 * firstStageMaxScore:
             return 2
         default:
             return 3
@@ -152,6 +194,7 @@ final class UserViewModel: UserViewModelProtocol {
 
 // MARK: - Constants
 
+/// Расширение со всеми текстовыми константами
 private extension UserViewModel {
 
     /// Текстовые константы
@@ -182,5 +225,6 @@ private extension UserViewModel {
     /// Имена звуков
     enum Sounds {
         static let levelUp = "levelUp"
+        static let cash = "cash"
     }
 }

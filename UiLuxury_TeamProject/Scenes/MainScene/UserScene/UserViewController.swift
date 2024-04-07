@@ -20,7 +20,7 @@ final class UserViewController: UIViewController {
     /// Изображение пользователя
     private var userImageView = UIImageView()
     
-    /// Количество кредитов
+    /// Количество очков
     private let userCreditsLabel = UILabel()
     
     /// Таблица купленных предметов
@@ -31,8 +31,6 @@ final class UserViewController: UIViewController {
 
     /// Экземпляр вью модели
     private var viewModel: UserViewModelProtocol!
-
-    // MARK: - Initializers
 
     // MARK: - Initializers
     
@@ -76,7 +74,7 @@ final class UserViewController: UIViewController {
             completion: nil
         )
         
-        viewModel.playSound()
+        viewModel.playSoundLevelUp()
     }
     
     /// Метод обновления внешнего вида сцены
@@ -147,6 +145,7 @@ extension UserViewController: UITableViewDelegate {
             switch action {
             case .confirm:
                 self?.viewModel.sellItem(indexPath: indexPath)
+                self?.viewModel.playSoundSell()
                 self?.updateUI()
             case .refuse:
                 tableView.deselectRow(at: indexPath, animated: true)
@@ -193,7 +192,7 @@ private extension UserViewController {
     }
 
     // MARK: Stage Label
-    /// Метод настройки текста стадии
+    /// Метод настройки текста уровня пользователя
     func setupStageLabel() {
         userStageLabel.font = .boldSystemFont(ofSize: 17)
         userStageLabel.textColor = .black
@@ -211,7 +210,7 @@ private extension UserViewController {
     }
 
     // MARK: Wallet Label
-    /// Метод настройки отображения количества кредитов
+    /// Метод настройки отображения количества очков
     func setupWalletLabel() {
         userCreditsLabel.font = .boldSystemFont(ofSize: 17)
         userCreditsLabel.textColor = .black
