@@ -37,6 +37,7 @@
 		6AE5E95B2B9F2A9F00810D91 /* UIButton+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE5E95A2B9F2A9F00810D91 /* UIButton+.swift */; };
 		6AE5E9752BA667BB00810D91 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE5E9742BA667BB00810D91 /* GameViewModel.swift */; };
 		B82ED5DF2BB81B4E0099108F /* coin.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B82ED5DE2BB81B4E0099108F /* coin.mp3 */; };
+		B84BB5312BC2556D00E3FE4A /* cash.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B84BB5302BC2556D00E3FE4A /* cash.mp3 */; };
 		B8979AB92BA9B85E00A2D725 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8979AB82BA9B85E00A2D725 /* SoundManager.swift */; };
 		B8979ABE2BA9B86C00A2D725 /* levelUp.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B8979ABB2BA9B86C00A2D725 /* levelUp.mp3 */; };
 /* End PBXBuildFile section */
@@ -74,6 +75,7 @@
 		6AE5E95A2B9F2A9F00810D91 /* UIButton+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+.swift"; sourceTree = "<group>"; };
 		6AE5E9742BA667BB00810D91 /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		B82ED5DE2BB81B4E0099108F /* coin.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = coin.mp3; sourceTree = "<group>"; };
+		B84BB5302BC2556D00E3FE4A /* cash.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cash.mp3; sourceTree = "<group>"; };
 		B8979AB82BA9B85E00A2D725 /* SoundManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 		B8979ABB2BA9B86C00A2D725 /* levelUp.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = levelUp.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -300,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				B82ED5DE2BB81B4E0099108F /* coin.mp3 */,
+				B84BB5302BC2556D00E3FE4A /* cash.mp3 */,
 				B8979ABB2BA9B86C00A2D725 /* levelUp.mp3 */,
 			);
 			path = Sounds;
@@ -364,6 +367,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8979ABE2BA9B86C00A2D725 /* levelUp.mp3 in Resources */,
+				B84BB5312BC2556D00E3FE4A /* cash.mp3 in Resources */,
 				6AB7F87D2A7302340026E5DC /* LaunchScreen.storyboard in Resources */,
 				6AB7F87A2A7302340026E5DC /* Assets.xcassets in Resources */,
 				B82ED5DF2BB81B4E0099108F /* coin.mp3 in Resources */,
