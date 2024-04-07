@@ -38,6 +38,9 @@ protocol ShopViewModelProtocol {
     
     ///Метод покупки айтема
     func buy(indexPath: IndexPath, completion: () -> Void)
+    
+    /// Метод воспроизведения звука при покупке товара пользователем
+    func playSoundBuy()
 }
 
 // MARK: - UserViewModel
@@ -47,8 +50,11 @@ final class ShopViewModel: ShopViewModelProtocol {
     
     // MARK: - Private properties
     
+    /// Точка доступа к SoundManager
+    private let soundManager = SoundManager.shared
+    
     /// Набор товаров из хранилища (пока моковый DataStore)
-    private var shopItems: [Item] { Item.getItems() }
+    private var shopItems: [Item] { DataStore.shared.items }
     
     /// Отображаемые в магазине товары
     private var displayedItems: [Item] {
@@ -100,6 +106,13 @@ final class ShopViewModel: ShopViewModelProtocol {
             completion()
         }
     }
+    
+    func playSoundBuy() {
+        DispatchQueue.main.async {
+            self.soundManager.setupAudioPlayer(fromSound: Sounds.cash)
+            self.soundManager.audioPlayer?.play()
+        }
+    }
           
     func getTitleHeader(section: Int) -> String {
         "\(displayedItems[section].title)"
@@ -113,3 +126,11 @@ final class ShopViewModel: ShopViewModelProtocol {
         "\(displayedItems[indexPath.section].price.formatted())"
     }
 }
+
+// MARK: - Sounds
+
+    /// Названия звуков
+    enum Sounds {
+        static let cash = "cash"
+    }
+

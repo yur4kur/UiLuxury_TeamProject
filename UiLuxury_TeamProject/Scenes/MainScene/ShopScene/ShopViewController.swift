@@ -121,9 +121,19 @@ extension ShopViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.buy(indexPath: indexPath) {
-            showLowCoinsAlert()
+        showBuyAlert(withTitle: Constants.buyMessage, andMessage: GlobalConstants.emptyString) { [weak self] action in
+            switch action {
+            case .confirm:
+                self?.viewModel.buy(indexPath: indexPath) {
+                    self?.showLowCoinsAlert()
+                }
+                self?.viewModel.playSoundBuy()
+                //updateUI()
+            case .refuse:
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
         }
+        
     }
 }
 
@@ -224,6 +234,30 @@ private extension ShopViewController {
         alert.addAction(okAktion)
         present(alert, animated: true)
     }
+    
+    
+    /// Метод настройки алерт-контроллера
+    func showBuyAlert(withTitle title: String, andMessage message: String, _ handler: @escaping (AlertAction) -> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let confirmAction = UIAlertAction(title: Constants.alertConfirmTitle, style: .default) { _ in
+            handler(.confirm)
+        }
+        let refuseAction = UIAlertAction(title: Constants.alertRefuseTitle, style: .destructive) { _ in
+            handler(.refuse)
+        }
+        
+        alert.addAction(confirmAction)
+        alert.addAction(refuseAction)
+        
+        present(alert, animated: true)
+    }
+    
+    /// Действия алерт-контроллера покупки
+    enum AlertAction {
+        case confirm
+        case refuse
+    }
 }
 
 // MARK: - Constants
@@ -238,5 +272,9 @@ private extension ShopViewController {
         static let ok = "Ok"
         static let ups = "Не хватает монет!"
         static let message = "На твоем счет недостаточно монет для покупки"
+        static let buyMessage = "Купить?"
+        static let alertConfirmTitle = "Да"
+        static let alertRefuseTitle = "Нет"
+        
     }
 }

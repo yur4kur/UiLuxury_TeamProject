@@ -92,7 +92,8 @@ final class GameViewModel: GameViewModelProtocol {
     /// Метод применяет модификаторы товаров купленные пользователем
     private func applyModifier(from items: [Item]) -> Int {
         var modifier = 1
-        items.forEach { item in
+        let sortedItems = items.sorted { $0.actionOperator < $1.actionOperator }
+        sortedItems.forEach { item in
             switch item.actionOperator{
             case .add:
                 modifier += item.modifier

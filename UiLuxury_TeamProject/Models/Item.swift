@@ -25,29 +25,9 @@ struct Item: Equatable {
     
     /// Оператор, применямый к модификатору
     let actionOperator: Operator
-
-    
-    // MARK: - Staic methods
-    /// Метод формирования товаров для магазина
-    static func getItems() -> [Item] {
-        var items: [Item] = []
-        let dataSourse = DataStore.shared
-        
-        for index in 0..<dataSourse.titles.count {
-            let item = Item(
-                title: dataSourse.titles[index],
-                price: dataSourse.prise[index],
-                description: dataSourse.description[index],
-                modifier: dataSourse.modifier[index],
-                actionOperator: .add
-            )
-            items.append(item)
-        }
-        return items
-    }
 }
 
 /// Тип оператора
-enum Operator {
+enum Operator: Comparable {
     case add, multiply
 }

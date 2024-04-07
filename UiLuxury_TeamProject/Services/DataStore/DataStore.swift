@@ -8,36 +8,42 @@
 final class DataStore {
     static let shared = DataStore()
     
-    let user = User(name: "Akira", wallet: 1800, items: [])
+    let user = User(name: "Akira", wallet: 6800, items: [])
     
-    let titles = [
-        "Потерянный навык",
-        "Новый талант",
-        "Red-Bull",
-        "Лотерейный билет",
+    let items = [
+        Item(
+            title: "Потерянный навык",
+             price: 250, 
+            description: "Дополнительное очко за каждое нажатие кнопки",
+            modifier: 1,
+            actionOperator: .add
+        ),
+        
+        Item(
+            title: "Новый талант", 
+            price: 500,
+            description: "3 дополнительных очка при каждом нажатии кнопки",
+            modifier: 2,
+            actionOperator: .add
+        ),
+        
+        Item(
+            title: "Red-Bull",
+            price: 1000,
+            description: "7 дополнительных очков при каждом нажатии кнопки",
+            modifier: 6,
+            actionOperator: .add
+        ),
+        
+        Item(
+            title: "Лотерейный билет",
+            price: 6000,
+            description: "При каждом нажатии кнопки умножает дополнительные очки на 2",
+            modifier: 2,
+            actionOperator: .multiply
+        )
     ]
-    
-    let prise = [
-        250,
-        500,
-        1000,
-        6000
-    ]
-    
-    let description = [
-        "Дополнительное очко за каждое нажатие кнопки",
-        "3 дополнительных очка при каждом нажатии кнопки",
-        "7 дополнительных очков при каждом нажатии кнопки",
-        "При каждом нажатии кнопки умножает дополнительные очки на 2"
-    ]
-    
-    let modifier = [
-        1,
-        2,
-        6,
-        2
-    ]
-    
+ 
     private init () {}
 }
 
