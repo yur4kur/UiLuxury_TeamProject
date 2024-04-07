@@ -19,6 +19,8 @@ final class StartViewController: UIViewController {
     /// Кнопка, переводящая на игровой экран
     private let startButton = UIButton()
     
+    private var viewModel: StartViewModelProtocol!
+    
     // TODO: Удалить, если не потребуются в ВМ
 //    var nameTextField: UITextField!
 //    var user = User.shared
@@ -27,6 +29,7 @@ final class StartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupBinding()
         setupUI()
     }
     
@@ -34,11 +37,21 @@ final class StartViewController: UIViewController {
     
     /// Метода переход на игровой экран
     @objc private func startTapped() {
-        let vc = GameTabBarController()
+        let vc = GameTabBarController(userData: viewModel)
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
     }
     
+}
+
+// MARK: - Setup Binding
+
+private extension StartViewController {
+    
+    /// Метод связывает контрллер с вьюмоделью
+    func setupBinding() {
+        viewModel = StartViewModel()
+    }
 }
 
 // MARK: -  Configure UI

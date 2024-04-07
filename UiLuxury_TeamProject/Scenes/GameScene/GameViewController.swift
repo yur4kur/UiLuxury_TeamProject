@@ -13,8 +13,6 @@ final class GameViewController: UIViewController {
     
     // MARK: - Private properties
     
-    // MARK: Views
-    
     /// Лейбл с игровым счетом
     private let scoreLabel = UILabel()
     
@@ -44,20 +42,47 @@ final class GameViewController: UIViewController {
     /// Картинка анимируемых объектов
     private var coinImageView: UIImageView!
   
+   // MARK: View model
+    
     /// Экземпляр вью модели
-    private let viewModel = GameViewModel()
+    private var viewModel: GameViewModelProtocol! {
+        didSet {
+            viewModel.scoreDidChange = { [ unowned self ] viewModel in
+                scoreLabel.text = viewModel.score.description
+            }
+        }
+    }
+    
+    /// Данные пользователя из стартовой вью-модели
+    var userData: StartViewModelProtocol!
+    
+    // MARK: - Initializers
+    
+    init(userData: StartViewModelProtocol) {
+        self.userData = userData
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError(GlobalConstants.fatalError)
+    }
     
     // MARK: - Lifecycle methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupBinding()
         setupUI()
     }
-    
-    // TODO: Проверить необходимость в методе после создания вьюмодели
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        modifySetup()
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.setupAudioPlayer()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        viewModel.updateUserWallet()
     }
     
     // MARK: - Private methods
@@ -65,26 +90,17 @@ final class GameViewController: UIViewController {
     /// Метод запускает анимацию нажатия кнопки, анимирует падающие монеты и увеличивает счет игры
     @objc private func clickButtonTapped() {
         animate()
-        viewModel.score += viewModel.clickModify
-        updateCharacterWallet(with: viewModel.score)
+        viewModel.playSound()
+        viewModel.updateScore()
     }
-    // TODO: весь блок по возможности перенести во вьюмодель
-    private func modifySetup() {
-        viewModel.user.items.forEach { item in
-            switch item.actionOperator{
-            case .add:
-                viewModel.clickModify += item.modifier
-            case .multiply:
-                viewModel.clickModify *= item.modifier
-            case .assets:
-                return
-            }
-        }
-    }
+}
+
+// MARK: - Setup Binding
+
+private extension GameViewController {
     
-    private func updateCharacterWallet(with newValue: Int) {
-        viewModel.user.wallet += newValue
-        scoreLabel.text = viewModel.user.wallet.description
+    func setupBinding() {
+        viewModel = GameViewModel(userData: userData)
     }
 }
 
@@ -142,7 +158,7 @@ private extension GameViewController {
     
     /// Метод настраивает лейбл
     func setupScoreLabel() {
-        scoreLabel.text = String(viewModel.user.wallet)
+        scoreLabel.text = viewModel.score.description
         scoreLabel.textColor = .black
         scoreLabel.font = .preferredFont(forTextStyle: .largeTitle)
         scoreLabel.textAlignment = .natural

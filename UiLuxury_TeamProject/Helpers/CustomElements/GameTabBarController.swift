@@ -9,8 +9,25 @@ import UIKit
 
 // MARK: - GameTabBarController
 
+/// Кастомный контроллер, в котором TabBar объединен с NavigationController
 final class GameTabBarController: UITabBarController {
-
+    
+    // MARK: - Private properties
+    
+    /// Вью-модель, содержащая единый объект пользователя
+    private var userData: StartViewModelProtocol
+    
+    // MARK: - Initializers
+    
+    init(userData: StartViewModelProtocol) {
+        self.userData = userData
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError(GlobalConstants.fatalError)
+    }
+    
     // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
@@ -53,19 +70,19 @@ final class GameTabBarController: UITabBarController {
         let clickVC = createNavigationController(
             title: Constants.gameTabName,
             image: UIImage(systemName: Constants.gameTabIcon),
-            rootViewController: GameViewController()
+            rootViewController: GameViewController(userData: userData)
         )
         
         let shopVC = createNavigationController(
             title: Constants.shopTabName,
             image: UIImage(systemName: Constants.shopTabIcon),
-            rootViewController: ShopViewController()
+            rootViewController: ShopViewController(userData: userData)
         )
         
         let userVC = createNavigationController(
             title: Constants.userTabName,
             image: UIImage(systemName: Constants.userTabIcon),
-            rootViewController: UserViewController()
+            rootViewController: UserViewController(userData: userData)
         )
         
         let teamVC = createNavigationController(
@@ -116,8 +133,8 @@ private extension GameTabBarController {
         static let gameTabIcon = "cursorarrow.click.2"
         static let shopTabName = "Магазин"
         static let shopTabIcon = "cart.fill"
-        static let userTabName = "Покупки"
-        static let userTabIcon = "bag.fill"
+        static let userTabName = "Игрок"
+        static let userTabIcon = "person.circle.fill"
         static let teamTabName = "Команда"
         static let teamTabIcon = "person.2.badge.gearshape.fill"
     }
