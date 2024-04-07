@@ -12,9 +12,6 @@ import Foundation
 ///Притокол описывающий отображение магазина и взаимодействия юзера с ним
 protocol ShopViewModelProtocol {
     
-    ///Массив айтемов для магазина
-    var shopItems: [Item] { get }
-    
     ///Счет очков(денег)
     var walletCount: String { get }
     
@@ -41,7 +38,6 @@ protocol ShopViewModelProtocol {
     
     ///Метод покупки айтема
     func buy(indexPath: IndexPath, completion: () -> Void)
-
 }
 
 // MARK: - UserViewModel
@@ -49,28 +45,56 @@ protocol ShopViewModelProtocol {
 ///Класс  ВьюМодели для магазина
 final class ShopViewModel: ShopViewModelProtocol {
     
-    // MARK: Public properties
+    // MARK: - Private properties
     
-    var shopItems: [Item] { Item.getItems() }
+    /// Набор товаров из хранилища (пока моковый DataStore)
+    private var shopItems: [Item] { Item.getItems() }
+    
+    /// Отображаемые в магазине товары
+    private var displayedItems: [Item] {
+        get {
+            sortItems()
+        }
+        set {}
+    }
+    
+    // MARK: - Public properties
+    
     var walletCount: String { "$\(userData.user.wallet.formatted())" }
-    var numberOfSections: Int { shopItems.count }
+    var numberOfSections: Int { displayedItems.count }
     var numberOfRowsInSection = 1
     var walletDidChange: ((ShopViewModelProtocol) -> Void)?
     
-    // MARK: Private properties
+    // MARK: - Private properties
     
     private var userData: UserDataTransferProtocol
     
-    // MARK: Initializers
+    // MARK: - Initializers
     
     init(userData: UserDataTransferProtocol) {
         self.userData = userData
     }
     
+    // MARK: - Private methods
+    
+    /// Метод, убирающий купленные товары из отображаемых в магазине
+    private func sortItems() -> [Item] {
+        var storeItems: [Item] = []
+        shopItems.forEach { Item in
+            if !userData.user.items.contains(Item) {
+                storeItems.append(Item)
+            }
+        }
+        return storeItems.sorted { $0.price < $1.price }
+    }
+    
+    // MARK: - Public methods
+    
     func buy(indexPath: IndexPath, completion: () -> Void) {
-        if userData.user.wallet >= shopItems[indexPath.section].price {
-            userData.user.items.append(shopItems[indexPath.section])
-            userData.user.wallet -= shopItems[indexPath.section].price // Вычитаем деньги из кошелька
+        if userData.user.wallet >= displayedItems[indexPath.section].price {
+            userData.user.wallet -= displayedItems[indexPath.section].price
+            displayedItems.remove(at: indexPath.section)
+            userData.user.items.append(displayedItems[indexPath.section])
             walletDidChange?(self)
         } else {
             completion()
@@ -78,14 +102,14 @@ final class ShopViewModel: ShopViewModelProtocol {
     }
           
     func getTitleHeader(section: Int) -> String {
-        "\(shopItems[section].title)"
+        "\(displayedItems[section].title)"
     }
     
     func getText(indexPath: IndexPath) -> String {
-        shopItems[indexPath.section].description
+        displayedItems[indexPath.section].description
     }
 
     func getSecondaryText(indexPath: IndexPath) -> String {
-        "\(shopItems[indexPath.section].price.formatted())"
+        "\(displayedItems[indexPath.section].price.formatted())"
     }
 }

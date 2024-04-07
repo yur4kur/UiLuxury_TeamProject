@@ -327,7 +327,7 @@ private extension UserViewController {
     /// Текстовые константы
     enum Text {
         static let cellIdentifier = "cell"
-        static let currentStage = "УРОВЕНЬ: "
+        static let currentStage = "СТАДИЯ: "
         static let tableViewSecondaryText = "Цена"
         
         static let alertTitle = "Продать?"

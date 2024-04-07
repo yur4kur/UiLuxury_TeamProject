@@ -26,6 +26,7 @@ final class ShopViewController: UIViewController {
         didSet {
             viewModel.walletDidChange = { [unowned self] viewModel in
                 walletLabel.text = viewModel.walletCount
+                tableView.reloadData()
             }
         }
     }
@@ -52,6 +53,7 @@ final class ShopViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         walletLabel.text = viewModel.walletCount.description
+        tableView.reloadData()
     }
 }
 
@@ -87,9 +89,6 @@ extension ShopViewController: UITableViewDataSource {
         cell.layer.borderWidth = 2
         cell.layer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
         
-        
-        
-        
         return cell
     }
 }
@@ -122,7 +121,6 @@ extension ShopViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        //guard let cell = tableView.cellForRow(at: indexPath) else { return }
         viewModel.buy(indexPath: indexPath) {
             showLowCoinsAlert()
         }

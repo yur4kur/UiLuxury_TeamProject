@@ -50,7 +50,7 @@ protocol UserViewModelProtocol {
 
 final class UserViewModel: UserViewModelProtocol {
 
-    // MARK: Public properties
+    // MARK: - Public properties
 
     var userStageName: String {
         let stageNameIndex = calculateUserStage(from: userData.user.wallet)
@@ -72,7 +72,7 @@ final class UserViewModel: UserViewModelProtocol {
 
     var numberOfRowsInSection = 1
 
-    // MARK: Private properties
+    // MARK: - Private properties
 
     /// Точка доступа к SoundManager
     private let soundManager = SoundManager.shared
@@ -82,6 +82,16 @@ final class UserViewModel: UserViewModelProtocol {
 
     /// Данные пользователя из стартовой вью-модели
     private var userData: UserDataTransferProtocol
+    
+    /// Отображаемые товары
+    private var displayedItems: [Item] {
+        get {
+            userData.user.items.sorted { $0.price < $1.price }
+        }
+        set (update) {
+            userData.user.items = update
+        }
+    }
 
     // MARK: Initializers
 
@@ -92,26 +102,22 @@ final class UserViewModel: UserViewModelProtocol {
     // MARK: Public methods
 
     func getTitleHeader(section: Int) -> String {
-        userData.user.items[section].title
+        displayedItems[section].title
     }
 
     func getText(indexPath: IndexPath) -> String {
-        userData.user.items[indexPath.section].description
+        displayedItems[indexPath.section].description
     }
 
     func getSecondaryText(indexPath: IndexPath) -> String {
-        "\(userData.user.items[indexPath.section].price)"
+        "\(displayedItems[indexPath.section].price)"
     }
 
     func sellItem(indexPath: IndexPath) {
         guard indexPath.section >= 0 && indexPath.section < userData.user.items.count else { return }
-        let itemPrice = userData.user.items[indexPath.section].price
+        let itemPrice = displayedItems[indexPath.section].price
         userData.user.wallet += itemPrice
-
-        // TODO: Удалить, если не будет использоваться
-        //        userData.user.items[indexPath.section].isOn.toggle()
-
-        userData.user.items.remove(at: indexPath.section)
+        displayedItems.remove(at: indexPath.section)
     }
 
     func playSound() {
@@ -156,10 +162,10 @@ private extension UserViewModel {
     /// Названия уровней
     enum StageNames {
         static let names = [
-            "НОВИЧОК",
-            "ПРОДВИНУТЫЙ",
-            "ЭЛИТА",
-            "ЛЕГЕНДА"
+            "МЕДИТАЦИЯ",
+            "СОЗНАНИЕ",
+            "МУДРОСТЬ",
+            "НИРВАНА"
         ]
     }
 

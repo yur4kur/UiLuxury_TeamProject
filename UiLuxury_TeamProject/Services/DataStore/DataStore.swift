@@ -8,7 +8,7 @@
 final class DataStore {
     static let shared = DataStore()
     
-    let user = User(name: "Akira", wallet: 1300, items: [])
+    let user = User(name: "Akira", wallet: 1800, items: [])
     
     let titles = [
         "Потерянный навык",
