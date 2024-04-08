@@ -22,6 +22,8 @@ final class DevelopersViewController: UIViewController {
 
     /// Кнопка перехода в Telegram
     private let telegramButton = UIButton()
+    
+    private let roleLabel = UILabel()
 
     /// Текущий индекс сегмента
     private var segmentIndex = 0
@@ -29,9 +31,14 @@ final class DevelopersViewController: UIViewController {
     /// Текущая Telegram-ссылка разработчика
     private var currentURL: String!  //DevelopersInfo.contacts[0]
     
+    /// Массив с именами разработчиков
     private var names: [String]!
     
+    /// Массив ссылок на телеграмм разработчиков
     private var contacts: [String]!
+    
+    /// Массив ролей разработчиков
+    private var roles: [String]!
     
     /// Координатор контроллера
     private let coordinator: TabCoordinatorProtocol!
@@ -69,10 +76,13 @@ final class DevelopersViewController: UIViewController {
         segmentIndex = selectedSegmentIndex
 
         guard let developerImage = UIImage(named: String(segmentIndex)) else { return }
-        let developerContact = contacts[segmentIndex]
-
         developerImageView.image = developerImage
+        
+        let developerContact = contacts[segmentIndex]
         currentURL = developerContact
+        
+        let developerRole = roles[segmentIndex]
+        roleLabel.text = developerRole
     }
 
     /// Метод перехода в Telegram
@@ -91,6 +101,7 @@ private extension DevelopersViewController {
         names = viewModel.getNames()
         contacts = viewModel.getContacts()
         currentURL = contacts[0]
+        roles = viewModel.getRoles()
     }
 }
 
@@ -104,6 +115,7 @@ private extension DevelopersViewController {
         setupDeveloperSegments()
         setupDeveloperImageView()
         setupTelegramButton()
+        setupRoleLabel()
 
         addSubviews()
         setConstraints()
@@ -145,6 +157,15 @@ private extension DevelopersViewController {
         guard let image = UIImage(named: Images.telegramLogo) else { return }
         telegramButton.setImage(image, for: .normal)
     }
+    
+    // MARK: Role label
+    
+    /// Метод настройка лейбла с ролью разработчика
+    func setupRoleLabel() {
+        roleLabel.font = .boldSystemFont(ofSize: 17)
+        roleLabel.textColor = .black
+        roleLabel.textAlignment = .center
+    }
 
     // MARK: Add subviews
     
@@ -153,13 +174,15 @@ private extension DevelopersViewController {
         view.addSubviews(
             developerSegments,
             developerImageView,
-            telegramButton
+            telegramButton,
+            roleLabel
         )
 
         view.disableAutoresizingMask(
             developerSegments,
             developerImageView,
-            telegramButton
+            telegramButton,
+            roleLabel
         )
     }
 
@@ -205,7 +228,11 @@ private extension DevelopersViewController {
             telegramButton.trailingAnchor.constraint(equalTo: developerImageView.trailingAnchor, constant: -16),
             telegramButton.bottomAnchor.constraint(equalTo: developerImageView.bottomAnchor, constant: -16),
             telegramButton.heightAnchor.constraint(equalToConstant: 30),
-            telegramButton.widthAnchor.constraint(equalToConstant: 30)
+            telegramButton.widthAnchor.constraint(equalToConstant: 30),
+            
+            // MARK: Role label
+            roleLabel.topAnchor.constraint(equalTo: developerImageView.bottomAnchor, constant: 20),
+            roleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 }

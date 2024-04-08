@@ -8,12 +8,12 @@
 final class DataStore {
     static let shared = DataStore()
     
-    let user = User(name: "Akira", wallet: 6800, items: [])
+    let user = User(name: GlobalConstants.emptyString, wallet: 0, items: [])
     
     let items = [
         Item(
             title: "Потерянный навык",
-             price: 250, 
+             price: 1000,
             description: "Дополнительное очко за каждое нажатие кнопки",
             modifier: 1,
             actionOperator: .add
@@ -21,7 +21,7 @@ final class DataStore {
         
         Item(
             title: "Новый талант", 
-            price: 500,
+            price: 3000,
             description: "3 дополнительных очка при каждом нажатии кнопки",
             modifier: 2,
             actionOperator: .add
@@ -29,7 +29,7 @@ final class DataStore {
         
         Item(
             title: "Red-Bull",
-            price: 1000,
+            price: 6000,
             description: "7 дополнительных очков при каждом нажатии кнопки",
             modifier: 6,
             actionOperator: .add
@@ -37,7 +37,7 @@ final class DataStore {
         
         Item(
             title: "Лотерейный билет",
-            price: 6000,
+            price: 15000,
             description: "При каждом нажатии кнопки умножает дополнительные очки на 2",
             modifier: 2,
             actionOperator: .multiply
@@ -45,11 +45,11 @@ final class DataStore {
     ]
     
     let developers = [
-    Developer(name: "Миша", contact: "https://t.me/AkiraReiTyan"),
-    Developer(name: "Кирилл", contact: "https://t.me/kizi_mcfly"),
-    Developer(name: "Юра", contact: "https://t.me/Radiator074"),
-    Developer(name: "Эльдар", contact: "https://t.me/eldarovsky"),
-    Developer(name: "Бийбол", contact: "https://t.me/zubi312")
+        Developer(name: "Миша", contact: "https://t.me/AkiraReiTyan", role: "Идейный вдохновитель"),
+        Developer(name: "Кирилл", contact: "https://t.me/kizi_mcfly", role: "Основатель команды и спец по магазину"),
+        Developer(name: "Юра", contact: "https://t.me/Radiator074", role: "Архитектор и спец по анимации"),
+        Developer(name: "Эльдар", contact: "https://t.me/eldarovsky", role: "Главный ревьюер и спец по озвучке"),
+        Developer(name: "Бийбол", contact: "https://t.me/zubi312", role: "Легендарный верстальщик сторибордов")
     ]
     
     private init () {}

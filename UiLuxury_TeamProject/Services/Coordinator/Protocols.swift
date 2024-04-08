@@ -32,7 +32,6 @@ protocol TabCoordinatorProtocol: CoordinatorProtocol {
     
     /// Экземпляр родительского координатора
     var parentCoodinator: MainCoordinatorProtocol? { get }
-    
 }
 
 

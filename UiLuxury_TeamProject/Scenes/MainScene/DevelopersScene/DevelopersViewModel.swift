@@ -17,6 +17,9 @@ protocol DevelopersViewModelProtocol {
     
     /// Метод возвращает массив контактных ссылок разработчиков
     func getContacts() -> [String]
+    
+    /// Метод возвращает массив ролей разработчиков
+    func getRoles() -> [String]
 }
 
 // MARK: - DevelopersViewModel
@@ -43,5 +46,13 @@ final class DevelopersViewModel: DevelopersViewModelProtocol {
         return contacts
     }
     
-    
+    func getRoles() -> [String] {
+        var roles: [String] = []
+        DataStore.shared.developers.forEach { developer in
+            let role = developer.role
+            roles.append(role)
+        }
+        
+        return roles
+    }
 }
