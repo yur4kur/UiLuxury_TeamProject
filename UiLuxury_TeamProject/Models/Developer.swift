@@ -5,15 +5,12 @@
 //  Created by Юрий Куринной on 27.07.2023.
 //
 
+/// Модель разработчика
 struct Developer {
     
+    /// Имя рарзработчика
     let name: String
-    let clan: String
-    var fullname: String {
-        "\(name) + \(clan)"
-    }
     
-    let jobInfo: String
-    let reactionToApp: String
-    
+    /// Ссылка на телеграмм разработчика
+    let contact: String
 }

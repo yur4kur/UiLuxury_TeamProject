@@ -27,10 +27,17 @@ final class DevelopersViewController: UIViewController {
     private var segmentIndex = 0
 
     /// Текущая Telegram-ссылка разработчика
-    private var currentURL = DevelopersInfo.contacts[0]
+    private var currentURL: String!  //DevelopersInfo.contacts[0]
+    
+    private var names: [String]!
+    
+    private var contacts: [String]!
     
     /// Координатор контроллера
     private let coordinator: TabCoordinatorProtocol!
+    
+    /// Вью-модель контроллера
+    private var viewModel: DevelopersViewModelProtocol!
 
     // MARK: - Initializers
     
@@ -48,6 +55,7 @@ final class DevelopersViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupBinding()
         setupUI()
         addActions()
     }
@@ -57,11 +65,11 @@ final class DevelopersViewController: UIViewController {
     /// Метод настройки карточки разработчика
     @objc private func showDeveloperInfo() {
         let selectedSegmentIndex = developerSegments.selectedSegmentIndex
-        guard selectedSegmentIndex < DevelopersInfo.names.count else { return }
+        guard selectedSegmentIndex < names.count else { return }
         segmentIndex = selectedSegmentIndex
 
         guard let developerImage = UIImage(named: String(segmentIndex)) else { return }
-        let developerContact = DevelopersInfo.contacts[segmentIndex]
+        let developerContact = contacts[segmentIndex]
 
         developerImageView.image = developerImage
         currentURL = developerContact
@@ -71,6 +79,18 @@ final class DevelopersViewController: UIViewController {
     @objc private func openURL() {
         guard let url = URL(string: currentURL) else { return }
         UIApplication.shared.open(url)
+    }
+}
+
+// MARK: - SetupBinding
+
+private extension DevelopersViewController {
+    
+    func setupBinding() {
+        viewModel = DevelopersViewModel()
+        names = viewModel.getNames()
+        contacts = viewModel.getContacts()
+        currentURL = contacts[0]
     }
 }
 
@@ -102,7 +122,7 @@ private extension DevelopersViewController {
 
     /// Метод настройки сегмент-контроллера
     func setupDeveloperSegments() {
-        developerSegments = UISegmentedControl(items: DevelopersInfo.names)
+        developerSegments = UISegmentedControl(items: names)
         developerSegments.selectedSegmentIndex = segmentIndex
         showDeveloperInfo()
     }
@@ -179,27 +199,6 @@ private extension DevelopersViewController {
 // MARK: - Constants
 
 private extension DevelopersViewController {
-
-    /// Информация о разработчиках
-    enum DevelopersInfo {
-        static let names = [
-            "Миша",
-            "Кирилл",
-            "Юра",
-            "Бийбол",
-            "Эльдар",
-            "Рустам"
-        ]
-
-        static let contacts = [
-            "https://t.me/AkiraReiTyan",
-            "https://t.me/kizi_mcfly",
-            "https://t.me/Radiator074",
-            "https://t.me/zubi312",
-            "https://t.me/eldarovsky",
-            "https://t.me/hellofox"
-        ]
-    }
 
     /// Изображения
     enum Images {

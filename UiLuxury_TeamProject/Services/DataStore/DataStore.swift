@@ -43,7 +43,15 @@ final class DataStore {
             actionOperator: .multiply
         )
     ]
- 
+    
+    let developers = [
+    Developer(name: "Миша", contact: "https://t.me/AkiraReiTyan"),
+    Developer(name: "Кирилл", contact: "https://t.me/kizi_mcfly"),
+    Developer(name: "Юра", contact: "https://t.me/Radiator074"),
+    Developer(name: "Эльдар", contact: "https://t.me/eldarovsky"),
+    Developer(name: "Бийбол", contact: "https://t.me/zubi312")
+    ]
+    
     private init () {}
 }
 
