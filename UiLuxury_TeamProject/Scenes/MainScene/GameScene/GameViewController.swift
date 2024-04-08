@@ -268,7 +268,7 @@ private extension GameViewController {
             scoreLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             scoreLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 230),
             
-            // TODO: Удалить, если кастомная кнопка будет заверстана фреймом
+            // MARK: Click button
             clickButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             clickButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             clickButton.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2),

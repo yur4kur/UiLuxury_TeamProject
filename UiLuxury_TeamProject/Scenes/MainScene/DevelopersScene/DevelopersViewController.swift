@@ -15,7 +15,7 @@ final class DevelopersViewController: UIViewController {
     // MARK: Private properties
 
     /// Сегмент-контроллер для переключения между карточками о разработчиках
-    private var developerSegments = UISegmentedControl()
+    private lazy var developerSegments = UISegmentedControl()
 
     /// Изображение разработчика
     private let developerImageView = UIImageView()
@@ -120,6 +120,8 @@ private extension DevelopersViewController {
         view.addQuadroGradientLayer()
     }
 
+    // MARK: Segmented control
+    
     /// Метод настройки сегмент-контроллера
     func setupDeveloperSegments() {
         developerSegments = UISegmentedControl(items: names)
@@ -127,6 +129,8 @@ private extension DevelopersViewController {
         showDeveloperInfo()
     }
 
+    // MARK: Developer image
+    
     /// Метод настройки изображения пользователя
     func setupDeveloperImageView() {
         developerImageView.contentMode = .scaleAspectFill
@@ -134,12 +138,16 @@ private extension DevelopersViewController {
         developerImageView.clipsToBounds = true
     }
 
+    // MARK: Telegram button
+    
     /// Метод настройки изображения кнопки перехода в Telegram
     func setupTelegramButton() {
         guard let image = UIImage(named: Images.telegramLogo) else { return }
         telegramButton.setImage(image, for: .normal)
     }
 
+    // MARK: Add subviews
+    
     /// Метод добавления элементов интерфейса на главный экран и отключения масок AutoLayout
     func addSubviews() {
         view.addSubviews(
@@ -155,6 +163,8 @@ private extension DevelopersViewController {
         )
     }
 
+    // MARK: Actions
+    
     /// Метод добавления действий  элементам интерфейса
     func addActions() {
         developerSegments.addTarget(
@@ -178,16 +188,20 @@ private extension DevelopersViewController {
     /// Метод установки констреинтов элементов интерфейса
     func setConstraints() {
         NSLayoutConstraint.activate([
+            
+            // MARK: Segmented control
             developerSegments.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             developerSegments.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             developerSegments.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             developerSegments.heightAnchor.constraint(equalToConstant: 32),
 
+            // MARK: Developer image
             developerImageView.topAnchor.constraint(equalTo: developerSegments.bottomAnchor, constant: 20),
             developerImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             developerImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             developerImageView.widthAnchor.constraint(equalTo: developerImageView.heightAnchor, multiplier: 1),
 
+            // MARK: Telegram button
             telegramButton.trailingAnchor.constraint(equalTo: developerImageView.trailingAnchor, constant: -16),
             telegramButton.bottomAnchor.constraint(equalTo: developerImageView.bottomAnchor, constant: -16),
             telegramButton.heightAnchor.constraint(equalToConstant: 30),

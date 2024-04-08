@@ -32,6 +32,6 @@ final class ShopCoordinator: TabCoordinatorProtocol {
     // MARK: Public methods
     func start()  {
         let shopVC = ShopViewController(coordinator: self)
-        parentCoodinator?.tabControllers.append(shopVC)
+        parentCoodinator?.tabControllers["shopVC"] = shopVC
     }
 }

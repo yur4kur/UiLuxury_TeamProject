@@ -19,7 +19,7 @@ protocol MainCoordinatorProtocol: CoordinatorProtocol {
     var parentCoodinator: CoordinatorProtocol? { get }
     
     /// Контроллеры таббара
-    var tabControllers: [UIViewController] { get set }
+    var tabControllers: [String: UIViewController] { get set }
 }
 
 // MARK: - MainCoordinator
@@ -30,7 +30,7 @@ final class MainCoordinator: MainCoordinatorProtocol {
     // MARK: Public properties
     var userData: UserDataTransferProtocol
     var childCoordinators: [CoordinatorProtocol]? = []
-    var tabControllers: [UIViewController] = []
+    var tabControllers: [String: UIViewController] = [:]
     var navigationController: UINavigationController
     var parentCoodinator: CoordinatorProtocol?
     

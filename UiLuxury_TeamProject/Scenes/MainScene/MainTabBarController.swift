@@ -67,25 +67,25 @@ final class MainTabBarController: UITabBarController {
         let gameVC = createNavigationController(
             title: Constants.gameTabName,
             image: UIImage(systemName: Constants.gameTabIcon),
-            rootViewController: coordinator.tabControllers[0]
+            rootViewController: coordinator.tabControllers["gameVC"] ?? UIViewController()
         )
         
         let shopVC = createNavigationController(
             title: Constants.shopTabName,
             image: UIImage(systemName: Constants.shopTabIcon),
-            rootViewController: coordinator.tabControllers[1]
+            rootViewController: coordinator.tabControllers["shopVC"] ?? UIViewController()
         )
         
         let userVC = createNavigationController(
             title: Constants.userTabName,
             image: UIImage(systemName: Constants.userTabIcon),
-            rootViewController: coordinator.tabControllers[2]
+            rootViewController: coordinator.tabControllers["userVC"] ?? UIViewController()
         )
         
         let teamVC = createNavigationController(
             title: Constants.teamTabName,
             image: UIImage(systemName: Constants.teamTabIcon),
-            rootViewController: coordinator.tabControllers[3]
+            rootViewController: coordinator.tabControllers["teamVC"] ?? UIViewController()
         )
         
         setViewControllers([gameVC, shopVC, userVC, teamVC], animated: true)
