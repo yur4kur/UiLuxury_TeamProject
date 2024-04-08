@@ -328,9 +328,5 @@ private extension UserViewController {
     /// Текстовые константы
     enum Text {
         static let cellIdentifier = "cell"
-        
-        
-        
-        
     }
 }
