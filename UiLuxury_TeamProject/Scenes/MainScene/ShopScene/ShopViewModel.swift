@@ -66,7 +66,7 @@ final class ShopViewModel: ShopViewModelProtocol {
     
     // MARK: - Public properties
     
-    var walletCount: String { "$\(userData.user.wallet.formatted())" }
+    var walletCount: String { GlobalConstants.coin + " \(userData.user.wallet.formatted())" }
     var numberOfSections: Int { displayedItems.count }
     var numberOfRowsInSection = 1
     var walletDidChange: ((ShopViewModelProtocol) -> Void)?
@@ -123,14 +123,25 @@ final class ShopViewModel: ShopViewModelProtocol {
     }
 
     func getSecondaryText(indexPath: IndexPath) -> String {
-        "\(displayedItems[indexPath.section].price.formatted())"
+        Constants.priceTag + " \(displayedItems[indexPath.section].price.formatted())"
     }
 }
 
 // MARK: - Sounds
 
+private extension ShopViewModel {
     /// Названия звуков
     enum Sounds {
         static let cash = "cash"
     }
+}
 
+// MARK: - Texts
+
+private extension ShopViewModel {
+    
+    /// Текстовые элементы, используемые в коде
+    enum Constants {
+        static let priceTag = "Купить: \(GlobalConstants.coin)"
+    }
+}

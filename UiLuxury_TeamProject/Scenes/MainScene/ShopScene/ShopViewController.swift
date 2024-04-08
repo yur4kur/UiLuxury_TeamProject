@@ -78,7 +78,7 @@ extension ShopViewController: UITableViewDataSource {
         var content = cell.defaultContentConfiguration()
         content.text = viewModel.getText(indexPath: indexPath)
         content.textProperties.lineBreakMode = .byTruncatingHead
-        content.secondaryText = Constants.buy + viewModel.getSecondaryText(indexPath: indexPath)
+        content.secondaryText = viewModel.getSecondaryText(indexPath: indexPath)
         content.secondaryTextProperties.font = .boldSystemFont(ofSize: 17)
         
         cell.contentConfiguration = content
@@ -268,7 +268,6 @@ private extension ShopViewController {
     enum Constants {
         static let cell = "cell"
         static let basket = "basket"
-        static let buy = "Купить: $"
         static let ok = "Ok"
         static let ups = "Не хватает монет!"
         static let message = "На твоем счет недостаточно монет для покупки"

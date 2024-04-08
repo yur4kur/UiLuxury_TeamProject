@@ -11,4 +11,5 @@ enum GlobalConstants {
     /// Текст ошибки в инициализаторах по умолчанию
     static let fatalError = "init(coder:) has not been implemented"
     static let emptyString = ""
+    static let coin = "🟡"
 }

@@ -30,6 +30,9 @@ protocol UserViewModelProtocol {
 
     /// Инициализация данными пользователя из UserViewController
     init(userData: UserDataTransferProtocol)
+    
+    /// Метод возвращает текста лейбла стадии пользователя
+    func getStageTitle() -> String
 
     /// Метод возвращает название секции таблицы
     func getTitleHeader(section: Int) -> String
@@ -39,6 +42,18 @@ protocol UserViewModelProtocol {
 
     /// Метод возвращает второстепенный текст стандартной ячейки таблицы
     func getSecondaryText(indexPath: IndexPath) -> String
+    
+    /// Метод возвращает вопрос о продаже
+    func getAlertTitle() -> String
+    
+    /// Метод возвращает пустую строку
+    func getAlertMessage() -> String
+    
+    /// Метод возвращает текст подтверждения продажи
+    func getAlertCofirmaTitle() -> String
+    
+    /// Метод возвращает текст отказа от продажи
+    func getAlertRefuseTitle() -> String
 
     /// Метод продажи купленных предметов
     func sellItem(indexPath: IndexPath)
@@ -69,7 +84,7 @@ final class UserViewModel: UserViewModelProtocol {
     }
 
     var userCreditsLabelText: String {
-        "\(Text.creditsLabelText): \(wallet)"
+        "\(Text.creditsLabelText) \(wallet)"
     }
 
     var numberOfSections: Int {
@@ -129,9 +144,12 @@ final class UserViewModel: UserViewModelProtocol {
     }
 
     // MARK: Public methods
+    
+    func getStageTitle() -> String {
+        "\(Text.stageTitle) \(userStageName)"
+    }
 
     func getTitleHeader(section: Int) -> String {
-
         displayedItems[section].title
     }
 
@@ -140,7 +158,24 @@ final class UserViewModel: UserViewModelProtocol {
     }
 
     func getSecondaryText(indexPath: IndexPath) -> String {
-        "\(displayedItems[indexPath.section].price)"
+        "\(Text.tableViewSecondaryText) \(displayedItems[indexPath.section].price)"
+        
+    }
+    
+    func getAlertTitle() -> String {
+        Text.alertTitle
+    }
+    
+    func getAlertMessage() -> String {
+        GlobalConstants.emptyString
+    }
+    
+    func getAlertCofirmaTitle() -> String {
+        Text.alertConfirmTitle
+    }
+    
+    func getAlertRefuseTitle() -> String {
+        Text.alertRefuseTitle
     }
 
     func sellItem(indexPath: IndexPath) {
@@ -199,7 +234,12 @@ private extension UserViewModel {
 
     /// Текстовые константы
     enum Text {
-        static let creditsLabelText = "СЧЕТ"
+        static let creditsLabelText = "СЧЕТ: \(GlobalConstants.coin)"
+        static let stageTitle = "СТАДИЯ: "
+        static let tableViewSecondaryText = "Продать: \(GlobalConstants.coin)"
+        static let alertTitle = "Продать?"
+        static let alertConfirmTitle = "Да"
+        static let alertRefuseTitle = "Нет"
     }
 
     /// Названия уровней

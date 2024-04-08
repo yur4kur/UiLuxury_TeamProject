@@ -79,7 +79,7 @@ final class UserViewController: UIViewController {
     
     /// Метод обновления внешнего вида сцены
     private func updateUI() {
-        userStageLabel.text = Text.currentStage + viewModel.userStageName
+        userStageLabel.text = viewModel.getStageTitle()
         updateUserStage()
         userCreditsLabel.text = viewModel.userCreditsLabelText
         userItemsTableView.reloadData()
@@ -103,7 +103,7 @@ extension UserViewController: UITableViewDataSource {
         
         var content = cell.defaultContentConfiguration()
         content.text = viewModel.getText(indexPath: indexPath)
-        content.secondaryText = "\(Text.tableViewSecondaryText): $\(viewModel.getSecondaryText(indexPath: indexPath))"
+        content.secondaryText = viewModel.getSecondaryText(indexPath: indexPath)
         content.secondaryTextProperties.font = .boldSystemFont(ofSize: 17)
         
         setupUserItemsTableViewCell(cell)
@@ -141,7 +141,8 @@ extension UserViewController: UITableViewDelegate {
             cell.selectedBackgroundView?.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         }
         
-        showAlert(withTitle: Text.alertTitle, andMessage: Text.alertMessage) { [weak self] action in
+        showAlert(withTitle: viewModel.getAlertTitle(),
+                  andMessage: viewModel.getAlertMessage()) { [weak self] action in
             switch action {
             case .confirm:
                 self?.viewModel.sellItem(indexPath: indexPath)
@@ -284,7 +285,7 @@ private extension UserViewController {
             userCreditsLabel.heightAnchor.constraint(equalToConstant: 22),
 
             // MARK: User Items Table
-            userItemsTableView.topAnchor.constraint(equalTo: userCreditsLabel.bottomAnchor, constant: 32),
+            userItemsTableView.topAnchor.constraint(equalTo: userCreditsLabel.bottomAnchor, constant: 5),
             userItemsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             userItemsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             userItemsTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
@@ -306,10 +307,10 @@ private extension UserViewController {
     func showAlert(withTitle title: String, andMessage message: String, _ handler: @escaping (AlertAction) -> Void) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        let confirmAction = UIAlertAction(title: Text.alertConfirmTitle, style: .default) { _ in
+        let confirmAction = UIAlertAction(title: viewModel.getAlertCofirmaTitle(), style: .default) { _ in
             handler(.confirm)
         }
-        let refuseAction = UIAlertAction(title: Text.alertRefuseTitle, style: .destructive) { _ in
+        let refuseAction = UIAlertAction(title: viewModel.getAlertRefuseTitle(), style: .destructive) { _ in
             handler(.refuse)
         }
         
@@ -327,12 +328,9 @@ private extension UserViewController {
     /// Текстовые константы
     enum Text {
         static let cellIdentifier = "cell"
-        static let currentStage = "СТАДИЯ: "
-        static let tableViewSecondaryText = "Продать:"
         
-        static let alertTitle = "Продать?"
-        static let alertMessage = ""
-        static let alertConfirmTitle = "Да"
-        static let alertRefuseTitle = "Нет"
+        
+        
+        
     }
 }
