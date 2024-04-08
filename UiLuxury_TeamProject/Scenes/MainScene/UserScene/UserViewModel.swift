@@ -159,7 +159,6 @@ final class UserViewModel: UserViewModelProtocol {
 
     func getSecondaryText(indexPath: IndexPath) -> String {
         "\(Text.tableViewSecondaryText) \(displayedItems[indexPath.section].price)"
-        
     }
     
     func getAlertTitle() -> String {
@@ -234,7 +233,7 @@ private extension UserViewModel {
 
     /// Текстовые константы
     enum Text {
-        static let creditsLabelText = "СЧЕТ: \(GlobalConstants.coin)"
+        static let creditsLabelText = "СЧЕТ: "
         static let stageTitle = "СТАДИЯ: "
         static let tableViewSecondaryText = "Продать: \(GlobalConstants.coin)"
         static let alertTitle = "Продать?"

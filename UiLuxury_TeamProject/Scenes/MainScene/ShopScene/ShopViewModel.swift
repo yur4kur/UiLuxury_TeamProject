@@ -12,13 +12,13 @@ import Foundation
 ///Притокол описывающий отображение магазина и взаимодействия юзера с ним
 protocol ShopViewModelProtocol {
     
-    ///Счет очков(денег)
+    /// Количество монет на счету пользователя
     var walletCount: String { get }
     
-    ///Колличество секций в таблице
+    ///Количество секций в таблице
     var numberOfSections: Int { get }
     
-    ///Колличество ячеек в секции
+    ///Количество ячеек в секции
     var numberOfRowsInSection: Int { get }
     
     /// Свойство оповещения об изменении количества монет на счету при покупке
@@ -36,11 +36,23 @@ protocol ShopViewModelProtocol {
     /// Метод возвращает второстепенный текст стандартной ячейки
     func getSecondaryText(indexPath: IndexPath) -> String
     
-    ///Метод покупки айтема
-    func buy(indexPath: IndexPath, completion: () -> Void)
+    /// Метод проверяет возможность покупки товара
+    func checkWallet(indexPath: IndexPath, ableCompletion: () -> Void, unableCompletion: () -> Void)
+    
+    ///Метод покупки товара
+    func buy(indexPath: IndexPath)
     
     /// Метод воспроизведения звука при покупке товара пользователем
     func playSoundBuy()
+    
+    /// Метод возвращает заголовок алерта
+    func getAlertTitle() -> String
+    
+    /// Метод возвращает сообщение алерта
+    func getAlertMessage() -> String
+    
+    /// Метод возвращает название кнопки алерта
+    func getAlertActionTitle() -> String
 }
 
 // MARK: - UserViewModel
@@ -66,8 +78,12 @@ final class ShopViewModel: ShopViewModelProtocol {
     
     // MARK: - Public properties
     
-    var walletCount: String { GlobalConstants.coin + " \(userData.user.wallet.formatted())" }
-    var numberOfSections: Int { displayedItems.count }
+    var walletCount: String {
+        "\(Constants.walletTag + userData.user.wallet.formatted())"
+    }
+    var numberOfSections: Int {
+        displayedItems.count
+    }
     var numberOfRowsInSection = 1
     var walletDidChange: ((ShopViewModelProtocol) -> Void)?
     
@@ -96,15 +112,19 @@ final class ShopViewModel: ShopViewModelProtocol {
     
     // MARK: - Public methods
     
-    func buy(indexPath: IndexPath, completion: () -> Void) {
+    func checkWallet(indexPath: IndexPath, ableCompletion: () -> Void, unableCompletion: () -> Void) {
         if userData.user.wallet >= displayedItems[indexPath.section].price {
+            ableCompletion()
+        } else {
+            unableCompletion()
+        }
+    }
+    
+    func buy(indexPath: IndexPath) {
             userData.user.wallet -= displayedItems[indexPath.section].price
             displayedItems.remove(at: indexPath.section)
             userData.user.items.append(displayedItems[indexPath.section])
             walletDidChange?(self)
-        } else {
-            completion()
-        }
     }
     
     func playSoundBuy() {
@@ -125,6 +145,18 @@ final class ShopViewModel: ShopViewModelProtocol {
     func getSecondaryText(indexPath: IndexPath) -> String {
         Constants.priceTag + " \(displayedItems[indexPath.section].price.formatted())"
     }
+    
+    func getAlertTitle() -> String {
+        Constants.alertTitle
+    }
+    
+    func getAlertMessage() -> String {
+        Constants.alertMessage
+    }
+    
+    func getAlertActionTitle() -> String {
+        Constants.alertButtonTitle
+    }
 }
 
 // MARK: - Sounds
@@ -142,6 +174,10 @@ private extension ShopViewModel {
     
     /// Текстовые элементы, используемые в коде
     enum Constants {
+        static let walletTag = "На счёте: \(GlobalConstants.coin)"
         static let priceTag = "Купить: \(GlobalConstants.coin)"
+        static let alertTitle = "Не хватает монет!"
+        static let alertMessage = "На твоем счет недостаточно монет для покупки"
+        static let alertButtonTitle = "Ok"
     }
 }

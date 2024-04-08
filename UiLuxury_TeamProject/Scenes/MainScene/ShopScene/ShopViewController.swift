@@ -18,6 +18,9 @@ final class ShopViewController: UIViewController {
     /// Лейбл с текущим счетом игрока
     private let walletLabel = UILabel()
     
+    /// Анимация изменения счета игрока при покупке товаров
+    private var animation: CAKeyframeAnimation!
+    
     /// Координатор контроллера
     private let coordinator: TabCoordinatorProtocol!
     
@@ -121,19 +124,31 @@ extension ShopViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        showBuyAlert(withTitle: Constants.buyMessage, andMessage: GlobalConstants.emptyString) { [weak self] action in
-            switch action {
-            case .confirm:
-                self?.viewModel.buy(indexPath: indexPath) {
-                    self?.showLowCoinsAlert()
-                }
-                self?.viewModel.playSoundBuy()
-                //updateUI()
-            case .refuse:
-                tableView.deselectRow(at: indexPath, animated: true)
+        viewModel.checkWallet(indexPath: indexPath) {
+            viewModel.buy(indexPath: indexPath)
+            viewModel.playSoundBuy()
+            animateWalletLabel()
+        } unableCompletion: {
+            showLowCoinsAlert()
+        }
+    }
+}
+
+// MARK: - SetupAnimatio
+
+private extension ShopViewController {
+    
+    /// Метод анимации лейбла со счетом в момент покупки товара из магазина
+    func animateWalletLabel() {
+        // Функция тряски
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: [.autoreverse,], animations: {
+            self.walletLabel.alpha = 0.0
+            self.walletLabel.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)}) { done in
+            if done {
+                self.walletLabel.alpha = 1
+                self.walletLabel.transform = CGAffineTransform.identity
             }
         }
-        
     }
 }
 
@@ -171,8 +186,31 @@ private extension ShopViewController {
             tableView,
             walletLabel
         )
-        setupTableView()
+        
+        setupAnimation()
         setupWalletLabel()
+        setupTableView()
+    }
+    
+    // MARK: Animations
+    
+    /// Метод настраивает анимацию
+    func setupAnimation() {
+        animation = CAKeyframeAnimation(keyPath: Constants.animationKeyPath)
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        animation.duration = 0.3
+        animation.values = [-10.0, 10.0, -10.0]
+    }
+    
+    // MARK: Wallet label
+    
+    /// Метод настраивает лейбл
+    func setupWalletLabel() {
+        walletLabel.text = viewModel.walletCount
+        walletLabel.textColor = .black
+        walletLabel.font = .preferredFont(forTextStyle: .body)
+        walletLabel.textAlignment = .natural
+        walletLabel.layer.add(animation, forKey: Constants.labelAnimationKey)
     }
     
     // MARK: TableView
@@ -186,16 +224,6 @@ private extension ShopViewController {
         tableView.delegate = self
         setConstraints()
     }
-    
-    // MARK: Wallet label
-    
-    /// Метод настраивает лейбл
-    func setupWalletLabel() {
-        walletLabel.text = viewModel.walletCount
-        walletLabel.textColor = .black
-        walletLabel.font = .preferredFont(forTextStyle: .body)
-        walletLabel.textAlignment = .natural
-    }
 }
 
 // MARK: - Constraints
@@ -206,15 +234,16 @@ private extension ShopViewController {
     func setConstraints() {
         NSLayoutConstraint.activate(
             [
+                
+                // MARK: Wallet label
+                walletLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20),
+                walletLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32),
+                
                 // MARK: TableView
                 tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                 tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
                 tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-                tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-                
-                // MARK: Wallet label
-                walletLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -20),
-                walletLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+                tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
             ]
         )
     }
@@ -227,36 +256,12 @@ private extension ShopViewController {
     /// Метод запускает алерт, если юзер пытается добавить в корзину больше 3 товаров
     func showLowCoinsAlert() {
         let alert = UIAlertController(
-            title: Constants.ups,
-            message: Constants.message,
+            title: viewModel.getAlertTitle(),
+            message: viewModel.getAlertMessage(),
             preferredStyle: .alert)
-        let okAktion = UIAlertAction(title: Constants.ok, style: .default)
+        let okAktion = UIAlertAction(title: viewModel.getAlertActionTitle(), style: .default)
         alert.addAction(okAktion)
         present(alert, animated: true)
-    }
-    
-    
-    /// Метод настройки алерт-контроллера
-    func showBuyAlert(withTitle title: String, andMessage message: String, _ handler: @escaping (AlertAction) -> Void) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let confirmAction = UIAlertAction(title: Constants.alertConfirmTitle, style: .default) { _ in
-            handler(.confirm)
-        }
-        let refuseAction = UIAlertAction(title: Constants.alertRefuseTitle, style: .destructive) { _ in
-            handler(.refuse)
-        }
-        
-        alert.addAction(confirmAction)
-        alert.addAction(refuseAction)
-        
-        present(alert, animated: true)
-    }
-    
-    /// Действия алерт-контроллера покупки
-    enum AlertAction {
-        case confirm
-        case refuse
     }
 }
 
@@ -268,12 +273,7 @@ private extension ShopViewController {
     enum Constants {
         static let cell = "cell"
         static let basket = "basket"
-        static let ok = "Ok"
-        static let ups = "Не хватает монет!"
-        static let message = "На твоем счет недостаточно монет для покупки"
-        static let buyMessage = "Купить?"
-        static let alertConfirmTitle = "Да"
-        static let alertRefuseTitle = "Нет"
-        
+        static let animationKeyPath = "transform.translation.x"
+        static let labelAnimationKey = "shake"
     }
 }
