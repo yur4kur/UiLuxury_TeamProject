@@ -7,8 +7,10 @@
 
 import UIKit
 
+/// Расширение для UILabel для более удобной работы
 extension UILabel {
-    
+    /// Метод настройки лейблов с заранее предустановленными значениями.
+    /// Текст берем из модели
     func setupDeveloperNameLabels(with name: String) -> UILabel {
         let nameLabel = UILabel()
         

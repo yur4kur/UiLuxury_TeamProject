@@ -17,8 +17,7 @@ struct Developer {
             "Кирилл",
             "Юра",
             "Бийбол",
-            "Эльдар",
-            "Рустам"
+            "Эльдар"
         ]
         
         /// Контакт телеграмма. 
@@ -27,8 +26,7 @@ struct Developer {
             "https://t.me/kizi_mcfly",
             "https://t.me/Radiator074",
             "https://t.me/zubi312",
-            "https://t.me/eldarovsky",
-            "https://t.me/hellofox"
+            "https://t.me/eldarovsky"
         ]
     }
 }

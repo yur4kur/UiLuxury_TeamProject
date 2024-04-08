@@ -44,7 +44,7 @@ final class UserViewController: UIViewController {
     
     /// Обязательный инициализатор сцены при переопределении родительского инициализатора
     required init?(coder: NSCoder) {
-        fatalError(GlobalConstants.fatalError)
+        fatalError("GlobalConstants.fatalError")
     }
     
     // MARK: - Lifecycle methods

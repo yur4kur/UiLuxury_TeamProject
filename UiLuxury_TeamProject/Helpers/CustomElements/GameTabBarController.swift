@@ -25,8 +25,9 @@ final class GameTabBarController: UITabBarController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError(GlobalConstants.fatalError)
+        fatalError("init(coder:) has not been implemented")
     }
+    
     
     // MARK: - Lifecycle Methods
     

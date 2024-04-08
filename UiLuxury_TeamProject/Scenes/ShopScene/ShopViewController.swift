@@ -31,7 +31,7 @@ final class ShopViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError(GlobalConstants.fatalError)
+        fatalError("GlobalConstants.fatalError")
     }
     
     // MARK: - Lifecycle methods

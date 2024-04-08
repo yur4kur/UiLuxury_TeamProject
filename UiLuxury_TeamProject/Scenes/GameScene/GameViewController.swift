@@ -64,7 +64,7 @@ final class GameViewController: UIViewController {
     }
     
     required init?(coder: NSCoder) {
-        fatalError(GlobalConstants.fatalError)
+        fatalError("GlobalConstants.fatalError")
     }
     
     // MARK: - Lifecycle methods

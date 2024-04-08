@@ -14,7 +14,6 @@
 		46C7C9DA2A7C2CC500FE5922 /* DevelopersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46C7C9D92A7C2CC500FE5922 /* DevelopersViewController.swift */; };
 		6A778A472A909F4B006D96CE /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A778A462A909F4B006D96CE /* User.swift */; };
 		6A9C13AC2BB313DC0090000C /* StartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9C13AB2BB313DC0090000C /* StartViewModel.swift */; };
-		6A9C13AE2BB32AA90090000C /* GlobalConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9C13AD2BB32AA90090000C /* GlobalConstants.swift */; };
 		6A9C13B02BB3DB5E0090000C /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9C13AF2BB3DB5E0090000C /* UserViewModel.swift */; };
 		6A9C13B22BB3DF250090000C /* ShopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9C13B12BB3DF250090000C /* ShopViewModel.swift */; };
 		6AB7F8712A7302330026E5DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AB7F8702A7302330026E5DC /* AppDelegate.swift */; };
@@ -34,7 +33,6 @@
 		E978F67F2BB444DF00D23173 /* DevelopersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E978F67E2BB444DF00D23173 /* DevelopersViewModel.swift */; };
 		E980BED62BC1ADA000A600D9 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E980BED52BC1ADA000A600D9 /* UIImageView+.swift */; };
 		E980BED82BC1AF9E00A600D9 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E980BED72BC1AF9E00A600D9 /* UILabel+.swift */; };
-		E99F36322A8EAE0300C96277 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99F36312A8EAE0300C96277 /* Protocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +43,6 @@
 		46C7C9D92A7C2CC500FE5922 /* DevelopersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopersViewController.swift; sourceTree = "<group>"; };
 		6A778A462A909F4B006D96CE /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		6A9C13AB2BB313DC0090000C /* StartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewModel.swift; sourceTree = "<group>"; };
-		6A9C13AD2BB32AA90090000C /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 		6A9C13AF2BB3DB5E0090000C /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		6A9C13B12BB3DF250090000C /* ShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewModel.swift; sourceTree = "<group>"; };
 		6AB7F86D2A7302330026E5DC /* UiLuxury_TeamProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UiLuxury_TeamProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,7 +64,6 @@
 		E978F67E2BB444DF00D23173 /* DevelopersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevelopersViewModel.swift; sourceTree = "<group>"; };
 		E980BED52BC1ADA000A600D9 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
 		E980BED72BC1AF9E00A600D9 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
-		E99F36312A8EAE0300C96277 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,7 +194,6 @@
 			children = (
 				6ADD25B22B9C52F900F3DD15 /* CustomElements */,
 				6ADD25AA2B98C03000F3DD15 /* Extension */,
-				6A9C13AD2BB32AA90090000C /* GlobalConstants.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";

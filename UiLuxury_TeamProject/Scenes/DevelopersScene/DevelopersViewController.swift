@@ -23,13 +23,19 @@ final class DevelopersViewController: UIViewController {
     /// Пейдж Контрол
     private let pageControl = UIPageControl()
     
+    /// КонтейнерВью для тени
+    private var containerViewOne = UIView()
+    private var containerViewTwo = UIView()
+    private var containerViewThree = UIView()
+    private var containerViewFour = UIView()
+    private var containerViewFive = UIView()
+    
     /// Изображение разработчика
     private var developerImageViewOne = UIImageView()
     private var developerImageViewTwo = UIImageView()
     private var developerImageViewThree = UIImageView()
     private var developerImageViewFour = UIImageView()
     private var developerImageViewFive = UIImageView()
-    private var developerImageViewSix = UIImageView()
     
     /// Кнопка перехода в Telegram
     private var telegramButtonOne = UIButton()
@@ -37,7 +43,6 @@ final class DevelopersViewController: UIViewController {
     private var telegramButtonThree = UIButton()
     private var telegramButtonFour = UIButton()
     private var telegramButtonFive = UIButton()
-    private var telegramButtonSix = UIButton()
     
     /// Лейбл с именем разработчика
     
@@ -46,7 +51,6 @@ final class DevelopersViewController: UIViewController {
     private var nameLabelThree = UILabel()
     private var nameLabelFour = UILabel()
     private var nameLabelFive = UILabel()
-    private var nameLabelSix = UILabel()
     
     /// Текущая Telegram-ссылка разработчика. Это свойство постоянно обновляется в методах
     /// setupURL и openURL. Присваивается новая юрла другого разработчика.
@@ -69,16 +73,12 @@ final class DevelopersViewController: UIViewController {
     /// Делаем из нашего изображения круг
     override func viewWillLayoutSubviews() {
         let cornerRadiusReady = developerImageViewOne.layer.frame.height / 2
-        let developerImages = [developerImageViewOne,
-                               developerImageViewTwo,
-                               developerImageViewThree,
-                               developerImageViewFour,
-                               developerImageViewFive,
-                               developerImageViewSix]
         
-        developerImages.forEach { developerImage in
-            developerImage.layer.cornerRadius = cornerRadiusReady
-        }
+        developerImageViewOne.layer.cornerRadius = cornerRadiusReady
+        developerImageViewTwo.layer.cornerRadius = cornerRadiusReady
+        developerImageViewThree.layer.cornerRadius = cornerRadiusReady
+        developerImageViewFour.layer.cornerRadius = cornerRadiusReady
+        developerImageViewFive.layer.cornerRadius = cornerRadiusReady
     }
     
     // MARK: Private Methods
@@ -97,15 +97,15 @@ final class DevelopersViewController: UIViewController {
     /// потом уже пользователь проводит этим пальцем из стороны в сторону в поисках нужного
     /// экрана.
     @objc func pageControlTapped(sender: UIPageControl) {
-           scrollView.setContentOffset(
+        scrollView.setContentOffset(
             CGPoint(
                 x: UIScreen.main.bounds.width * CGFloat(sender.currentPage),
                 y: 0
             ),
             animated: true)
-           
-           setupURL(with: sender.currentPage)
-       }
+        
+        setupURL(with: sender.currentPage)
+    }
     
     /// Тут мы изменяем ссылку на актульную
     private func setupURL(with position: Int) {
@@ -147,66 +147,55 @@ private extension DevelopersViewController {
     
     /// Устанавливаем лейблы
     func setupLabels() {
-        let developersNames = viewModel.getNames()
-        var nameLabels = [nameLabelOne,
-                          nameLabelTwo,
-                          nameLabelThree,
-                          nameLabelFour,
-                          nameLabelFive,
-                          nameLabelSix]
+        var nameLabels = [
+            nameLabelOne,
+            nameLabelTwo,
+            nameLabelThree,
+            nameLabelFour,
+            nameLabelFive
+        ]
         
-        for i in 0...viewModel.getNamesCount() - 1 {
+        for i in 0..<viewModel.getNamesCount() {
             nameLabels[i] = addLabel(position: CGFloat(i))
         }
     }
     
-    /// Устанавливаем изображения
+    /// Устанавливаем изображения + контейнер вью как тень
     func setupDeveloperImages() {
-        //TODO: - 1
-        /// Я хер его знает почему при таком способе обхявления изображения пропадает
-        /// корнер радиус. Вроде перепроверил порядок вызовов - все гуд. Нет времени - потом сделаю
-        /// или дропните нахер
-//        var developerImages = [developerImageViewOne,
-//                               developerImageViewTwo,
-//                               developerImageViewThree,
-//                               developerImageViewFour,
-//                               developerImageViewFive,
-//                               developerImageViewSix]
-//
-//        for i in 0...viewModel.getNamesCount() - 1 {
-//            let index = CGFloat(i)
-//            developerImages[i] = addDeveloperImage(imageNamed: i, position: index)
-//        }
-        
-        developerImageViewOne = addDeveloperImage(imageNamed: 0, position: 0)
-        developerImageViewTwo = addDeveloperImage(imageNamed: 1, position: 1)
-        developerImageViewThree = addDeveloperImage(imageNamed: 2, position: 2)
-        developerImageViewFour = addDeveloperImage(imageNamed: 3, position: 3)
-        developerImageViewFive = addDeveloperImage(imageNamed: 4, position: 4)
-        developerImageViewSix = addDeveloperImage(imageNamed: 5, position: 5)
+        developerImageViewOne = addDeveloperImage(
+            imageNamed: 0,
+            position: 0,
+            containerView: containerViewOne
+        )
+        developerImageViewTwo = addDeveloperImage(
+            imageNamed: 1,
+            position: 1,
+            containerView: containerViewTwo
+        )
+        developerImageViewThree = addDeveloperImage(
+            imageNamed: 2,
+            position: 2,
+            containerView: containerViewThree
+        )
+        developerImageViewFour = addDeveloperImage(
+            imageNamed: 3,
+            position: 3,
+            containerView: containerViewFour
+        )
+        developerImageViewFive = addDeveloperImage(
+            imageNamed: 4,
+            position: 4,
+            containerView: containerViewFive
+        )
     }
     
     /// Устанавливаем ссылки на телеграм для кнопок
-    func setupTelegramButtons() {
-        //TODO: - 2
-//        var telegramButtons = [telegramButtonOne,
-//                               telegramButtonTwo,
-//                               telegramButtonThree,
-//                               telegramButtonFour,
-//                               telegramButtonFive,
-//                               telegramButtonSix]
-//
-//        for i in 0...viewModel.getNamesCount() - 1 {
-//            let index = CGFloat(i)
-//            telegramButtons[i] = addTelegramButton(position: index)
-//        }
-        
+    func setupTelegramButtons() {        
         telegramButtonOne = addTelegramButton(position: 0)
         telegramButtonTwo = addTelegramButton(position: 1)
         telegramButtonThree = addTelegramButton(position: 2)
         telegramButtonFour = addTelegramButton(position: 3)
         telegramButtonFive = addTelegramButton(position: 4)
-        telegramButtonSix = addTelegramButton(position: 5)
     }
     
     ///  Настройка скролл вью
@@ -215,7 +204,7 @@ private extension DevelopersViewController {
     func setupScrollView() {
         scrollView.contentSize = CGSize(
             width: Int(UIScreen.main.bounds.width) * viewModel.getNamesCount(),
-            height: Int(1)
+            height: 1
         )
         
         scrollView.isPagingEnabled = true
@@ -229,7 +218,8 @@ private extension DevelopersViewController {
         let actualName = viewModel.getNames()[Int(position)]
         let nameLabel = UILabel().setupDeveloperNameLabels(with: actualName)
         let screenWidth: CGFloat = UIScreen.main.bounds.width
-
+        
+        scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.addSubview(nameLabel)
         
         NSLayoutConstraint.activate([
@@ -252,27 +242,45 @@ private extension DevelopersViewController {
     /// Добавляем Изображения на каждую из страниц
     /// ImageNames - это название изображения в Ассетах. Изображения под номерами 0-6
     /// Position - это по факту страница. Т.е номер страницы, на которых располагаются данные
-    func addDeveloperImage(imageNamed: Int, position: CGFloat) -> UIImageView {
+    /// ContainerView - это контейнер, который выполняет роль тени здесь. Просто добавить
+    /// тень к изображению мы не можем т.к он обрезает все лишнее
+    /// Это должен быть один метод, иначе imageView и containerView не знают друг о друге
+    /// А значит имедж не сможет стать сабвью контейнера. А это фатал еррор.
+    func addDeveloperImage(imageNamed: Int, position: CGFloat, containerView: UIView) -> UIImageView {
         let imageView = UIImageView().setupDeveloperImage(imageNamed: imageNamed)
+        let containerView = UIView()
         let screenWidth: CGFloat = UIScreen.main.bounds.width
         
-        scrollView.addSubview(imageView)
+        imageView.clipsToBounds = true
+        
+        containerView.layer.shadowColor = UIColor.black.cgColor
+        containerView.layer.shadowOpacity = 0.8
+        containerView.layer.shadowRadius = 10
+        
+        scrollView.addSubview(containerView)
+        containerView.addSubview(imageView)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(
+            containerView.centerXAnchor.constraint(
                 equalTo: scrollView.centerXAnchor,
                 constant: screenWidth * position
             ),
-            imageView.topAnchor.constraint(
+            containerView.topAnchor.constraint(
                 equalToSystemSpacingBelow: scrollView.topAnchor,
                 multiplier: 8
             ),
-            imageView.widthAnchor.constraint(
+            containerView.widthAnchor.constraint(
                 equalToConstant: screenWidth / 2.25
             ),
-            imageView.heightAnchor.constraint(
-                equalTo: imageView.widthAnchor
-            )
+            containerView.heightAnchor.constraint(
+                equalTo: containerView.widthAnchor
+            ),
+            
+            imageView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
         
         return imageView
@@ -283,7 +291,7 @@ private extension DevelopersViewController {
         let telegramDeveloperButton = UIButton()
         let telegramImage = UIImage(named: viewModel.getTelegramImage())
         let screenWidth: CGFloat = UIScreen.main.bounds.width
-
+        
         telegramDeveloperButton.setImage(telegramImage, for: .normal)
         
         scrollView.addSubview(telegramDeveloperButton)
@@ -308,14 +316,13 @@ private extension DevelopersViewController {
         
         return telegramDeveloperButton
     }
-
+    
     /// Метод добавления элементов интерфейса на главный экран и отключения масок AutoLayout
     func addSubviews() {
         view.addSubviews(
             scrollView,
             pageControl
         )
-        
         view.disableAutoresizingMask(
             scrollView,
             pageControl
@@ -324,12 +331,17 @@ private extension DevelopersViewController {
     
     /// Метод добавления действий  элементам интерфейса
     func addActions() {
-        telegramButtonOne.addTarget(self, action: #selector(openURL), for: .touchUpInside)
-        telegramButtonTwo.addTarget(self, action: #selector(openURL), for: .touchUpInside)
-        telegramButtonThree.addTarget(self, action: #selector(openURL), for: .touchUpInside)
-        telegramButtonFour.addTarget(self, action: #selector(openURL), for: .touchUpInside)
-        telegramButtonFive.addTarget(self, action: #selector(openURL), for: .touchUpInside)
-        telegramButtonSix.addTarget(self, action: #selector(openURL), for: .touchUpInside)
+        let buttons = [
+            telegramButtonOne,
+            telegramButtonTwo,
+            telegramButtonThree,
+            telegramButtonFour,
+            telegramButtonFive
+        ]
+        
+        buttons.forEach { button in
+            button.addTarget(self, action: #selector(openURL), for: .touchUpInside)
+        }
         
         pageControl.addTarget(self, action: #selector(pageControlTapped), for: .touchUpInside)
     }
@@ -354,9 +366,9 @@ private extension DevelopersViewController {
                 equalToConstant: view.frame.height - 150
             ),
             
-            pageControl.topAnchor.constraint(
-                equalTo: scrollView.bottomAnchor,
-                constant: 32
+            pageControl.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                constant: -36
             ),
             pageControl.centerXAnchor.constraint(
                 equalTo: scrollView.centerXAnchor
@@ -376,4 +388,5 @@ extension DevelopersViewController: UIScrollViewDelegate {
         
         setupURL(with: pageControl.currentPage)
     }
+    
 }
