@@ -17,6 +17,7 @@ extension UILabel {
         nameLabel.text = name
         nameLabel.textAlignment = .center
         nameLabel.font = UIFont.systemFont(ofSize: 25)
+        nameLabel.numberOfLines = 0 
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         
         return nameLabel

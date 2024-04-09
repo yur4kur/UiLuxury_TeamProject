@@ -8,7 +8,7 @@
 final class DataStore {
     static let shared = DataStore()
     
-    let user = User(name: GlobalConstants.emptyString, wallet: 20, items: [])
+    let user = User(name: GlobalConstants.emptyString, wallet: 0, items: [])
     
     let items = [
         Item(
@@ -44,33 +44,93 @@ final class DataStore {
         )
     ]
     
+    /* Для быстроты варвнивал текст в лейбле путем добавления строк в описания */
     let developers = [
         Developer(
-            name: "Михаил",
+            name: """
+            Михаил
+            
+            Роль: Идейный вдохновитель
+            
+            Разработал экран команды на основе PageControl и ScrollView
+            
+            
+            
+            
+            
+            
+            
+            """,
             contact: "https://t.me/AkiraReiTyan",
             role: "Идейный вдохновитель"
         ),
         
         Developer(
-            name: "Кирилл",
+            name: """
+            Кирилл
+            
+            Роль: Основатель команды
+            
+            Разработал экран магазина на основе TableView c применением CAKeyframeAnimation.
+            
+            
+            
+            
+            
+            
+            
+            """,
             contact: "https://t.me/kizi_mcfly",
             role: "Основатель команды и спец по магазину"
         ),
         
         Developer(
-            name: "Юрий",
+            name: """
+            Юрий
+            
+            Роль: Архитектор
+            
+            Разработал стартовый и игровой экраны c анимацией на основе UIDynamicBehavior. 
+            Внедрил в проект паттерн Координатор для навигации и передачи данных.
+            
+            
+            
+            
+            """,
             contact: "https://t.me/Radiator074",
             role: "Архитектор и спец по анимации"
         ),
         
         Developer(
-            name: "Эльдар",
+            name: """
+            Эльдар
+            
+            Роль: Ревьюер
+            
+            Разработал экран игрока c применением анимации состояний. 
+            Внедрил в проект игровую озвучку на основе AVAudioPlayer.
+            Разработал систему игровых достижений.
+            
+            
+            """,
             contact: "https://t.me/eldarovsky",
             role: "Главный ревьюер и спец по озвучке"
         ),
         
         Developer(
-            name: "Бийбол",
+            name: """
+            Бийбол
+            
+            Роль: Верстальщик
+            
+            Сверстал исходный макет приложения на основе сторибордов.
+            
+            
+            
+            
+            
+            
+            """,
             contact: "https://t.me/zubi312",
             role: "Легендарный верстальщик сторибордов"
         )

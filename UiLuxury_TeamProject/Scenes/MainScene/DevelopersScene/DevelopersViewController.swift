@@ -2,7 +2,7 @@
 //  DevelopersViewController.swift
 //  UiLuxury_TeamProject
 //
-//  Created by Eldar Abdullin on 7/3/24
+//  Created by Акира on 06.04.2024.
 //
 
 import UIKit
@@ -92,22 +92,6 @@ final class DevelopersViewController: UIViewController {
     
     // MARK: - Private Methods
     
-    //    /// Метод настройки карточки разработчика
-    //    @objc private func showDeveloperInfo() {
-    //        let selectedSegmentIndex = developerSegments.selectedSegmentIndex
-    //        guard selectedSegmentIndex < names.count else { return }
-    //        segmentIndex = selectedSegmentIndex
-    //
-    //        guard let developerImage = UIImage(named: String(segmentIndex)) else { return }
-    //        developerImageView.image = developerImage
-    //
-    //        let developerContact = contacts[segmentIndex]
-    //        currentURL = developerContact
-    //
-    //        let developerRole = roles[segmentIndex]
-    //        roleLabel.text = developerRole
-    //    }
-    
     /// Метод перехода в Telegram
     @objc private func openURL() {
         guard let url = URL(string: currentURL) else { return }
@@ -116,11 +100,11 @@ final class DevelopersViewController: UIViewController {
     
     /// Метод показывает нужную картинку в зависимости от того, какую страницу
     /// выбрал пользователь на пейдж индикаторе
-    // Важно! Пользователь не может нажать на конкретную точку на пейдж индикаторе
-    // То, что мы можем с эмулятора это сделать не означает, что на айфоне у пользователя
-    // есть в принципе физически сделать такое т.к сначала пейдж индикатор выделяется, а
-    // потом уже пользователь проводит этим пальцем из стороны в сторону в поисках нужного
-    // экрана.
+     /*Важно! Пользователь не может нажать на конкретную точку на пейдж индикаторе
+     То, что мы можем с эмулятора это сделать не означает, что на айфоне у пользователя
+     есть в принципе физически сделать такое т.к сначала пейдж индикатор выделяется, а
+     потом уже пользователь проводит этим пальцем из стороны в сторону в поисках нужного
+     экрана.*/
     @objc func pageControlTapped(sender: UIPageControl) {
         scrollView.setContentOffset(
             CGPoint(
@@ -145,10 +129,6 @@ private extension DevelopersViewController {
     
     func setupBinding() {
         viewModel = DevelopersViewModel()
-//        names = viewModel.getNames()
-//        contacts = viewModel.getContacts()
-//        currentURL = contacts[0]
-//        roles = viewModel.getRoles()
     }
 }
 
@@ -274,29 +254,22 @@ private extension DevelopersViewController {
         scrollView.addSubview(nameLabel)
         
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(
-                equalToSystemSpacingBelow: scrollView.topAnchor,
-                multiplier: 32
-            ),
-            nameLabel.leadingAnchor.constraint(
-                equalTo: scrollView.leadingAnchor,
-                constant: screenWidth * position
-            ),
-            nameLabel.widthAnchor.constraint(
-                equalToConstant: screenWidth
-            )
+            nameLabel.topAnchor.constraint(equalToSystemSpacingBelow: scrollView.topAnchor, multiplier: 32),
+            nameLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: screenWidth * position),
+            nameLabel.widthAnchor.constraint(equalToConstant: screenWidth),
+            nameLabel.heightAnchor.constraint(equalToConstant: 400)
         ])
         
         return nameLabel
     }
     
     /// Добавляем Изображения на каждую из страниц
-    // ImageNames - это название изображения в Ассетах. Изображения под номерами 0-6
-    // Position - это по факту страница. Т.е номер страницы, на которых располагаются данные
-    // ContainerView - это контейнер, который выполняет роль тени здесь. Просто добавить
-    // тень к изображению мы не можем т.к он обрезает все лишнее
-    // Это должен быть один метод, иначе imageView и containerView не знают друг о друге
-    // А значит имедж не сможет стать сабвью контейнера. А это фатал еррор.
+    /* ImageNames - это название изображения в Ассетах. Изображения под номерами 0-6
+    Position - это по факту страница. Т.е номер страницы, на которых располагаются данные
+    ContainerView - это контейнер, который выполняет роль тени здесь. Просто добавить
+    тень к изображению мы не можем т.к он обрезает все лишнее
+    Это должен быть один метод, иначе imageView и containerView не знают друг о друге
+    А значит имедж не сможет стать сабвью контейнера. А это фатал еррор.*/
     func addDeveloperImage(imageNamed: Int, position: CGFloat, containerView: UIView) -> UIImageView {
         let imageView = UIImageView().setupDeveloperImage(imageNamed: imageNamed)
         let containerView = UIView()
@@ -424,7 +397,7 @@ private extension DevelopersViewController {
 }
 
 //MARK: - ScrollViewDelegate
-// Тут мы настраиваем логику свайпа. При свайпе изменяется контент и, что главное, мы устанавливаем значение для пейджКонтрола. Плюсом, в этом же методе, мы обновляем ссылку для кнопки телеграма.  В зависимости от страницы обновляется юрл.
+/* Тут мы настраиваем логику свайпа. При свайпе изменяется контент и, что главное, мы устанавливаем значение для пейджКонтрола. Плюсом, в этом же методе, мы обновляем ссылку для кнопки телеграма.  В зависимости от страницы обновляется юрл.*/
 extension DevelopersViewController: UIScrollViewDelegate {
     
     /// Метод настройки свайпа скроллвью
