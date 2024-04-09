@@ -10,7 +10,7 @@ final class DataStore {
     
     static let shared = DataStore()
     
-    let user = User(name: GlobalConstants.emptyString, wallet: 5950, items: [])
+    let user = User(name: GlobalConstants.emptyString, wallet: 0, items: [])
     
     let items = [
         Item(
