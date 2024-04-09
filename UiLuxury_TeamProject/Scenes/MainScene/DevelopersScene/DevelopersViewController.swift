@@ -408,10 +408,10 @@ private extension DevelopersViewController {
 }
 
 //MARK: - ScrollViewDelegate
-/* Тут мы настраиваем логику свайпа. При свайпе изменяется контент и, что главное, мы устанавливаем значение для пейджКонтрола. Плюсом, в этом же методе, мы обновляем ссылку для кнопки телеграма.  В зависимости от страницы обновляется юрл.*/
+
 extension DevelopersViewController: UIScrollViewDelegate {
     
-    /// Метод настройки свайпа скроллвью
+    /// Метод настройки свайпа скроллвью. Устанавливается новое значение для PageControl и обновляется ссылка кнопки телеграма.
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         pageControl.currentPage = Int(scrollView.contentOffset.x / UIScreen.main.bounds.width)
         
