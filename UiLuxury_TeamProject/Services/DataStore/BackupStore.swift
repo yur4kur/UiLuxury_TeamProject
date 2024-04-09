@@ -8,7 +8,7 @@
 final class DataStore {
     static let shared = DataStore()
     
-    let user = User(name: GlobalConstants.emptyString, wallet: 0, items: [])
+    let user = User(name: GlobalConstants.emptyString, wallet: 20, items: [])
     
     let items = [
         Item(
@@ -20,7 +20,7 @@ final class DataStore {
         ),
         
         Item(
-            title: "Новый талант", 
+            title: "Новый талант",
             price: 3000,
             description: "3 дополнительных очка при каждом нажатии кнопки",
             modifier: 2,
