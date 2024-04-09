@@ -68,7 +68,7 @@
 		6A9C13AB2BB313DC0090000C /* StartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewModel.swift; sourceTree = "<group>"; };
 		6A9C13AD2BB32AA90090000C /* GlobalConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalConstants.swift; sourceTree = "<group>"; };
 		6A9C13AF2BB3DB5E0090000C /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
-		6A9C13B12BB3DF250090000C /* ShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopViewModel.swift; sourceTree = "<group>"; };
+		6A9C13B12BB3DF250090000C /* ShopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShopViewModel.swift; path = ../../StartScene/ShopViewModel.swift; sourceTree = "<group>"; };
 		6AB7F86D2A7302330026E5DC /* UiLuxury_TeamProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UiLuxury_TeamProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AB7F8702A7302330026E5DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6AB7F8722A7302330026E5DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };

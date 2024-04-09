@@ -249,6 +249,17 @@ private extension DevelopersViewController {
         let actualName = viewModel.getNames()[Int(position)]
         let nameLabel = UILabel().setupDeveloperNameLabels(with: actualName)
         let screenWidth: CGFloat = UIScreen.main.bounds.width
+        var height: CGFloat = 0
+        if screenWidth > 393 {
+            nameLabel.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+            height = 500
+        } else if screenWidth > 375 {
+            nameLabel.font = UIFont.preferredFont(forTextStyle: .title1)
+            height = 400
+        } else {
+            nameLabel.font = UIFont.preferredFont(forTextStyle: .title3)
+            height = 200
+        }
         
         scrollView.contentInsetAdjustmentBehavior = .never
         scrollView.addSubview(nameLabel)
@@ -257,7 +268,7 @@ private extension DevelopersViewController {
             nameLabel.topAnchor.constraint(equalToSystemSpacingBelow: scrollView.topAnchor, multiplier: 32),
             nameLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: screenWidth * position),
             nameLabel.widthAnchor.constraint(equalToConstant: screenWidth),
-            nameLabel.heightAnchor.constraint(equalToConstant: 400)
+            nameLabel.heightAnchor.constraint(equalToConstant: height)
         ])
         
         return nameLabel

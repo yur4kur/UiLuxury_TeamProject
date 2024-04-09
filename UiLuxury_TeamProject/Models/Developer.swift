@@ -13,7 +13,4 @@ struct Developer {
     
     /// Ссылка на телеграмм разработчика
     let contact: String
-    
-    /// Роль в проекте
-    let role: String
 }

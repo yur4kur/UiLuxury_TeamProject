@@ -53,16 +53,9 @@ final class DataStore {
             Роль: Идейный вдохновитель
             
             Разработал экран команды на основе PageControl и ScrollView
-            
-            
-            
-            
-            
-            
-            
+
             """,
-            contact: "https://t.me/AkiraReiTyan",
-            role: "Идейный вдохновитель"
+            contact: "https://t.me/AkiraReiTyan"
         ),
         
         Developer(
@@ -71,17 +64,10 @@ final class DataStore {
             
             Роль: Основатель команды
             
-            Разработал экран магазина на основе TableView c применением CAKeyframeAnimation.
-            
-            
-            
-            
-            
-            
+            Разработал экран магазина на основе TableView c применением CAKeyframeAnimation
             
             """,
-            contact: "https://t.me/kizi_mcfly",
-            role: "Основатель команды и спец по магазину"
+            contact: "https://t.me/kizi_mcfly"
         ),
         
         Developer(
@@ -90,15 +76,9 @@ final class DataStore {
             
             Роль: Архитектор
             
-            Разработал стартовый и игровой экраны c анимацией на основе UIDynamicBehavior. 
-            Внедрил в проект паттерн Координатор для навигации и передачи данных.
-            
-            
-            
-            
+            Разработал стартовый и игровой экраны с динамической анимацией объектов. Внедрил в проект паттерн Координатор
             """,
-            contact: "https://t.me/Radiator074",
-            role: "Архитектор и спец по анимации"
+            contact: "https://t.me/Radiator074"
         ),
         
         Developer(
@@ -107,14 +87,9 @@ final class DataStore {
             
             Роль: Ревьюер
             
-            Разработал экран игрока c применением анимации состояний. 
-            Внедрил в проект игровую озвучку на основе AVAudioPlayer.
-            Разработал систему игровых достижений.
-            
-            
+            Разработал экран игрока. Внедрил в проект игровую озвучку на основе AVAudioPlayer и тактильный отклик игровой кнопки
             """,
-            contact: "https://t.me/eldarovsky",
-            role: "Главный ревьюер и спец по озвучке"
+            contact: "https://t.me/eldarovsky"
         ),
         
         Developer(
@@ -123,16 +98,10 @@ final class DataStore {
             
             Роль: Верстальщик
             
-            Сверстал исходный макет приложения на основе сторибордов.
-            
-            
-            
-            
-            
+            Сверстал исходный макет приложения на основе сторибордов
             
             """,
-            contact: "https://t.me/zubi312",
-            role: "Легендарный верстальщик сторибордов"
+            contact: "https://t.me/zubi312"
         )
     ]
     
