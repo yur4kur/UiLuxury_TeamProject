@@ -5,7 +5,9 @@
 //  Created by Юрий Куринной on 27.07.2023.
 //
 
+/// Хранилище моковых данных
 final class DataStore {
+    
     static let shared = DataStore()
     
     let user = User(name: GlobalConstants.emptyString, wallet: 0, items: [])
@@ -44,7 +46,6 @@ final class DataStore {
         )
     ]
     
-    /* Для быстроты варвнивал текст в лейбле путем добавления строк в описания */
     let developers = [
         Developer(
             name: """
