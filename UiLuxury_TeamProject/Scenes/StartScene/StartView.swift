@@ -20,7 +20,10 @@ final class StartView: UIView {
     
     /// Кнопка, переводящая на игровой экран
     let startButton = UIButton()
-    
+
+    /// UIImageView для фонового изображения
+    private let backgroundImageView = UIImageView()
+
     // MARK: - Initializer
     
     override init(frame: CGRect) {
@@ -54,8 +57,8 @@ private extension StartView {
     
     /// Метод настраивает основное вью и запускает методы настройки сабвьюх
     func setupViews() {
-        addQuadroGradientLayer()
-        
+        setupBackgroundImageView()
+
         disableAutoresizingMask(
         greetingLabel,
         startButton
@@ -81,7 +84,7 @@ private extension StartView {
     func setupGreetingLabel() {
         greetingLabel.text = Constants.greetingText
         greetingLabel.font = UIFont(name: Constants.gameFont, size: 30)
-        greetingLabel.textColor = .white
+        greetingLabel.textColor = .darkGray
         greetingLabel.textAlignment = .center
         greetingLabel.numberOfLines = 5
     }
@@ -100,6 +103,16 @@ private extension StartView {
         startButton.layer.cornerRadius = 10
         startButton.layer.borderWidth = 1
         startButton.layer.borderColor = UIColor.darkGray.cgColor
+    }
+
+    /// Метод настраивает фон
+    func setupBackgroundImageView() {
+        backgroundImageView.image = UIImage(named: "backgroundImage")
+        backgroundImageView.contentMode = .scaleAspectFill
+        backgroundImageView.clipsToBounds = true
+        backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(backgroundImageView)
+        sendSubviewToBack(backgroundImageView)
     }
 }
 
@@ -124,8 +137,13 @@ private extension StartView {
             startButton.bottomAnchor.constraint(
                 greaterThanOrEqualTo: safeAreaLayoutGuide.bottomAnchor,
                 constant: -80
-            )
-                
+            ),
+
+            // MARK: Background ImageView
+            backgroundImageView.topAnchor.constraint(equalTo: topAnchor),
+            backgroundImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            backgroundImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            backgroundImageView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 }
@@ -141,5 +159,3 @@ private extension StartView {
         static let gameFont = "AvenirNext-DemiBold"
     }
 }
-
-
