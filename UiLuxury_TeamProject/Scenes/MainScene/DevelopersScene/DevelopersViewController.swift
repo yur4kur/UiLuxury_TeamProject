@@ -50,7 +50,7 @@ final class DevelopersViewController: UIViewController {
     private var nameLabelFive = UILabel()
     
     /// Текущая Telegram-ссылка разработчика
-    private var currentURL: String!  //DevelopersInfo.contacts[0]
+    private var currentURL: String!
     
     /// Координатор контроллера
     private let coordinator: TabCoordinatorProtocol!
@@ -229,8 +229,8 @@ private extension DevelopersViewController {
     // MARK: Scroll View
     
     ///  Настройка скролл вью
-    //  В контент сайзе мы указываем высоту как 1 для того, чтобы отключить вертикальный скролл
-    //  И мы пользовались только свайпами вправо-влево
+    ///  В контент сайзе мы указываем высоту как 1 для того, чтобы отключить вертикальный скролл
+    ///  и мы пользовались только свайпами вправо-влево
     func setupScrollView() {
         scrollView.contentSize = CGSize(
             width: Int(UIScreen.main.bounds.width) * viewModel.getTeamCount(),
