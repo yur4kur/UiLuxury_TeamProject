@@ -14,7 +14,10 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: - Public properties
     
     var window: UIWindow?
-    let navigationController = UINavigationController()
+    
+    // MARK: - Private properties
+    
+    private let navigationController = UINavigationController()
     
     
     // MARK: - Public methods

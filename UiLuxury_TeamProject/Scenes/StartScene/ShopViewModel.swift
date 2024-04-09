@@ -9,16 +9,16 @@ import Foundation
 
 // MARK: - ShopViewModelProtocol
 
-///Притокол, описывающий отображение магазина и взаимодействия юзера с ним
+///Протокол, описывающий отображение магазина и взаимодействия юзера с ним
 protocol ShopViewModelProtocol {
     
     /// Количество монет на счету пользователя
     var walletCount: String { get }
     
-    ///Количество секций в таблице
+    /// Количество секций в таблице
     var numberOfSections: Int { get }
     
-    ///Количество ячеек в секции
+    /// Количество ячеек в секции
     var numberOfRowsInSection: Int { get }
     
     /// Свойство оповещения об изменении количества монет на счету при покупке
@@ -27,7 +27,7 @@ protocol ShopViewModelProtocol {
     /// Инициализация данных пользователя из стартовой вью-модели
     init(userData: UserDataTransferProtocol)
     
-    ///Метод отображения названия секции
+    /// Метод отображения названия секции
     func getTitleHeader(section: Int) -> String
     
     /// Метод возвращает основной текст стандартной ячейки
@@ -39,7 +39,7 @@ protocol ShopViewModelProtocol {
     /// Метод проверяет возможность покупки товара
     func checkWallet(indexPath: IndexPath, ableCompletion: () -> Void, unableCompletion: () -> Void)
     
-    ///Метод покупки товара
+    /// Метод покупки товара
     func buy(indexPath: IndexPath)
     
     /// Метод воспроизведения звука при покупке товара пользователем
@@ -57,7 +57,7 @@ protocol ShopViewModelProtocol {
 
 // MARK: - UserViewModel
 
-///Класс  ВьюМодели для магазина
+/// Класс ВьюМодели для магазина
 final class ShopViewModel: ShopViewModelProtocol {
     
     // MARK: - Private properties
@@ -66,7 +66,9 @@ final class ShopViewModel: ShopViewModelProtocol {
     private let soundManager = SoundManager.shared
     
     /// Набор товаров из хранилища (пока моковый DataStore)
-    private var shopItems: [Item] { DataStore.shared.items }
+    private var shopItems: [Item] {
+        DataStore.shared.items
+    }
     
     /// Отображаемые в магазине товары
     private var displayedItems: [Item] {

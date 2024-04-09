@@ -62,30 +62,30 @@ final class MainTabBarController: UITabBarController {
         navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
-    /// Метода настраивает иконки и названия элементов ТабБара с привязкой к контроллерам
+    /// Метод настраивает иконки и названия элементов ТабБара с привязкой к контроллерам
     private func setUpTabs() {
         let gameVC = createNavigationController(
             title: Constants.gameTabName,
             image: UIImage(systemName: Constants.gameTabIcon),
-            rootViewController: coordinator.tabControllers["gameVC"] ?? UIViewController()
+            rootViewController: coordinator.tabControllers[Constants.gameKey] ?? UIViewController()
         )
         
         let shopVC = createNavigationController(
             title: Constants.shopTabName,
             image: UIImage(systemName: Constants.shopTabIcon),
-            rootViewController: coordinator.tabControllers["shopVC"] ?? UIViewController()
+            rootViewController: coordinator.tabControllers[Constants.shopKey] ?? UIViewController()
         )
         
         let userVC = createNavigationController(
             title: Constants.userTabName,
             image: UIImage(systemName: Constants.userTabIcon),
-            rootViewController: coordinator.tabControllers["userVC"] ?? UIViewController()
+            rootViewController: coordinator.tabControllers[Constants.userKey] ?? UIViewController()
         )
         
         let teamVC = createNavigationController(
             title: Constants.teamTabName,
             image: UIImage(systemName: Constants.teamTabIcon),
-            rootViewController: coordinator.tabControllers["teamVC"] ?? UIViewController()
+            rootViewController: coordinator.tabControllers[Constants.teamKey] ?? UIViewController()
         )
         
         setViewControllers([gameVC, shopVC, userVC, teamVC], animated: true)
@@ -124,11 +124,18 @@ private extension MainTabBarController {
     enum Constants {
         static let gameTabName = "Игра"
         static let gameTabIcon = "cursorarrow.click.2"
+        static let gameKey = "gameVC"
+        
         static let shopTabName = "Магазин"
         static let shopTabIcon = "cart.fill"
+        static let shopKey = "shopVC"
+        
         static let userTabName = "Игрок"
         static let userTabIcon = "person.circle.fill"
+        static let userKey = "userVC"
+        
         static let teamTabName = "Команда"
         static let teamTabIcon = "person.2.badge.gearshape.fill"
+        static let teamKey = "teamVC"
     }
 }

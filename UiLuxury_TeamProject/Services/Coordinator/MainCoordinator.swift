@@ -48,7 +48,8 @@ final class MainCoordinator: MainCoordinatorProtocol {
         navigationController.pushViewController(gameTabBarVC, animated: true)
     }
     
-    /// Метод создает дочерние координаторы, которые стартуют контроллеры таббара. Так происходите заполнение таббара дочерними контроллерами
+    /// Метод создает дочерние координаторы, которые стартуют контроллеры таббара. 
+    /// Так происходите заполнение таббара дочерними контроллерами.
     private func startTabControllers() {
         
         let gameChild = GameCoordinator(userData: userData,

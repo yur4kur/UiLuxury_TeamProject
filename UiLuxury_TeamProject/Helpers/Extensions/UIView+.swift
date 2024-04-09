@@ -17,7 +17,6 @@ extension UIView {
     ///  Метод отключает маски у всех вьюх
     func disableAutoresizingMask(_ views: UIView...) {
         views.forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
-        
     }
 
     /// Метод добавляет вертикальный градиент с неизменяемыми цветами
@@ -35,6 +34,5 @@ extension UIView {
         gradient.endPoint = CGPoint(x: 0, y: 1)
         layer.insertSublayer(gradient, at: 0)
     }
-
 }
 
