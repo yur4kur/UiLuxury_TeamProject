@@ -45,11 +45,35 @@ final class DataStore {
     ]
     
     let developers = [
-        Developer(name: "Миша", contact: "https://t.me/AkiraReiTyan", role: "Идейный вдохновитель"),
-        Developer(name: "Кирилл", contact: "https://t.me/kizi_mcfly", role: "Основатель команды и спец по магазину"),
-        Developer(name: "Юра", contact: "https://t.me/Radiator074", role: "Архитектор и спец по анимации"),
-        Developer(name: "Эльдар", contact: "https://t.me/eldarovsky", role: "Главный ревьюер и спец по озвучке"),
-        Developer(name: "Бийбол", contact: "https://t.me/zubi312", role: "Легендарный верстальщик сторибордов")
+        Developer(
+            name: "Михаил",
+            contact: "https://t.me/AkiraReiTyan",
+            role: "Идейный вдохновитель"
+        ),
+        
+        Developer(
+            name: "Кирилл",
+            contact: "https://t.me/kizi_mcfly",
+            role: "Основатель команды и спец по магазину"
+        ),
+        
+        Developer(
+            name: "Юрий",
+            contact: "https://t.me/Radiator074",
+            role: "Архитектор и спец по анимации"
+        ),
+        
+        Developer(
+            name: "Эльдар",
+            contact: "https://t.me/eldarovsky",
+            role: "Главный ревьюер и спец по озвучке"
+        ),
+        
+        Developer(
+            name: "Бийбол",
+            contact: "https://t.me/zubi312",
+            role: "Легендарный верстальщик сторибордов"
+        )
     ]
     
     private init () {}

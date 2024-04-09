@@ -52,15 +52,6 @@ final class DevelopersViewController: UIViewController {
     /// Текущая Telegram-ссылка разработчика
     private var currentURL: String!  //DevelopersInfo.contacts[0]
     
-    /// Массив с именами разработчиков
-    //private var names: [String]!
-    
-    /// Массив ссылок на телеграмм разработчиков
-    //private var contacts: [String]!
-    
-    /// Массив ролей разработчиков
-    //private var roles: [String]!
-    
     /// Координатор контроллера
     private let coordinator: TabCoordinatorProtocol!
     
@@ -168,11 +159,6 @@ private extension DevelopersViewController {
     /// Метод настройки пользовательского интерфейса
     func setupUI() {
         setupView()
-        // TODO: попробовать перенести в setupView
-        setupScrollView()
-        //        setupDeveloperImageView()
-        //        setupTelegramButton()
-        //        setupRoleLabel()
         
         addSubviews()
         setConstraints()
@@ -193,6 +179,7 @@ private extension DevelopersViewController {
         setupLabels()
         setupDeveloperImages()
         setupTelegramButtons()
+        setupScrollView()
     }
 
     // MARK: Page control
@@ -424,7 +411,7 @@ private extension DevelopersViewController {
         NSLayoutConstraint.activate([
             
             // MARK: ScrollView
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.heightAnchor.constraint(equalToConstant: view.frame.height - 150),
@@ -449,7 +436,7 @@ extension DevelopersViewController: UIScrollViewDelegate {
 }
 
 // MARK: - Constants
-// TODO: проверить необходимость
+
 private extension DevelopersViewController {
 
     /// Изображения
