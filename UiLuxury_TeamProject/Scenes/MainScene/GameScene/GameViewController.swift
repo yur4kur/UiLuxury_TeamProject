@@ -54,7 +54,7 @@ final class GameViewController: UIViewController {
     }
     
     /// Координатор контроллера
-    private let coordinator: TabCoordinatorProtocol!
+    private weak var coordinator: TabCoordinatorProtocol!
     
     // MARK: - Initializers
     
@@ -183,7 +183,7 @@ private extension GameViewController {
         clickButton.addTarget(
             self,
             action: #selector(clickButtonTapped),
-            for: .touchUpInside
+            for: .touchDown
         )
     }
 }

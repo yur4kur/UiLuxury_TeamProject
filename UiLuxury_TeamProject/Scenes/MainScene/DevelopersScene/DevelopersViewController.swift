@@ -53,7 +53,7 @@ final class DevelopersViewController: UIViewController {
     private var currentURL: String!
     
     /// Координатор контроллера
-    private let coordinator: TabCoordinatorProtocol!
+    private weak var coordinator: TabCoordinatorProtocol!
     
     /// Вью-модель контроллера
     private var viewModel: DevelopersViewModelProtocol!
@@ -102,11 +102,6 @@ final class DevelopersViewController: UIViewController {
     
     /// Метод показывает нужную картинку в зависимости от того, какую страницу
     /// выбрал пользователь на пейдж индикаторе
-     /*Важно! Пользователь не может нажать на конкретную точку на пейдж индикаторе
-     То, что мы можем с эмулятора это сделать не означает, что на айфоне у пользователя
-     есть в принципе физически сделать такое т.к сначала пейдж индикатор выделяется, а
-     потом уже пользователь проводит этим пальцем из стороны в сторону в поисках нужного
-     экрана.*/
     @objc func pageControlTapped(sender: UIPageControl) {
         scrollView.setContentOffset(
             CGPoint(
@@ -118,7 +113,7 @@ final class DevelopersViewController: UIViewController {
         setupURL(with: sender.currentPage)
     }
     
-    /// Тут мы изменяем ссылку на актульную
+    /// Тут мы изменяем ссылку на актуальную
     private func setupURL(with position: Int) {
         currentURL = viewModel.getContacts()[position]
     }

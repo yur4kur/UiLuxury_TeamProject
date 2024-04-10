@@ -22,7 +22,7 @@ final class ShopViewController: UIViewController {
     private var animation: CAKeyframeAnimation!
     
     /// Координатор контроллера
-    private let coordinator: TabCoordinatorProtocol!
+    private weak var coordinator: TabCoordinatorProtocol!
     
     /// Экземпляр вью модели
     private var viewModel: ShopViewModelProtocol! {

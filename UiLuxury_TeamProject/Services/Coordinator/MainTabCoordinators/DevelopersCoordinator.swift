@@ -32,6 +32,6 @@ final class DevelopersCoordinator: TabCoordinatorProtocol {
     // MARK: Public methods
     func start()  {
         let teamVC = DevelopersViewController(coordinator: self)
-        parentCoodinator?.tabControllers["teamVC"] = teamVC
+        parentCoodinator?.tabControllers[GlobalConstants.teamKey] = teamVC
     }
 }

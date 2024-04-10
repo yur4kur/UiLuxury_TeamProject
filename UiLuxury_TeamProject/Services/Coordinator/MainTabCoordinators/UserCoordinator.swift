@@ -32,6 +32,6 @@ final class UserCoordinator: TabCoordinatorProtocol {
     // MARK: Public methods
     func start()  {
         let userVC = UserViewController(coordinator: self)
-        parentCoodinator?.tabControllers["userVC"] = userVC
+        parentCoodinator?.tabControllers[GlobalConstants.userKey] = userVC
     }
 }

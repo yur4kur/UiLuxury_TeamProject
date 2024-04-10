@@ -12,4 +12,9 @@ enum GlobalConstants {
     static let fatalError = "init(coder:) has not been implemented"
     static let emptyString = ""
     static let coin = "$"
+   
+    static let gameKey = "gameVC"
+    static let shopKey = "shopVC"
+    static let userKey = "userVC"
+    static let teamKey = "teamVC"
 }

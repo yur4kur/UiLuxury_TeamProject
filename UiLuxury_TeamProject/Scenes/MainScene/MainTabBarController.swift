@@ -13,7 +13,7 @@ import UIKit
 final class MainTabBarController: UITabBarController {
     
     // MARK: Private properties
-    private let coordinator: MainCoordinatorProtocol
+    private weak var coordinator: MainCoordinatorProtocol?
     
     // MARK: Initializers
     init(coordinator: MainCoordinatorProtocol) {
@@ -40,7 +40,7 @@ final class MainTabBarController: UITabBarController {
                                             image: UIImage?,
                                             rootViewController: UIViewController) -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: rootViewController)
-        coordinator.navigationController.navigationBar.isHidden = true
+        coordinator?.navigationController.navigationBar.isHidden = true
         navigationController.tabBarItem.title = title
         navigationController.tabBarItem.image = image
         
@@ -67,25 +67,25 @@ final class MainTabBarController: UITabBarController {
         let gameVC = createNavigationController(
             title: Constants.gameTabName,
             image: UIImage(systemName: Constants.gameTabIcon),
-            rootViewController: coordinator.tabControllers[Constants.gameKey] ?? UIViewController()
+            rootViewController: coordinator?.tabControllers[GlobalConstants.gameKey] ?? UIViewController()
         )
         
         let shopVC = createNavigationController(
             title: Constants.shopTabName,
             image: UIImage(systemName: Constants.shopTabIcon),
-            rootViewController: coordinator.tabControllers[Constants.shopKey] ?? UIViewController()
+            rootViewController: coordinator?.tabControllers[GlobalConstants.shopKey] ?? UIViewController()
         )
         
         let userVC = createNavigationController(
             title: Constants.userTabName,
             image: UIImage(systemName: Constants.userTabIcon),
-            rootViewController: coordinator.tabControllers[Constants.userKey] ?? UIViewController()
+            rootViewController: coordinator?.tabControllers[GlobalConstants.userKey] ?? UIViewController()
         )
         
         let teamVC = createNavigationController(
             title: Constants.teamTabName,
             image: UIImage(systemName: Constants.teamTabIcon),
-            rootViewController: coordinator.tabControllers[Constants.teamKey] ?? UIViewController()
+            rootViewController: coordinator?.tabControllers[GlobalConstants.teamKey] ?? UIViewController()
         )
         
         setViewControllers([gameVC, shopVC, userVC, teamVC], animated: true)
@@ -124,18 +124,14 @@ private extension MainTabBarController {
     enum Constants {
         static let gameTabName = "Игра"
         static let gameTabIcon = "cursorarrow.click.2"
-        static let gameKey = "gameVC"
         
         static let shopTabName = "Магазин"
         static let shopTabIcon = "cart.fill"
-        static let shopKey = "shopVC"
         
         static let userTabName = "Игрок"
         static let userTabIcon = "person.circle.fill"
-        static let userKey = "userVC"
         
         static let teamTabName = "Команда"
         static let teamTabIcon = "person.2.badge.gearshape.fill"
-        static let teamKey = "teamVC"
     }
 }
