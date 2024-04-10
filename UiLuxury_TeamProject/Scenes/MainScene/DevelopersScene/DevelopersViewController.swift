@@ -77,6 +77,8 @@ final class DevelopersViewController: UIViewController {
         setupBinding()
         setupUI()
         addActions()
+
+        setupURL(with: 0)
     }
     
     /// Делаем из нашего изображения круг
@@ -382,7 +384,7 @@ private extension DevelopersViewController {
             button.addTarget(self, action: #selector(openURL), for: .touchUpInside)
         }
         
-        pageControl.addTarget(self, action: #selector(pageControlTapped), for: .touchUpInside)
+        pageControl.addTarget(self, action: #selector(pageControlTapped), for: .valueChanged)
     }
 }
 
