@@ -2,8 +2,8 @@
 # CoinsRain
 Игра типа «кликер», ставящая целью прокачку игрока через зарабатывание монет путем нажатия на кнопку и покупки модификаторов к этой кнопке. Приложение выполнено на архитектуре МВВМ с использованием паттерна Координатор и кастомных расширений UI-элементов. На текущий момент в приложении намеренно использованы только нативные элементы. Выпущена в релиз альфа-версия проекта.
 
-![1 (1)](https://github.com/yur4kur/UiLuxury_TeamProject/assets/105720427/16c0663d-1f1a-4888-9974-5f691c5c17ee)
-![2 (1)](https://github.com/yur4kur/UiLuxury_TeamProject/assets/105720427/5312ce65-5b17-4d9a-8ff2-8fdee696321b)
+![1](https://github.com/yur4kur/UiLuxury_TeamProject/assets/60284515/9c518b97-361e-4ced-a3e1-e36dda1224d8)
+![2](https://github.com/yur4kur/UiLuxury_TeamProject/assets/60284515/ba3f5a68-e3ad-4b30-9e0f-6616d10493ca)
 
 ## Технологии
 <details>
