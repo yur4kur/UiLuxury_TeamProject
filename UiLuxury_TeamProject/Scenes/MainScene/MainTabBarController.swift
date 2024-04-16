@@ -40,7 +40,6 @@ final class MainTabBarController: UITabBarController {
                                             image: UIImage?,
                                             rootViewController: UIViewController) -> UINavigationController {
         let navigationController = UINavigationController(rootViewController: rootViewController)
-        coordinator?.navigationController.navigationBar.isHidden = true
         navigationController.tabBarItem.title = title
         navigationController.tabBarItem.image = image
         
