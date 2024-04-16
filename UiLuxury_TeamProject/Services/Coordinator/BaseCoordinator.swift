@@ -13,7 +13,7 @@ import UIKit
 protocol BaseCoordinatorProtocol {
     
     /// Переход на игровые сцены
-    func moveToGame(receivedData: UserDataTransferProtocol)
+    func moveToGame(dataManager: DataManagerProtocol)
 }
 
 // MARK: - BaseCoordinator
@@ -24,6 +24,7 @@ final class BaseCoordinator: CoordinatorProtocol {
     // MARK: Public properties
     var childCoordinators: [CoordinatorProtocol]? = []
     var navigationController: UINavigationController
+    var dataManager = DataManager()
 
     // MARK: Initializers
     init(navigationController: UINavigationController) {
@@ -40,8 +41,8 @@ final class BaseCoordinator: CoordinatorProtocol {
 extension BaseCoordinator: BaseCoordinatorProtocol {
     
     /// Переход на основную сцену
-    func moveToGame(receivedData: UserDataTransferProtocol) {
-        let child = MainCoordinator(navigationController: navigationController, userData: receivedData)
+    func moveToGame(dataManager: DataManagerProtocol) {
+        let child = MainCoordinator(navigationController: navigationController, dataManager: dataManager)
         childCoordinators?.append(child)
         child.parentCoodinator = self
         child.start()

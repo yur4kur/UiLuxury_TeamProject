@@ -13,18 +13,18 @@ import UIKit
 final class UserCoordinator: TabCoordinatorProtocol {
     
     // MARK: Public properties
-    var userData: UserDataTransferProtocol
+    var dataManager : DataManagerProtocol
     weak var parentCoodinator: MainCoordinatorProtocol?
     var childCoordinators: [CoordinatorProtocol]?
     var navigationController: UINavigationController
     
     // MARK: Initializers
     init(
-        userData: UserDataTransferProtocol,
+        dataManager : DataManagerProtocol,
         parentCoodinator: MainCoordinatorProtocol,
         navigationController: UINavigationController
     ) {
-        self.userData = userData
+        self.dataManager = dataManager
         self.parentCoodinator = parentCoodinator
         self.navigationController = navigationController
     }
@@ -35,3 +35,6 @@ final class UserCoordinator: TabCoordinatorProtocol {
         parentCoodinator?.tabControllers[GlobalConstants.userKey] = userVC
     }
 }
+// MARK: - GameDataTransferProtocol
+
+extension UserCoordinator: GameDataTransferProtocol {}

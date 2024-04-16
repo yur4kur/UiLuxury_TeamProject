@@ -12,9 +12,6 @@ import UIKit
 /// Протокол координатора таббара основной сцены
 protocol MainCoordinatorProtocol: CoordinatorProtocol {
     
-    /// Данные пользователя из стартовой вью-модели
-    var userData: UserDataTransferProtocol { get set }
-    
     /// Экземпляр родительского координатора
     var parentCoodinator: CoordinatorProtocol? { get }
     
@@ -28,7 +25,7 @@ protocol MainCoordinatorProtocol: CoordinatorProtocol {
 final class MainCoordinator: MainCoordinatorProtocol {
     
     // MARK: Public properties
-    var userData: UserDataTransferProtocol
+    var dataManager: DataManagerProtocol
     var childCoordinators: [CoordinatorProtocol]? = []
     var tabControllers: [String: UIViewController] = [:]
     var navigationController: UINavigationController
@@ -36,9 +33,9 @@ final class MainCoordinator: MainCoordinatorProtocol {
     
     
     // MARK: Initializers
-    init(navigationController: UINavigationController, userData: UserDataTransferProtocol) {
+    init(navigationController: UINavigationController, dataManager: DataManagerProtocol) {
         self.navigationController = navigationController
-        self.userData = userData
+        self.dataManager = dataManager
     }
     
     // MARK: Public methods
@@ -48,36 +45,40 @@ final class MainCoordinator: MainCoordinatorProtocol {
         navigationController.pushViewController(gameTabBarVC, animated: true)
     }
     
-    /// Метод создает дочерние координаторы, которые стартуют контроллеры таббара. 
+    /// Метод создает дочерние координаторы, которые стартуют контроллеры таббара.
     /// Так происходите заполнение таббара дочерними контроллерами.
     private func startTabControllers() {
         
-        let gameChild = GameCoordinator(userData: userData,
+        let gameChild = GameCoordinator(dataManager: dataManager,
                                         parentCoodinator: self,
                                         navigationController: navigationController)
         childCoordinators?.append(gameChild)
         gameChild.parentCoodinator = self
         gameChild.start()
         
-        let shopChild = ShopCoordinator(userData: userData,
+        let shopChild = ShopCoordinator(dataManager: dataManager,
                                         parentCoodinator: self,
                                         navigationController: navigationController)
         childCoordinators?.append(shopChild)
         shopChild.parentCoodinator = self
         shopChild.start()
         
-        let userChild = UserCoordinator(userData: userData,
+        let userChild = UserCoordinator(dataManager: dataManager,
                                         parentCoodinator: self,
                                         navigationController: navigationController)
         childCoordinators?.append(userChild)
         userChild.parentCoodinator = self
         userChild.start()
         
-        let devsChild = DevelopersCoordinator(userData: userData,
-                                        parentCoodinator: self,
-                                        navigationController: navigationController)
+        let devsChild = DevelopersCoordinator(dataManager: dataManager,
+                                              parentCoodinator: self,
+                                              navigationController: navigationController)
         childCoordinators?.append(devsChild)
         devsChild.parentCoodinator = self
         devsChild.start()
     }
 }
+
+// MARK: - GameDataTransferProtocol
+
+extension MainCoordinator: GameDataTransferProtocol {}

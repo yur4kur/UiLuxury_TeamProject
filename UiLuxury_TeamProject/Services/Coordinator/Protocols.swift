@@ -27,12 +27,14 @@ protocol CoordinatorProtocol: AnyObject {
 /// Протокол координаторов контроллеров таббара
 protocol TabCoordinatorProtocol: CoordinatorProtocol {
     
-    /// Данные пользователя из стартовой вью-модели
-    var userData: UserDataTransferProtocol { get set }
-    
     /// Экземпляр родительского координатора
     var parentCoodinator: MainCoordinatorProtocol? { get }
 }
 
+// MARK: - GameDataTransferProtocol
 
+/// Протокол передачи данных, необходимых для игры
+protocol GameDataTransferProtocol {
+    var dataManager: DataManagerProtocol { get set }
+}
 
