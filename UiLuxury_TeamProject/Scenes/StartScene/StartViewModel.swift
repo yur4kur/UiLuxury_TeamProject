@@ -15,11 +15,11 @@ protocol StartViewModelProtocol: UserDataTransferProtocol {}
 /// Базовая вью-модель с данными о пользователе
 final class StartViewModel: StartViewModelProtocol {
     
-    // MARK: Private properties
+    // MARK: - Private properties
     /// Инициализация пользователя (из БД или с бэка), пока через моковые данные
     private var uploadedUser = DataStore.shared.user
     
-    // MARK: Public properties
+    // MARK: - Public properties
     var user: User {
         get {
             uploadedUser
