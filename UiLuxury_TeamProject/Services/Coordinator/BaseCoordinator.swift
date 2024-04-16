@@ -10,7 +10,7 @@ import UIKit
 // MARK: - BaseCoordinatorProtocol
 
 /// Протокол главного координатора
-protocol BaseCoordinatorProtocol: CoordinatorProtocol {
+protocol BaseCoordinatorProtocol {
     
     /// Переход на игровые сцены
     func moveToGame(receivedData: UserDataTransferProtocol)
@@ -19,7 +19,7 @@ protocol BaseCoordinatorProtocol: CoordinatorProtocol {
 // MARK: - BaseCoordinator
 
 /// Основной координатор, через который происходит запуск приложения
-final class BaseCoordinator: BaseCoordinatorProtocol {
+final class BaseCoordinator: CoordinatorProtocol {
     
     // MARK: Public properties
     var childCoordinators: [CoordinatorProtocol]? = []
@@ -35,6 +35,9 @@ final class BaseCoordinator: BaseCoordinatorProtocol {
         let startVC = StartViewController(coordinator: self)
         navigationController.pushViewController(startVC, animated: false)
     }
+}
+
+extension BaseCoordinator: BaseCoordinatorProtocol {
     
     /// Переход на основную сцену
     func moveToGame(receivedData: UserDataTransferProtocol) {
