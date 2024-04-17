@@ -5,13 +5,6 @@
 //  Created by Юрий Куринной on 19.08.2023.
 //
 
-/// Протокол передачи данных модели пользователя
-protocol UserDataTransferProtocol {
-    
-    /// Экземпляр модели пользователя
-    var user: User { get set }
-}
-
 /// Модель пользователя
 struct User {
     

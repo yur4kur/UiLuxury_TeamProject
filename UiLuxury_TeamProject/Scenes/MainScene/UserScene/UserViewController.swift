@@ -27,14 +27,14 @@ final class UserViewController: UIViewController {
     private let userItemsTableView = UITableView()
 
     /// Координатор контроллера
-    private weak var coordinator: TabCoordinatorProtocol!
+    private var coordinator: GameDataTransferProtocol!
 
     /// Экземпляр вью модели
     private var viewModel: UserViewModelProtocol!
 
     // MARK: - Initializers
     
-    init(coordinator: TabCoordinatorProtocol) {
+    init(coordinator: GameDataTransferProtocol) {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
@@ -161,7 +161,7 @@ private extension UserViewController {
     
     /// Метод инициализации вью модели
     func setupBinding() {
-        viewModel = UserViewModel(userData: coordinator.userData)
+        viewModel = UserViewModel(dataManager: coordinator.dataManager)
     }
 }
 

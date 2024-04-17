@@ -29,7 +29,7 @@ protocol UserViewModelProtocol {
     var numberOfRowsInSection: Int { get }
 
     /// Инициализация данными пользователя из UserViewController
-    init(userData: UserDataTransferProtocol)
+    init(dataManager: DataManagerProtocol)
     
     /// Метод возвращает текста лейбла стадии пользователя
     func getStageTitle() -> String
@@ -105,42 +105,42 @@ final class UserViewModel: UserViewModelProtocol {
     private var firstStageMaxScore = 1999
 
     /// Данные пользователя из стартовой вью-модели
-    private var userData: UserDataTransferProtocol
+    private var dataManager: DataManagerProtocol
     
     /// Отображаемые товары
     private var displayedItems: [Item] {
         get {
-            userData.user.items.sorted { $0.price < $1.price }
+            dataManager.user.items.sorted { $0.price < $1.price }
         }
         set (update) {
-            userData.user.items = update
+            dataManager.user.items = update
         }
     }
-
+    
     /// Сумма очков в кошельке пользователя
     private var wallet: Int {
         get {
-            userData.user.wallet
+            dataManager.user.wallet
         }
         set {
-            userData.user.wallet += newValue
+            dataManager.user.wallet += newValue
         }
     }
 
     /// Массив купленных пользователем товаров
     private var items: [Item] {
         get {
-            userData.user.items
+            dataManager.user.items
         }
         set {
-            userData.user.items = newValue
+            dataManager.user.items = newValue
         }
     }
 
     // MARK: Initializers
 
-    init(userData: UserDataTransferProtocol) {
-        self.userData = userData
+    init(dataManager: DataManagerProtocol) {
+        self.dataManager = dataManager
     }
 
     // MARK: Public methods
@@ -178,9 +178,9 @@ final class UserViewModel: UserViewModelProtocol {
     }
 
     func sellItem(indexPath: IndexPath) {
-        guard indexPath.section >= 0 && indexPath.section < userData.user.items.count else { return }
+        guard indexPath.section >= 0 && indexPath.section < dataManager.user.items.count else { return }
         let itemPrice = displayedItems[indexPath.section].price
-        userData.user.wallet += itemPrice
+        dataManager.user.wallet += itemPrice
         displayedItems.remove(at: indexPath.section)
     }
 

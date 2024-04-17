@@ -25,7 +25,7 @@ protocol ShopViewModelProtocol {
     var walletDidChange: ((ShopViewModelProtocol) -> Void)? { get set }
     
     /// Инициализация данных пользователя из стартовой вью-модели
-    init(userData: UserDataTransferProtocol)
+    init(dataManager: DataManagerProtocol)
     
     /// Метод отображения названия секции
     func getTitleHeader(section: Int) -> String
@@ -67,7 +67,7 @@ final class ShopViewModel: ShopViewModelProtocol {
     
     /// Набор товаров из хранилища (пока моковый DataStore)
     private var shopItems: [Item] {
-        DataStore.shared.items
+        dataManager.items
     }
     
     /// Отображаемые в магазине товары
@@ -78,25 +78,23 @@ final class ShopViewModel: ShopViewModelProtocol {
         set {}
     }
     
+    private var dataManager: DataManagerProtocol
+    
     // MARK: - Public properties
     
     var walletCount: String {
-        "\(Constants.walletTag + userData.user.wallet.formatted())"
+        "\(Constants.walletTag + dataManager.user.wallet.formatted())"
     }
     var numberOfSections: Int {
         displayedItems.count
     }
     var numberOfRowsInSection = 1
     var walletDidChange: ((ShopViewModelProtocol) -> Void)?
-    
-    // MARK: - Private properties
-    
-    private var userData: UserDataTransferProtocol
-    
+
     // MARK: - Initializers
     
-    init(userData: UserDataTransferProtocol) {
-        self.userData = userData
+    init(dataManager: DataManagerProtocol) {
+        self.dataManager = dataManager
     }
     
     // MARK: - Private methods
@@ -105,7 +103,7 @@ final class ShopViewModel: ShopViewModelProtocol {
     private func sortItems() -> [Item] {
         var storeItems: [Item] = []
         shopItems.forEach { Item in
-            if !userData.user.items.contains(Item) {
+            if !dataManager.user.items.contains(Item) {
                 storeItems.append(Item)
             }
         }
@@ -115,7 +113,7 @@ final class ShopViewModel: ShopViewModelProtocol {
     // MARK: - Public methods
     
     func checkWallet(indexPath: IndexPath, ableCompletion: () -> Void, unableCompletion: () -> Void) {
-        if userData.user.wallet >= displayedItems[indexPath.section].price {
+        if dataManager.user.wallet >= displayedItems[indexPath.section].price {
             ableCompletion()
         } else {
             unableCompletion()
@@ -123,10 +121,10 @@ final class ShopViewModel: ShopViewModelProtocol {
     }
     
     func buy(indexPath: IndexPath) {
-            userData.user.wallet -= displayedItems[indexPath.section].price
-            displayedItems.remove(at: indexPath.section)
-            userData.user.items.append(displayedItems[indexPath.section])
-            walletDidChange?(self)
+        dataManager.user.wallet -= displayedItems[indexPath.section].price
+        displayedItems.remove(at: indexPath.section)
+        dataManager.user.items.append(displayedItems[indexPath.section])
+        walletDidChange?(self)
     }
     
     func playSoundBuy() {

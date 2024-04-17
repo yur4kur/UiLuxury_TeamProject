@@ -54,11 +54,11 @@ final class GameViewController: UIViewController {
     }
     
     /// Координатор контроллера
-    private weak var coordinator: TabCoordinatorProtocol!
+    private var coordinator: GameDataTransferProtocol!
     
     // MARK: - Initializers
     
-    init(coordinator: TabCoordinatorProtocol) {
+    init(coordinator: GameDataTransferProtocol) {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
@@ -103,7 +103,7 @@ private extension GameViewController {
     
     /// Метод связывает контроллер с вьюмоделью
     func setupBinding() {
-        viewModel = GameViewModel(userData: coordinator.userData)
+        viewModel = GameViewModel(dataManager: coordinator.dataManager)
     }
 }
 

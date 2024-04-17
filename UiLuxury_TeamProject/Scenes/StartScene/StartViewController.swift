@@ -17,7 +17,7 @@ final class StartViewController: UIViewController {
     private let startView = StartView(frame: UIScreen.main.bounds)
     
     /// Вью-модель с данными пользователя
-    private var viewModel: UserDataTransferProtocol!
+    private var viewModel: StartViewModelProtocol!
     
     /// Базовый координатор, управляющий этим контроллером
     private let coordinator: BaseCoordinatorProtocol!
@@ -50,7 +50,7 @@ final class StartViewController: UIViewController {
     
     /// Метода переход на игровой экран
     @objc private func startTapped() {
-        coordinator.moveToGame(receivedData: viewModel)
+        coordinator.moveToGame()
     }
 }
 

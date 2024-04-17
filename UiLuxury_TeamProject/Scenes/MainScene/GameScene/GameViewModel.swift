@@ -41,7 +41,7 @@ protocol GameViewModelProtocol {
 final class GameViewModel: GameViewModelProtocol {
     
     // MARK: Public properties
-    var userData: UserDataTransferProtocol
+    var dataManager: DataManagerProtocol
     var score = 0
     var scoreDidChange: ((GameViewModelProtocol) -> Void)?
     
@@ -53,20 +53,20 @@ final class GameViewModel: GameViewModelProtocol {
     private let hapticFeedbackManager = HapticFeedbackManager.shared
 
     // MARK: - Initializers
-    init(userData: UserDataTransferProtocol) {
-        self.userData = userData
+    init(dataManager: DataManagerProtocol) {
+        self.dataManager = dataManager
     }
     
     // MARK: - Public methods
     // TODO: доработать метод для применения модификатора айтемов
     func updateScore() {
-        let modifier = applyModifier(from: userData.user.items)
+        let modifier = applyModifier(from: dataManager.user.items)
         score += modifier
         scoreDidChange?(self)
     }
     
     func updateUserWallet() {
-        userData.user.wallet += score
+        dataManager.user.wallet += score
         score = 0
         scoreDidChange?(self)
     }

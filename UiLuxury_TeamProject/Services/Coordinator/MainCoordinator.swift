@@ -33,9 +33,9 @@ final class MainCoordinator: MainCoordinatorProtocol {
     
     
     // MARK: Initializers
-    init(navigationController: UINavigationController, dataManager: DataManagerProtocol) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.dataManager = dataManager
+        self.dataManager = DataManager()
     }
     
     // MARK: Public methods

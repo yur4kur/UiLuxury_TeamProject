@@ -107,7 +107,7 @@ private extension StartView {
 
     /// Метод настраивает фон
     func setupBackgroundImageView() {
-        backgroundImageView.image = UIImage(named: "backgroundImage")
+        backgroundImageView.image = UIImage(named: Constants.backgroundImage)
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.clipsToBounds = true
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -157,5 +157,6 @@ private extension StartView {
         static let greetingText = "Вперед за золотом! Дави на кнопку, зарабатывай монеты!"
         static let startButtonTitle = "Вперед!"
         static let gameFont = "AvenirNext-DemiBold"
+        static let backgroundImage = "backgroundImage"
     }
 }
