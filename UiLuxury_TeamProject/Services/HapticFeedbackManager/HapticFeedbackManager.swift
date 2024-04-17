@@ -7,23 +7,19 @@
 
 import UIKit
 
+protocol FeedbackManagerProtocol {
+    
+    /// Метод генерации тактильной отдачи
+    func enableFeedback()
+}
+
 // MARK: - HapticFeedbackManager
 
 /// Класс реализации тактильной отдачи
-final class HapticFeedbackManager {
+final class HapticFeedbackManager: FeedbackManagerProtocol {
 
-    // MARK: - Public Properties
-
-    /// Точка доступа в Haptic Feedback Manager
-    static let shared = HapticFeedbackManager()
-
-    // MARK: - Private Initializers
-
-    private init() {}
-
-    // MARK: - Public Methods
+    // MARK:  Public Methods
     
-    /// Точка доступа в Haptic Feedback Manager
     func enableFeedback() {
         let generator = UIImpactFeedbackGenerator(style: .soft)
         generator.impactOccurred()

@@ -27,13 +27,21 @@ final class SoundManager {
 
     /// Метод, в который нужно передать имя mp3 файла
     func setupAudioPlayer(fromSound sound: String) {
-        guard let soundURL = Bundle.main.url(forResource: sound, withExtension: "mp3") else { return }
+        guard let soundURL = Bundle.main.url(forResource: sound, withExtension: Constants.fileExtension) else { return }
 
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
             audioPlayer?.prepareToPlay()
         } catch {
-            print("Error loading sound file: \(error.localizedDescription)")
+            print("\(Constants.error) \(error.localizedDescription)")
         }
     }
 }
+
+// MARK: - Constants
+
+enum Constants {
+    static let fileExtension = "mp3"
+    static let error = "Error loading sound file:"
+}
+

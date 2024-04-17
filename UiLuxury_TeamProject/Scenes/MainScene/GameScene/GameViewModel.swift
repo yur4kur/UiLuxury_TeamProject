@@ -40,21 +40,22 @@ protocol GameViewModelProtocol {
 /// Класс, описывающий игровую механику и связывающий ее со свойствами пользователя
 final class GameViewModel: GameViewModelProtocol {
     
-    // MARK: Public properties
-    var dataManager: DataManagerProtocol
-    var score = 0
-    var scoreDidChange: ((GameViewModelProtocol) -> Void)?
-    
     // MARK: - Private properties
     /// Точка доступа к SoundManager
     private let soundManager = SoundManager.shared
 
     /// Точка доступа к HapticFeedbackManager
-    private let hapticFeedbackManager = HapticFeedbackManager.shared
-
+    private let hapticFeedbackManager: FeedbackManagerProtocol
+    
+    // MARK: - Public properties
+    var dataManager: DataManagerProtocol
+    var score = 0
+    var scoreDidChange: ((GameViewModelProtocol) -> Void)?
+    
     // MARK: - Initializers
     init(dataManager: DataManagerProtocol) {
         self.dataManager = dataManager
+        hapticFeedbackManager = HapticFeedbackManager()
     }
     
     // MARK: - Public methods
