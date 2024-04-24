@@ -34,7 +34,7 @@ protocol TabCoordinatorProtocol: CoordinatorProtocol {
 // MARK: - GameDataTransferProtocol
 
 /// Протокол передачи данных, необходимых для игры
-protocol GameDataTransferProtocol {
+protocol GameServicesProtocol {
     var dataManager: DataManagerProtocol { get set }
 }
 

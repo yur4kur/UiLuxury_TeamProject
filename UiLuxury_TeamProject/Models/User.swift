@@ -9,7 +9,7 @@
 struct User {
     
     /// Имя пользователя
-    var name: String
+    let name: String
     
     /// Количество заработанных монет
     var wallet: Int

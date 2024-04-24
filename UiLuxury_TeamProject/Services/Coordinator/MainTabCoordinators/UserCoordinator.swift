@@ -37,4 +37,4 @@ final class UserCoordinator: TabCoordinatorProtocol {
 }
 // MARK: - GameDataTransferProtocol
 
-extension UserCoordinator: GameDataTransferProtocol {}
+extension UserCoordinator: GameServicesProtocol {}

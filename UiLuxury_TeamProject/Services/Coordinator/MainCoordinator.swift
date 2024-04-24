@@ -81,4 +81,4 @@ final class MainCoordinator: MainCoordinatorProtocol {
 
 // MARK: - GameDataTransferProtocol
 
-extension MainCoordinator: GameDataTransferProtocol {}
+extension MainCoordinator: GameServicesProtocol {}

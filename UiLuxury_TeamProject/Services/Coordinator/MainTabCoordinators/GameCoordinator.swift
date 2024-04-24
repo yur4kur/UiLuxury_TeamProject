@@ -38,4 +38,4 @@ final class GameCoordinator: TabCoordinatorProtocol {
 
 // MARK: - GameDataTransferProtocol
 
-extension GameCoordinator: GameDataTransferProtocol {}
+extension GameCoordinator: GameServicesProtocol {}

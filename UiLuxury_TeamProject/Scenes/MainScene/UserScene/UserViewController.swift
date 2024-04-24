@@ -27,14 +27,14 @@ final class UserViewController: UIViewController {
     private let userItemsTableView = UITableView()
 
     /// Координатор контроллера
-    private var coordinator: GameDataTransferProtocol!
+    private var coordinator: GameServicesProtocol!
 
     /// Экземпляр вью модели
     private var viewModel: UserViewModelProtocol!
 
     // MARK: - Initializers
     
-    init(coordinator: GameDataTransferProtocol) {
+    init(coordinator: GameServicesProtocol) {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }

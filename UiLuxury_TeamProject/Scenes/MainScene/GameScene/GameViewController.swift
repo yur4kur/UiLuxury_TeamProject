@@ -54,11 +54,11 @@ final class GameViewController: UIViewController {
     }
     
     /// Координатор контроллера
-    private var coordinator: GameDataTransferProtocol!
+    private var coordinator: GameServicesProtocol!
     
     // MARK: - Initializers
     
-    init(coordinator: GameDataTransferProtocol) {
+    init(coordinator: GameServicesProtocol) {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }

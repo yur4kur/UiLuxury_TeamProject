@@ -38,4 +38,4 @@ final class ShopCoordinator: TabCoordinatorProtocol {
 
 // MARK: - GameDataTransferProtocol
 
-extension ShopCoordinator: GameDataTransferProtocol {}
+extension ShopCoordinator: GameServicesProtocol {}

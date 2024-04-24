@@ -22,7 +22,7 @@ final class ShopViewController: UIViewController {
     private var animation: CAKeyframeAnimation!
     
     /// Координатор контроллера
-    private var coordinator: GameDataTransferProtocol!
+    private var coordinator: GameServicesProtocol!
     
     /// Экземпляр вью модели
     private var viewModel: ShopViewModelProtocol! {
@@ -36,7 +36,7 @@ final class ShopViewController: UIViewController {
     
     // MARK: - Initializers
     
-    init(coordinator: GameDataTransferProtocol) {
+    init(coordinator: GameServicesProtocol) {
         self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
     }
