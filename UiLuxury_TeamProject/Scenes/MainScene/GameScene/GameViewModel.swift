@@ -24,15 +24,6 @@ protocol GameViewModelProtocol {
     
     /// Метод пополнения кошелька пользователя
     func updateUserWallet()
-
-//    /// Метод настройки плеера
-//    func setupAudioPlayer()
-//
-//    /// Метод воспроизведения звука
-//    func playSound()
-//
-//    /// Метод активации тактильной отдачи
-//    func enableFeedback()
 }
 
 // MARK: - GameViewModel
@@ -41,12 +32,7 @@ protocol GameViewModelProtocol {
 final class GameViewModel: GameViewModelProtocol {
     
     // MARK: - Private properties
-//    /// Точка доступа к SoundManager
-//    private let soundManager = SoundManager.shared
-//
-//    /// Точка доступа к HapticFeedbackManager
-//    private let hapticFeedbackManager: FeedbackManagerProtocol
-//    
+   
     // MARK: - Public properties
     var dataManager: DataManagerProtocol
     var score = 0
@@ -55,7 +41,6 @@ final class GameViewModel: GameViewModelProtocol {
     // MARK: - Initializers
     init(dataManager: DataManagerProtocol) {
         self.dataManager = dataManager
-//        hapticFeedbackManager = HapticFeedbackManager()
     }
     
     // MARK: - Public methods
@@ -71,24 +56,6 @@ final class GameViewModel: GameViewModelProtocol {
         score = 0
         scoreDidChange?(self)
     }
-    
-//    func setupAudioPlayer() {
-//        DispatchQueue.global().async {
-//            self.soundManager.setupAudioPlayer(fromSound: Sounds.buttonPressed)
-//        }
-//    }
-//    
-//    func playSound() {
-//        DispatchQueue.global(qos: .default).async {
-//            self.soundManager.audioPlayer?.stop()
-//            self.soundManager.audioPlayer?.currentTime = 0
-//            self.soundManager.audioPlayer?.play()
-//        }
-//    }
-
-//    func enableFeedback() {
-//        hapticFeedbackManager.enableFeedback()
-//    }
 
     /// Метод применяет модификаторы товаров купленные пользователем
     private func applyModifier(from items: [Item]) -> Int {
@@ -106,12 +73,3 @@ final class GameViewModel: GameViewModelProtocol {
     }
 }
 
-//// MARK: - Constants
-//
-//private extension GameViewModel {
-//
-//    /// Имена звуков
-//    enum Sounds {
-//        static let buttonPressed = "coin"
-//    }
-//}

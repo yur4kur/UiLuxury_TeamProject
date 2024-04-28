@@ -51,21 +51,16 @@ final class GameViewController: UIViewController {
    // MARK: View model
     
     /// Экземпляр вью модели
-    private var viewModel: GameViewModelProtocol! {
-        didSet {
-            viewModel.scoreDidChange = { [ unowned self ] viewModel in
-                scoreLabel.text = viewModel.score.description
-            }
-        }
-    }
+    private var viewModel: GameViewModelProtocol!
     
     /// Координатор контроллера
     private var coordinator: GameServicesProtocol!
     
     // MARK: - Initializers
     
-    init(coordinator: GameServicesProtocol) {
+    init(coordinator: GameServicesProtocol, viewModel: GameViewModelProtocol) {
         self.coordinator = coordinator
+        self.viewModel = viewModel
         hapticFeedbackManager = HapticFeedbackManager()
         soundManager = SoundManager.shared
         super.init(nibName: nil, bundle: nil)
@@ -99,8 +94,6 @@ final class GameViewController: UIViewController {
     /// Метод запускает анимацию нажатия кнопки, анимирует падающие монеты и увеличивает счет игры
     @objc private func clickButtonTapped() {
         animate()
-//        viewModel.playSound()
-//        viewModel.enableFeedback()
         viewModel.updateScore()
     }
     
@@ -132,7 +125,9 @@ private extension GameViewController {
     
     /// Метод связывает контроллер с вьюмоделью
     func setupBinding() {
-        viewModel = GameViewModel(dataManager: coordinator.dataManager)
+        viewModel.scoreDidChange = { [ unowned self ] viewModel in
+            scoreLabel.text = viewModel.score.description
+        }
     }
 }
 
@@ -192,7 +187,7 @@ private extension GameViewController {
     
     /// Метод настраивает лейбл
     func setupScoreLabel() {
-        scoreLabel.text = viewModel.score.description
+        scoreLabel.text = Constants.nullScore
         scoreLabel.textColor = .black
         scoreLabel.font = .preferredFont(forTextStyle: .largeTitle)
         scoreLabel.textAlignment = .natural
@@ -320,6 +315,7 @@ private extension GameViewController {
     enum Constants {
         static let coinImage = "plainCoin"
         static let navigationTitle = "Жми на кнопку!"
+        static let nullScore = "0"
         static let buttonPressed = "coin"
     }
 }
