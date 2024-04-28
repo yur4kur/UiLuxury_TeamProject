@@ -41,6 +41,12 @@ final class GameViewController: UIViewController {
     
     /// Картинка анимируемых объектов
     private var coinImageView: UIImageView!
+    
+    /// Точка доступа к HapticFeedbackManager
+    private let hapticFeedbackManager: FeedbackManagerProtocol
+    
+    /// Точка доступа к SoundManager
+    private let soundManager: SoundManager
   
    // MARK: View model
     
@@ -60,6 +66,8 @@ final class GameViewController: UIViewController {
     
     init(coordinator: GameServicesProtocol) {
         self.coordinator = coordinator
+        hapticFeedbackManager = HapticFeedbackManager()
+        soundManager = SoundManager.shared
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -78,7 +86,7 @@ final class GameViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.setupAudioPlayer()
+        setupAudioPlayer()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -91,9 +99,30 @@ final class GameViewController: UIViewController {
     /// Метод запускает анимацию нажатия кнопки, анимирует падающие монеты и увеличивает счет игры
     @objc private func clickButtonTapped() {
         animate()
-        viewModel.playSound()
-        viewModel.enableFeedback()
+//        viewModel.playSound()
+//        viewModel.enableFeedback()
         viewModel.updateScore()
+    }
+    
+    /// Тактильная отдача кнопки
+    private func enableFeedback() {
+        hapticFeedbackManager.enableFeedback()
+    }
+    
+    /// Настройка аудиоплеера
+    private func setupAudioPlayer() {
+        DispatchQueue.global().async {
+            self.soundManager.setupAudioPlayer(fromSound: Constants.buttonPressed)
+        }
+    }
+    
+    /// Озвучка падения монеты
+    private func playSound() {
+        DispatchQueue.global(qos: .default).async {
+            self.soundManager.audioPlayer?.stop()
+            self.soundManager.audioPlayer?.currentTime = 0
+            self.soundManager.audioPlayer?.play()
+        }
     }
 }
 
@@ -123,7 +152,9 @@ private extension GameViewController {
     /// Метод собирает в себе анимации, запускающиеся при нажатии кнопки
     func animate() {
         clickButton.shakeButton()
+        enableFeedback()
         dropCoin()
+        playSound()
     }
 }
 
@@ -289,6 +320,7 @@ private extension GameViewController {
     enum Constants {
         static let coinImage = "plainCoin"
         static let navigationTitle = "Жми на кнопку!"
+        static let buttonPressed = "coin"
     }
 }
 
