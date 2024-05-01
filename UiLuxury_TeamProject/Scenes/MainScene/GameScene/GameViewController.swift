@@ -7,6 +7,15 @@
 
 import UIKit
 
+// MARK: - ViewState
+
+/// Состояние вью
+enum ViewState: Comparable {
+    case loaded
+    case gaming
+    case background
+}
+
 // MARK: - ClickViewController
 
 final class GameViewController: UIViewController {
@@ -51,14 +60,20 @@ final class GameViewController: UIViewController {
    // MARK: View model
     
     /// Экземпляр вью модели
-    private var viewModel: GameViewModelProtocol!
+    private var viewModel: (any GameViewModelProtocol)?
     
     /// Координатор контроллера
     private var coordinator: GameServicesProtocol!
     
+    private var state: ViewState! {
+        didSet {
+            scoreLabel.text = viewModel?.transform(input: state)
+        }
+    }
+    
     // MARK: - Initializers
     
-    init(coordinator: GameServicesProtocol, viewModel: GameViewModelProtocol) {
+    init(coordinator: GameServicesProtocol, viewModel:any GameViewModelProtocol) {
         self.coordinator = coordinator
         self.viewModel = viewModel
         hapticFeedbackManager = HapticFeedbackManager()
@@ -75,26 +90,26 @@ final class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupBinding()
         setupUI()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupAudioPlayer()
+        state = .loaded
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        viewModel.updateUserWallet()
+        state = .background
     }
     
     // MARK: - Private methods
     
     /// Метод запускает анимацию нажатия кнопки, анимирует падающие монеты и увеличивает счет игры
     @objc private func clickButtonTapped() {
+        state = .gaming
         animate()
-        viewModel.updateScore()
     }
     
     /// Тактильная отдача кнопки
@@ -115,18 +130,6 @@ final class GameViewController: UIViewController {
             self.soundManager.audioPlayer?.stop()
             self.soundManager.audioPlayer?.currentTime = 0
             self.soundManager.audioPlayer?.play()
-        }
-    }
-}
-
-// MARK: - Setup Binding
-
-private extension GameViewController {
-    
-    /// Метод связывает контроллер с вьюмоделью
-    func setupBinding() {
-        viewModel.scoreDidChange = { [ unowned self ] viewModel in
-            scoreLabel.text = viewModel.score.description
         }
     }
 }
@@ -187,7 +190,7 @@ private extension GameViewController {
     
     /// Метод настраивает лейбл
     func setupScoreLabel() {
-        scoreLabel.text = Constants.nullScore
+        //scoreLabel.text = Constants.nullScore
         scoreLabel.textColor = .black
         scoreLabel.font = .preferredFont(forTextStyle: .largeTitle)
         scoreLabel.textAlignment = .natural

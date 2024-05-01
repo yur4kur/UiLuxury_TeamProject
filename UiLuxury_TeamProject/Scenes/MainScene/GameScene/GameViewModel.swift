@@ -9,51 +9,76 @@ import Foundation
 
 // MARK: - GameViewModelProtocol
 
-/// Протокол, описывающий методы игрового экрана и изменение счета кошелька пользователя
-protocol GameViewModelProtocol {
-
-    /// Свойство для подсчета очков за нажатие на кнопку
-    var score: Int { get set }
-    
-    /// Свойство оповещения об изменении количества заработанных очков
-    var scoreDidChange: ((GameViewModelProtocol) -> Void)? { get set }
-    
-    /// Метод подсчета очков за нажатие на кнопку
-    func updateScore()
-    
-    /// Метод пополнения кошелька пользователя
-    func updateUserWallet()
-}
+/// Протокол вью-модели игрового экрана
+protocol GameViewModelProtocol: ViewModelType where Input == ViewState, Output == String {}
 
 // MARK: - GameViewModel
 
-/// Класс, описывающий игровую механику и связывающий ее со свойствами пользователя
+/// Вью-модель игровой механики
 final class GameViewModel: GameViewModelProtocol {
-    
+
     // MARK: - Private properties
+    
+    /// Менеджер данных
+    private var dataManager: DataManagerProtocol
+    
+    /// Счет полученных монет
+    private var score = 0 {
+        didSet {
+            output = score.description
+        }
+    }
    
     // MARK: - Public properties
-    var dataManager: DataManagerProtocol
-    var score = 0
-    var scoreDidChange: ((GameViewModelProtocol) -> Void)?
+    
+    /// Входной поток данных
+    var input: ViewState {
+        get {
+            .loaded
+        }
+        set {}
+    }
+  
+    /// Выходной поток данных
+    var output: String {
+        get {
+            score.description
+        }
+        set {}
+    }
+    
+    var didChange: ((AnyObject) -> Void)?
+    
     
     // MARK: - Initializers
     init(dataManager: DataManagerProtocol) {
         self.dataManager = dataManager
     }
     
-    // MARK: - Public methods
-    // TODO: доработать метод для применения модификатора айтемов
-    func updateScore() {
+    func transform(input: Input) -> String {
+        switch input {
+        case .loaded:
+            score = 0
+            didChange?(self)
+        case .gaming:
+            updateScore()
+        case .background:
+            updateUserWallet()
+        }
+        return output
+    }
+    // MARK: - Private methods
+    
+    private func updateScore() {
         let modifier = applyModifier(from: dataManager.user.items)
         score += modifier
-        scoreDidChange?(self)
+        didChange?(self)
     }
     
-    func updateUserWallet() {
+    private func updateUserWallet() {
         dataManager.user.wallet += score
         score = 0
-        scoreDidChange?(self)
+        didChange?(self)
     }
 
     /// Метод применяет модификаторы товаров купленные пользователем
@@ -72,3 +97,16 @@ final class GameViewModel: GameViewModelProtocol {
     }
 }
 
+//// MARK: - ViewModelType
+//
+//extension GameViewModel: ViewModelType {
+//    
+//    func transform(input: ViewState) -> String {
+//        switch input {
+//        case .visible:
+//            updateScore()
+//        case .background:
+//            updateUserWallet()
+//        }
+//    }
+//}

@@ -15,7 +15,7 @@ protocol ViewModelType {
     associatedtype Output
     
     /// Коллбэк для биндинга свойств
-    var modelDidChange: (AnyObject) -> Void { get set }
+    var didChange: ((AnyObject) -> Void)? { get set }
     
     /// Запрос на обработку данных вью-моделью
     func transform(input: Input) -> Output
