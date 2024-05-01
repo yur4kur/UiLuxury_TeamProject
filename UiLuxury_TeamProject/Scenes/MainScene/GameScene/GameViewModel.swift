@@ -47,9 +47,6 @@ final class GameViewModel: GameViewModelProtocol {
         set {}
     }
     
-    var didChange: ((AnyObject) -> Void)?
-    
-    
     // MARK: - Initializers
     init(dataManager: DataManagerProtocol) {
         self.dataManager = dataManager
@@ -59,7 +56,6 @@ final class GameViewModel: GameViewModelProtocol {
         switch input {
         case .loaded:
             score = 0
-            didChange?(self)
         case .gaming:
             updateScore()
         case .background:
@@ -72,13 +68,11 @@ final class GameViewModel: GameViewModelProtocol {
     private func updateScore() {
         let modifier = applyModifier(from: dataManager.user.items)
         score += modifier
-        didChange?(self)
     }
     
     private func updateUserWallet() {
         dataManager.user.wallet += score
         score = 0
-        didChange?(self)
     }
 
     /// Метод применяет модификаторы товаров купленные пользователем
@@ -96,17 +90,3 @@ final class GameViewModel: GameViewModelProtocol {
         return modifier
     }
 }
-
-//// MARK: - ViewModelType
-//
-//extension GameViewModel: ViewModelType {
-//    
-//    func transform(input: ViewState) -> String {
-//        switch input {
-//        case .visible:
-//            updateScore()
-//        case .background:
-//            updateUserWallet()
-//        }
-//    }
-//}

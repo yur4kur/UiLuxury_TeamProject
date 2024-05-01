@@ -65,6 +65,7 @@ final class GameViewController: UIViewController {
     /// Координатор контроллера
     private var coordinator: GameServicesProtocol!
     
+    /// Состояние вьюхи контроллера
     private var state: ViewState! {
         didSet {
             scoreLabel.text = viewModel?.transform(input: state)
