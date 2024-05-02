@@ -21,6 +21,9 @@ final class ShopViewController: UIViewController {
     /// Анимация изменения счета игрока при покупке товаров
     private var animation: CAKeyframeAnimation!
     
+    /// Точка доступа к SoundManager
+    private let soundManager: SoundManager
+    
     /// Координатор контроллера
     private var coordinator: GameServicesProtocol!
     
@@ -38,6 +41,7 @@ final class ShopViewController: UIViewController {
     
     init(coordinator: GameServicesProtocol) {
         self.coordinator = coordinator
+        soundManager = SoundManager.shared
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -57,6 +61,15 @@ final class ShopViewController: UIViewController {
         super.viewDidAppear(animated)
         walletLabel.text = viewModel.walletCount.description
         tableView.reloadData()
+    }
+    
+    // MARK: - Private metods
+    
+    private func playSound() {
+        DispatchQueue.main.async {
+            self.soundManager.setupAudioPlayer(fromSound: Sounds.cash)
+            self.soundManager.audioPlayer?.play()
+        }
     }
 }
 
@@ -126,7 +139,7 @@ extension ShopViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         viewModel.checkWallet(indexPath: indexPath) {
             viewModel.buy(indexPath: indexPath)
-            viewModel.playSoundBuy()
+            playSound()
             animateWalletLabel()
         } unableCompletion: {
             showLowCoinsAlert()
@@ -275,5 +288,10 @@ private extension ShopViewController {
         static let basket = "basket"
         static let animationKeyPath = "transform.translation.x"
         static let labelAnimationKey = "shake"
+    }
+    
+    /// Названия звуков
+    enum Sounds {
+        static let cash = "cash"
     }
 }

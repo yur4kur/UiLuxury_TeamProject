@@ -42,9 +42,6 @@ protocol ShopViewModelProtocol {
     /// Метод покупки товара
     func buy(indexPath: IndexPath)
     
-    /// Метод воспроизведения звука при покупке товара пользователем
-    func playSoundBuy()
-    
     /// Метод возвращает заголовок алерта
     func getAlertTitle() -> String
     
@@ -61,9 +58,6 @@ protocol ShopViewModelProtocol {
 final class ShopViewModel: ShopViewModelProtocol {
     
     // MARK: - Private properties
-    
-    /// Точка доступа к SoundManager
-    private let soundManager = SoundManager.shared
     
     /// Набор товаров из хранилища (пока моковый DataStore)
     private var shopItems: [Item] {
@@ -126,13 +120,6 @@ final class ShopViewModel: ShopViewModelProtocol {
         dataManager.user.items.append(displayedItems[indexPath.section])
         walletDidChange?(self)
     }
-    
-    func playSoundBuy() {
-        DispatchQueue.main.async {
-            self.soundManager.setupAudioPlayer(fromSound: Sounds.cash)
-            self.soundManager.audioPlayer?.play()
-        }
-    }
           
     func getTitleHeader(section: Int) -> String {
         "\(displayedItems[section].title)"
@@ -156,15 +143,6 @@ final class ShopViewModel: ShopViewModelProtocol {
     
     func getAlertActionTitle() -> String {
         Constants.alertButtonTitle
-    }
-}
-
-// MARK: - Sounds
-
-private extension ShopViewModel {
-    /// Названия звуков
-    enum Sounds {
-        static let cash = "cash"
     }
 }
 
