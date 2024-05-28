@@ -6,6 +6,24 @@
 
 import UIKit
 
+// MARK: - ViewModelOutput
+
+struct TableConfiguration {
+    var numberOfSections: Int
+    var numberOfRows: Int
+}
+
+struct AlertConfiguration {
+    var title: String
+    var message: String
+    var action: String
+}
+
+struct ViewModelOutput {
+    var tableConfiguration: TableConfiguration
+    var alertConfiguration: AlertConfiguration
+}
+
 // MARK: - ShopViewController
 
 final class ShopViewController: UIViewController {
@@ -92,12 +110,12 @@ extension ShopViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cell, for: indexPath)
         
         var content = cell.defaultContentConfiguration()
-        content.text = viewModel.getText(indexPath: indexPath)
+        content.text = viewModel.getCellText(indexPath: indexPath)
         content.textProperties.lineBreakMode = .byTruncatingHead
         content.secondaryText = viewModel.getSecondaryText(indexPath: indexPath)
         content.secondaryTextProperties.font = .boldSystemFont(ofSize: 17)
-        
         cell.contentConfiguration = content
+        
         cell.backgroundColor = .clear
         cell.tintColor = .white
         cell.layer.cornerRadius = 8
@@ -113,11 +131,11 @@ extension ShopViewController: UITableViewDataSource {
 
 extension ShopViewController: UITableViewDelegate {
     
-    //MARK: Setup Footers
+    //MARK: Setup Header
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let itemNameLabel = UILabel(frame: CGRect(x: 17, y: 3, width: tableView.frame.width, height: 20))
-        itemNameLabel.text = viewModel.getTitleHeader(section: section)
+        itemNameLabel.text = viewModel.getHeaderTitle(section: section)
         itemNameLabel.font = UIFont.boldSystemFont(ofSize: 17)
         itemNameLabel.textColor = .darkGray
         

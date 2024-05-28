@@ -28,10 +28,10 @@ protocol ShopViewModelProtocol {
     init(dataManager: DataManagerProtocol)
     
     /// Метод отображения названия секции
-    func getTitleHeader(section: Int) -> String
+    func getHeaderTitle(section: Int) -> String
     
     /// Метод возвращает основной текст стандартной ячейки
-    func getText(indexPath: IndexPath) -> String
+    func getCellText(indexPath: IndexPath) -> String
 
     /// Метод возвращает второстепенный текст стандартной ячейки
     func getSecondaryText(indexPath: IndexPath) -> String
@@ -121,11 +121,11 @@ final class ShopViewModel: ShopViewModelProtocol {
         walletDidChange?(self)
     }
           
-    func getTitleHeader(section: Int) -> String {
+    func getHeaderTitle(section: Int) -> String {
         "\(displayedItems[section].title)"
     }
     
-    func getText(indexPath: IndexPath) -> String {
+    func getCellText(indexPath: IndexPath) -> String {
         displayedItems[indexPath.section].description
     }
 

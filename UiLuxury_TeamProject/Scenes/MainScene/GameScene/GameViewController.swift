@@ -12,7 +12,7 @@ import UIKit
 /// Состояние вью
 enum ViewState: Comparable {
     case loaded
-    case gaming
+    case tapped
     case background
 }
 
@@ -109,7 +109,7 @@ final class GameViewController: UIViewController {
     
     /// Метод запускает анимацию нажатия кнопки, анимирует падающие монеты и увеличивает счет игры
     @objc private func clickButtonTapped() {
-        state = .gaming
+        state = .tapped
         animate()
     }
     

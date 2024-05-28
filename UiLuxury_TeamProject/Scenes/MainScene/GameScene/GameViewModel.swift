@@ -10,7 +10,10 @@ import Foundation
 // MARK: - GameViewModelProtocol
 
 /// Протокол вью-модели игрового экрана
-protocol GameViewModelProtocol: ViewModelType where Input == ViewState, Output == String {}
+protocol GameViewModelProtocol: ViewModelType where Input == ViewState, Output == String {
+//    var input: ViewState { get set }
+//    var transform: ((any GameViewModelProtocol) -> Void)? { get set }
+}
 
 // MARK: - GameViewModel
 
@@ -30,14 +33,16 @@ final class GameViewModel: GameViewModelProtocol {
     }
    
     // MARK: - Public properties
-    
+    //var transform: ((any GameViewModelProtocol) -> Void)?
     /// Входной поток данных
-    var input: ViewState {
-        get {
-            .loaded
-        }
-        set {}
-    }
+//    var input: ViewState {
+//        get {
+//            .loaded
+//        }
+//        set {
+//            transform?(self)
+//        }
+//    }
   
     /// Выходной поток данных
     var output: String {
@@ -56,7 +61,7 @@ final class GameViewModel: GameViewModelProtocol {
         switch input {
         case .loaded:
             score = 0
-        case .gaming:
+        case .tapped:
             updateScore()
         case .background:
             updateUserWallet()
